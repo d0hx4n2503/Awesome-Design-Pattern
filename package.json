@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "awe-design-pattern",
   "version": "0.1.0",
   "private": true,
@@ -13,7 +13,7 @@
     "iterator": "tsx patterns/behavioral/iterator/index.ts",
     "observer": "tsx patterns/behavioral/observer/index.ts",
     "test": "node --import tsx --test \"test/**/*.test.ts\"",
-    "validate": "npm run format:check \u0026\u0026 npm run check \u0026\u0026 npm test",
+    "validate": "npm run format:check && npm run check && npm test",
     "prepare": "husky",
     "adapter": "tsx patterns/structural/adapter/index.ts",
     "builder": "tsx patterns/creational/builder/index.ts",
@@ -33,7 +33,11 @@
     "visitor": "tsx patterns/behavioral/visitor/index.ts",
     "memento": "tsx patterns/behavioral/memento/index.ts",
     "flyweight": "tsx patterns/structural/flyweight/index.ts",
-    "interpreter": "tsx patterns/behavioral/interpreter/index.ts"
+    "interpreter": "tsx patterns/behavioral/interpreter/index.ts",
+    "docs:sync": "node scripts/sync-docs-content.cjs",
+    "docs:dev": "astro dev",
+    "docs:build": "npm run docs:sync && astro build",
+    "docs:preview": "astro preview"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
@@ -41,5 +45,9 @@
     "prettier": "^3.9.6",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "astro": "^7.2.0",
+    "marked": "^18.0.9"
   }
 }

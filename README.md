@@ -11,7 +11,8 @@ This repository is intentionally built like a professional engineering project: 
 - All **23 GoF design patterns** organized by category.
 - TypeScript implementations placed directly inside `patterns/`.
 - Tests mirrored under `test/` so each pattern has a clear validation home.
-- Clean examples focused on real design pressure, not artificial class diagrams.
+- Astro documentation generated from pattern READMEs.
+- Light/dark docs UI with English, Vietnamese, and Chinese locale routes.
 - CI workflows split by responsibility: docs, format, test, e2e smoke, CodeQL, and release.
 
 ## Quick Start
@@ -19,10 +20,10 @@ This repository is intentionally built like a professional engineering project: 
 ```bash
 npm install
 npm run validate
-npm run strategy
+npm run docs:dev
 ```
 
-Current runnable implementation:
+Run any pattern directly with its script:
 
 | Pattern  | Run Command        | Source                                  | Test                                     |
 | -------- | ------------------ | --------------------------------------- | ---------------------------------------- |
@@ -32,26 +33,32 @@ Current runnable implementation:
 
 ```text
 Awe-Design-Pattern/
-├── .github/
-│   ├── ISSUE_TEMPLATE/
-│   ├── PULL_REQUEST_TEMPLATE/
-│   └── workflows/
-├── docs/
-├── img/
-├── patterns/
-│   ├── creational/
-│   ├── structural/
-│   └── behavioral/
-├── scripts/
-├── test/
-│   ├── creational/
-│   ├── structural/
-│   └── behavioral/
-├── CONTEXT.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── README.md
-└── SECURITY.md
+|-- .github/
+|   |-- ISSUE_TEMPLATE/
+|   |-- PULL_REQUEST_TEMPLATE/
+|   `-- workflows/
+|-- docs/
+|   |-- content/
+|   |   |-- en/
+|   |   |-- vi/
+|   |   `-- zh/
+|   |-- public/
+|   `-- src/
+|-- img/
+|-- patterns/
+|   |-- creational/
+|   |-- structural/
+|   `-- behavioral/
+|-- scripts/
+|-- test/
+|   |-- creational/
+|   |-- structural/
+|   `-- behavioral/
+|-- CONTEXT.md
+|-- CONTRIBUTING.md
+|-- LICENSE
+|-- README.md
+`-- SECURITY.md
 ```
 
 ## Implementation Model
@@ -74,7 +81,7 @@ This keeps every pattern easy to find, review, and extend.
 
 Implementation follows practical adoption order: common patterns first, specialized patterns later.
 
-### Priority 1 — Highest Practical Value
+### Priority 1 - Highest Practical Value
 
 | Order | Pattern        | Group      | Why It Comes Early                                |
 | ----: | -------------- | ---------- | ------------------------------------------------- |
@@ -88,7 +95,7 @@ Implementation follows practical adoption order: common patterns first, speciali
 |     8 | Command        | Behavioral | Encapsulates actions for queues, jobs, and undo.  |
 |     9 | Iterator       | Behavioral | Standardizes traversal without exposing storage.  |
 
-### Priority 2 — Common in Architecture and Frameworks
+### Priority 2 - Common in Architecture and Frameworks
 
 | Pattern                 | Group      | Typical Usage                                  |
 | ----------------------- | ---------- | ---------------------------------------------- |
@@ -101,7 +108,7 @@ Implementation follows practical adoption order: common patterns first, speciali
 | Abstract Factory        | Creational | Product families, themes, providers.           |
 | Prototype               | Creational | Cloning templates or expensive objects.        |
 
-### Priority 3 — Specialized but Important
+### Priority 3 - Specialized but Important
 
 | Pattern     | Group      | Typical Usage                              |
 | ----------- | ---------- | ------------------------------------------ |
@@ -112,6 +119,19 @@ Implementation follows practical adoption order: common patterns first, speciali
 | Flyweight   | Structural | Memory-sensitive object sharing.           |
 | Interpreter | Behavioral | Small DSLs, rules, and expression parsing. |
 
+## Documentation Site
+
+The repository includes an Astro-powered documentation site under `docs/`. Pattern READMEs remain close to the source code, while `npm run docs:sync` mirrors them into localized documentation content for the site.
+
+| Command                | Purpose                                                  |
+| ---------------------- | -------------------------------------------------------- |
+| `npm run docs:sync`    | Sync pattern READMEs into `docs/content/`.               |
+| `npm run docs:dev`     | Run the Astro documentation site locally.                |
+| `npm run docs:build`   | Sync content and build the static site into `dist/site`. |
+| `npm run docs:preview` | Preview the production documentation build.              |
+
+The docs UI supports light/dark theme switching and three locale routes: English (`/en/`), Vietnamese (`/vi/`), and Chinese (`/zh/`).
+
 ## Available Scripts
 
 | Command                | Purpose                                      |
@@ -121,20 +141,23 @@ Implementation follows practical adoption order: common patterns first, speciali
 | `npm run check`        | Run TypeScript type-checking.                |
 | `npm test`             | Run Node's built-in test runner through TSX. |
 | `npm run validate`     | Run format check, type-check, and tests.     |
+| `npm run docs:build`   | Build the Astro documentation site.          |
 | `npm run strategy`     | Execute the Strategy pattern example.        |
 
 ## Quality Gates
 
 The repository uses separate workflows for separate responsibilities:
 
-| Workflow            | Responsibility                           |
-| ------------------- | ---------------------------------------- |
-| `validate-docs.yml` | Validate required docs and folder shape  |
-| `format.yml`        | Enforce Prettier formatting              |
-| `test.yml`          | Type-check and unit test TypeScript      |
-| `e2e.yml`           | Run smoke checks for executable examples |
-| `codeql.yml`        | Run CodeQL security analysis             |
-| `release.yml`       | Publish tagged releases                  |
+| Workflow            | Responsibility                                      |
+| ------------------- | --------------------------------------------------- |
+| `validate-docs.yml` | Validate required docs, folders, and docs app shape |
+| `format.yml`        | Enforce Prettier formatting                         |
+| `test.yml`          | Type-check and unit test TypeScript                 |
+| `e2e.yml`           | Run smoke checks for executable examples            |
+| `codeql.yml`        | Run CodeQL security analysis                        |
+| `release.yml`       | Publish tagged releases                             |
+| `docs_build.yml`    | Build Astro docs on main and pull requests          |
+| `docs_deploy.yml`   | Deploy Astro docs to GitHub Pages                   |
 
 Husky runs `npm run validate` before commits.
 
@@ -144,7 +167,7 @@ Husky runs `npm run validate` before commits.
 - Prefer composition and interfaces where they clarify the pattern.
 - Avoid cleverness that hides the point of the pattern.
 - Export only what tests and future examples need.
-- Add one pattern at a time and commit each pattern separately.
+- Keep pattern docs close to implementation and sync them into the docs site.
 - Keep tests close to the pattern structure.
 
 ## Contributing

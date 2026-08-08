@@ -1,0 +1,88 @@
+﻿---
+import "../styles/global.css";
+import { localeLabels, locales, normalizeLocale, ui } from "../lib/i18n";
+import { getPatterns } from "../lib/content";
+
+const locale = normalizeLocale(Astro.params.locale);
+const t = ui[locale];
+const patterns = getPatterns(locale);
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base.slice(0, -1) : base;
+const currentPath = Astro.url.pathname.replace(basePath, "").replace(/^\/(en|vi|zh)/, "");
+const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups, pattern) => {
+  groups[pattern.groupLabel] ??= [];
+  groups[pattern.groupLabel].push(pattern);
+  return groups;
+}, {});
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={t.tagline} />
+    <title><slot name="title" />Awe Design Pattern</title>
+    <script is:inline>
+      const savedTheme = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
+    </script>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href={`${base}${locale}/`}>
+          <span class="brand-mark">A</span>
+          <span>
+            <strong>Awe Design Pattern</strong>
+            <small>{t.tagline}</small>
+          </span>
+        </a>
+
+        <div class="toolbar">
+          <label>
+            <span>{t.language}</span>
+            <select id="locale-select" aria-label={t.language}>
+              {locales.map((item) => <option value={item} selected={item === locale}>{localeLabels[item]}</option>)}
+            </select>
+          </label>
+          <button id="theme-toggle" type="button">{t.theme}</button>
+        </div>
+
+        <input id="pattern-search" class="search" type="search" placeholder={t.searchPlaceholder} />
+
+        <nav class="nav" aria-label={t.patterns}>
+          {Object.entries(groupedPatterns).map(([group, items]) => (
+            <section>
+              <h2>{group}</h2>
+              <ul>
+                {items.map((pattern) => {
+                  const href = `${base}${pattern.href.slice(1)}`;
+                  return (
+                    <li>
+                      <a data-pattern-link href={href} class={Astro.url.pathname === href ? "active" : ""}>
+                        {pattern.title}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ))}
+        </nav>
+      </aside>
+
+      <main class="content">
+        <slot />
+      </main>
+    </div>
+
+    <script src={`${base}scripts/site.js`}></script>
+    <script is:inline define:vars={{ base, currentPath }}>
+      document.getElementById("locale-select")?.addEventListener("change", (event) => {
+        const nextLocale = event.target.value;
+        window.location.href = `${base}${nextLocale}${currentPath}`;
+      });
+    </script>
+  </body>
+</html>
