@@ -1,43 +1,58 @@
-﻿# Facade
+# Facade
 
-## Mục Đích
+## Intent
 
-Cung cấp interface đơn giản cho một subsystem phức tạp.
+Facade provides a simple, stable interface over a more complex subsystem.
 
-## Vấn Đề
+## Problem
 
-Client phải biết quá nhiều class, bước gọi, hoặc chi tiết nội bộ của subsystem.
+Client code often needs to coordinate several services to complete one business workflow. If every caller knows the subsystem details, the workflow is duplicated and changes become risky.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tổ chức lại quan hệ giữa object/class để client dùng hệ thống qua interface ổn định, trong khi cấu trúc bên trong có thể thay đổi linh hoạt hơn.
+Create a facade that exposes a high-level operation. The facade orchestrates the subsystem internally while clients depend on one clear API.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi muốn tạo service/module boundary; khi gom workflow phức tạp sau API đơn giản; khi giảm coupling.
+This implementation models order placement:
 
-## Khi Không Nên Dùng
+- `InventoryService`, `PaymentService`, and `ShippingService` are subsystem services.
+- `OrderFacade` coordinates the workflow.
+- Callers place an order through one method instead of orchestrating every subsystem.
 
-Khi facade trở thành god object; khi nó che giấu lỗi thiết kế thay vì tạo boundary rõ.
+Run it from the repository root:
 
-## Dấu Hiệu Nhận Biết
+```bash
+npm run facade
+```
 
-- Client đang phụ thuộc quá nhiều vào cấu trúc nội bộ.
-- Có nhu cầu bọc, chuyển đổi, gom nhóm, hoặc che giấu chi tiết object.
-- Thay đổi cấu trúc làm lan sửa code ở nhiều nơi.
+## When To Use
 
-## Ưu Điểm
+- A workflow requires several subsystem calls.
+- Client code is coupled to too many internal services.
+- You want a clean module or service boundary.
+- The subsystem is valid but too detailed for most callers.
 
-- Giảm coupling giữa client và implementation.
-- Làm ranh giới module rõ hơn.
-- Giúp hệ thống dễ mở rộng mà ít sửa client code.
+## When Not To Use
 
-## Nhược Điểm
+- The facade becomes a god object.
+- It hides important domain decisions from callers.
+- The subsystem is already simple and stable.
 
-- Có thể thêm nhiều lớp trung gian.
-- Debug khó hơn nếu abstraction bị lạm dụng.
-- Cần kiểm soát naming để người đọc hiểu vai trò từng lớp.
+## Benefits
 
-## Pattern Liên Quan
+- Reduces coupling at module boundaries.
+- Centralizes workflow orchestration.
+- Makes common operations easier to use correctly.
 
-Adapter, Mediator, Proxy
+## Trade-offs
+
+- Can become too broad if not scoped carefully.
+- May hide useful lower-level capabilities.
+- Needs clear naming to avoid becoming a vague service layer.
+
+## Related Patterns
+
+- Adapter
+- Mediator
+- Proxy
