@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "awe-design-pattern",
   "version": "0.1.0",
   "private": true,
@@ -13,7 +13,7 @@
     "iterator": "tsx patterns/behavioral/iterator/index.ts",
     "observer": "tsx patterns/behavioral/observer/index.ts",
     "test": "node --import tsx --test \"test/**/*.test.ts\"",
-    "validate": "npm run format:check && npm run check && npm test",
+    "validate": "npm run format:check \u0026\u0026 npm run check \u0026\u0026 npm test",
     "prepare": "husky",
     "adapter": "tsx patterns/structural/adapter/index.ts",
     "builder": "tsx patterns/creational/builder/index.ts",
@@ -21,7 +21,19 @@
     "decorator": "tsx patterns/structural/decorator/index.ts",
     "singleton": "tsx patterns/creational/singleton/index.ts",
     "strategy": "tsx patterns/behavioral/strategy/index.ts",
-    "template-method": "tsx patterns/behavioral/template-method/index.ts"
+    "template-method": "tsx patterns/behavioral/template-method/index.ts",
+    "proxy": "tsx patterns/structural/proxy/index.ts",
+    "composite": "tsx patterns/structural/composite/index.ts",
+    "state": "tsx patterns/behavioral/state/index.ts",
+    "chain-of-responsibility": "tsx patterns/behavioral/chain-of-responsibility/index.ts",
+    "abstract-factory": "tsx patterns/creational/abstract-factory/index.ts",
+    "prototype": "tsx patterns/creational/prototype/index.ts",
+    "mediator": "tsx patterns/behavioral/mediator/index.ts",
+    "bridge": "tsx patterns/structural/bridge/index.ts",
+    "visitor": "tsx patterns/behavioral/visitor/index.ts",
+    "memento": "tsx patterns/behavioral/memento/index.ts",
+    "flyweight": "tsx patterns/structural/flyweight/index.ts",
+    "interpreter": "tsx patterns/behavioral/interpreter/index.ts"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
