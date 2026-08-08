@@ -6,7 +6,14 @@ function updateThemeToggle(theme) {
   const label = themeToggle.dataset.themeLabel || "Theme";
   const lightLabel = themeToggle.dataset.lightLabel || "Light";
   const darkLabel = themeToggle.dataset.darkLabel || "Dark";
-  themeToggle.textContent = `${label}: ${theme === "dark" ? darkLabel : lightLabel}`;
+  themeToggle.setAttribute(
+    "aria-label",
+    `${label}: ${theme === "dark" ? darkLabel : lightLabel}`,
+  );
+  themeToggle.setAttribute(
+    "title",
+    `${label}: ${theme === "dark" ? darkLabel : lightLabel}`,
+  );
   themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
 }
 
