@@ -5,7 +5,7 @@ export default defineConfig({
   publicDir: "./docs/public",
   outDir: "./dist/site",
   site: "https://d0hx4n2503.github.io",
-  base: "/Design-Pattern",
+  base: "/Awesome-Design-Pattern/",
   markdown: {
     shikiConfig: {
       theme: "github-dark",
