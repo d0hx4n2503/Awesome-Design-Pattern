@@ -2,12 +2,12 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const labels = {
-  creational: { en: "Creational", vi: "Khởi tạo", zh: "创建型" },
-  structural: { en: "Structural", vi: "Cấu trúc", zh: "结构型" },
-  behavioral: { en: "Behavioral", vi: "Hành vi", zh: "行为型" },
+  creational: { en: "Creational", vi: "Creational", zh: "创建型" },
+  structural: { en: "Structural", vi: "Structural", zh: "结构型" },
+  behavioral: { en: "Behavioral", vi: "Behavioral", zh: "行为型" },
 };
 const localizedIntro = {
-  vi: "Tài liệu tiếng Việt cho pattern này được đồng bộ từ nội dung gốc và giữ nguyên thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.",
+  vi: "This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.",
   zh: "本中文文档与英文原文保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。",
 };
 const patternRoot = path.join(process.cwd(), "patterns");

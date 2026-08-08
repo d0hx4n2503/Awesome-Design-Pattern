@@ -1,9 +1,9 @@
 # Scripts
 
-Thư mục này dành cho script hỗ trợ repo trong tương lai.
+This folder contains repository automation scripts.
 
-## Nguyên Tắc
+## Guidelines
 
-- Chưa thêm script thực thi ở giai đoạn documentation-first.
-- Script sau này nên phục vụ kiểm tra cấu trúc, generate index, hoặc validate đủ 23 patterns.
-- Không dùng script để sinh code pattern khi chưa có kế hoạch implementation rõ ràng.
+- Keep scripts focused on documentation syncing, structure validation, and repository maintenance.
+- Avoid generating pattern implementation code automatically; examples should stay intentional and reviewable.
+- Prefer small Node.js scripts that run consistently in local development and CI.

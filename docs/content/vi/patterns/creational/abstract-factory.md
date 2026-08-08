@@ -2,13 +2,13 @@
 title: "Abstract Factory"
 slug: "abstract-factory"
 group: "creational"
-groupLabel: "Khởi tạo"
+groupLabel: "Creational"
 source: "patterns/creational/abstract-factory/README.md"
 ---
 
 # Abstract Factory
 
-> Tài liệu tiếng Việt cho pattern này được đồng bộ từ nội dung gốc và giữ nguyên thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
+> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
 
 ## Intent
 

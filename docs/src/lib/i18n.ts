@@ -1,10 +1,10 @@
-﻿export type Locale = "en" | "vi" | "zh";
+export type Locale = "en" | "vi" | "zh";
 
 export const locales: Locale[] = ["en", "vi", "zh"];
 
 export const localeLabels: Record<Locale, string> = {
   en: "English",
-  vi: "Tiếng Việt",
+  vi: "Vietnamese",
   zh: "中文",
 };
 
@@ -26,18 +26,18 @@ export const ui = {
   },
   vi: {
     tagline:
-      "Triển khai TypeScript thực tế cho 23 Gang of Four design patterns.",
-    searchPlaceholder: "Tìm pattern...",
+      "Practical TypeScript implementations of the 23 Gang of Four design patterns.",
+    searchPlaceholder: "Search patterns...",
     patterns: "Patterns",
-    source: "Nguồn",
-    implementation: "Triển khai",
-    tests: "Kiểm thử",
-    openPattern: "Mở pattern",
-    theme: "Giao diện",
-    language: "Ngôn ngữ",
-    heroTitle: "Design patterns, triển khai rõ ràng.",
+    source: "Source",
+    implementation: "Implementation",
+    tests: "Tests",
+    openPattern: "Open pattern",
+    theme: "Theme",
+    language: "Language",
+    heroTitle: "Design patterns, implemented clearly.",
     heroBody:
-      "Khám phá 23 GoF patterns với TypeScript implementation, test và ghi chú kỹ thuật ngắn gọn.",
+      "Explore all 23 GoF patterns with TypeScript implementations, tests, and concise engineering notes.",
   },
   zh: {
     tagline: "面向工程实践的 23 个 GoF 设计模式 TypeScript 实现。",
