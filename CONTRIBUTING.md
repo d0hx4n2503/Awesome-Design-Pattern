@@ -22,6 +22,7 @@ The repository currently contains:
 - A pattern index
 - One folder for each of the 23 GoF patterns
 - README documentation for each pattern
+- A mirrored `test/` tree for implementation tests
 - GitHub templates and validation workflow
 
 The repository contains TypeScript implementations directly inside pattern folders as they are added.
@@ -70,6 +71,7 @@ Before opening a pull request, verify that:
 - The change fits the repository scope.
 - `patterns/` still contains exactly the 23 GoF pattern folders.
 - Implementation files live inside the matching pattern folder.
+- Tests live in the matching path under `test/`.
 - Required documentation files are not empty.
 - The writing is clear, practical, and consistent.
 - Trade-offs are included where relevant.

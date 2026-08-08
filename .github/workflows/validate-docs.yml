@@ -73,12 +73,34 @@ jobs:
           set -euo pipefail
 
           misplaced_typescript_files="$(
-            find . -path "./.git" -prune -o -name "*.ts" -type f ! -path "./patterns/*" -print | sort
+            find . -path "./.git" -prune -o -name "*.ts" -type f ! -path "./patterns/*" ! -path "./test/*" -print | sort
           )"
 
           if [ -n "$misplaced_typescript_files" ]; then
-            echo "TypeScript implementation files must live under patterns/."
+            echo "TypeScript files must live under patterns/ or test/."
             echo "$misplaced_typescript_files"
+            exit 1
+          fi
+
+      - name: Validate mirrored test structure
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          while IFS= read -r pattern_dir; do
+            test_dir="${pattern_dir/patterns/test}"
+
+            test -d "$test_dir" || {
+              echo "Missing mirrored test folder: $test_dir"
+              exit 1
+            }
+          done < <(find patterns -mindepth 2 -maxdepth 2 -type d | sort)
+
+          actual_count="$(find test -mindepth 2 -maxdepth 2 -type d | wc -l | tr -d ' ')"
+
+          if [ "$actual_count" != "23" ]; then
+            echo "Expected 23 mirrored test folders, found $actual_count"
+            find test -mindepth 2 -maxdepth 2 -type d | sort
             exit 1
           fi
 
@@ -109,5 +131,5 @@ jobs:
       - name: Install TypeScript dependencies
         run: npm ci
 
-      - name: Type-check TypeScript implementations
-        run: npm run check
+      - name: Validate TypeScript implementations
+        run: npm run validate

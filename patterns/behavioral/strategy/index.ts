@@ -1,22 +1,22 @@
 import { pathToFileURL } from "node:url";
 
-type Shipment = {
+export type Shipment = {
   weightKg: number;
   distanceKm: number;
   orderValueUsd: number;
 };
 
-type ShippingQuote = {
+export type ShippingQuote = {
   carrier: string;
   costUsd: number;
   estimatedDays: number;
 };
 
-interface ShippingStrategy {
+export interface ShippingStrategy {
   quote(shipment: Shipment): ShippingQuote;
 }
 
-class EconomyShipping implements ShippingStrategy {
+export class EconomyShipping implements ShippingStrategy {
   quote(shipment: Shipment): ShippingQuote {
     return {
       carrier: "Economy",
@@ -26,7 +26,7 @@ class EconomyShipping implements ShippingStrategy {
   }
 }
 
-class ExpressShipping implements ShippingStrategy {
+export class ExpressShipping implements ShippingStrategy {
   quote(shipment: Shipment): ShippingQuote {
     return {
       carrier: "Express",
@@ -36,7 +36,7 @@ class ExpressShipping implements ShippingStrategy {
   }
 }
 
-class FreeShipping implements ShippingStrategy {
+export class FreeShipping implements ShippingStrategy {
   quote(shipment: Shipment): ShippingQuote {
     return {
       carrier: "Free Shipping",
@@ -46,7 +46,7 @@ class FreeShipping implements ShippingStrategy {
   }
 }
 
-class CheckoutService {
+export class CheckoutService {
   constructor(private readonly shippingStrategy: ShippingStrategy) {}
 
   calculateShipping(shipment: Shipment): ShippingQuote {

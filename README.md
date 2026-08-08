@@ -22,7 +22,7 @@ The goal is not to force patterns into every design. The goal is to build judgme
 | CI validation | Active |
 | Contribution guidelines | Active |
 
-Each implementation lives directly inside its own pattern folder, next to the pattern README.
+Each implementation lives directly inside its own pattern folder, next to the pattern README. Tests live under `test/` using the same group and pattern structure as `patterns/`.
 
 ## Repository Structure
 
@@ -41,6 +41,10 @@ Awe-Design-Pattern/
 │   ├── structural/
 │   └── behavioral/
 ├── scripts/
+├── test/
+│   ├── creational/
+│   ├── structural/
+│   └── behavioral/
 ├── CONTEXT.md
 ├── CONTRIBUTING.md
 ├── LICENSE
@@ -163,6 +167,15 @@ The repository includes a GitHub Actions workflow that validates:
 - Each pattern folder contains a `README.md`
 - TypeScript implementations are allowed inside their own pattern folders
 - Required repository documents are present and non-empty
+- TypeScript code passes type-checking and tests
+
+Local validation runs through:
+
+```bash
+npm run validate
+```
+
+Husky runs the same validation before commits.
 
 See `.github/workflows/validate-docs.yml` for the validation rules.
 

@@ -45,6 +45,7 @@ The repository should not present design patterns as rules to apply everywhere. 
 | `img/` | Future diagrams and visual assets |
 | `patterns/` | Documentation and implementation files for the 23 GoF patterns |
 | `scripts/` | Future helper scripts for validation or generation |
+| `test/` | Tests mirrored from the `patterns/` folder structure |
 | `README.md` | Primary public-facing project overview |
 | `CONTRIBUTING.md` | Contribution rules and review expectations |
 | `SECURITY.md` | Security reporting and scope |
@@ -69,6 +70,17 @@ Expected leaf pattern folder count:
 Each leaf pattern folder should contain a `README.md`.
 
 During the current phase, implementation should be added one pattern at a time, starting with TypeScript.
+
+## Test Folder Rules
+
+The `test/` directory should mirror `patterns/`.
+
+For example:
+
+- Implementation: `patterns/behavioral/strategy/index.ts`
+- Test: `test/behavioral/strategy/index.test.ts`
+
+This keeps test coverage easy to navigate as the repository grows.
 
 ## Documentation Tone
 
@@ -101,4 +113,5 @@ When making changes:
 - Preserve the 23-pattern structure.
 - Avoid adding dependencies without a clear reason.
 - Update CI when repository rules change.
+- Keep tests aligned with the matching pattern structure under `test/`.
 - Keep `README.md` professional and suitable as the first page a reviewer sees.
