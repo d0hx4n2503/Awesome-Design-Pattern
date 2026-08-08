@@ -1,0 +1,105 @@
+name: Validate Documentation
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+
+jobs:
+  validate-patterns:
+    name: Validate pattern structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate 23 pattern folders
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          expected_patterns=(
+            "patterns/creational/abstract-factory"
+            "patterns/creational/builder"
+            "patterns/creational/factory-method"
+            "patterns/creational/prototype"
+            "patterns/creational/singleton"
+            "patterns/structural/adapter"
+            "patterns/structural/bridge"
+            "patterns/structural/composite"
+            "patterns/structural/decorator"
+            "patterns/structural/facade"
+            "patterns/structural/flyweight"
+            "patterns/structural/proxy"
+            "patterns/behavioral/chain-of-responsibility"
+            "patterns/behavioral/command"
+            "patterns/behavioral/interpreter"
+            "patterns/behavioral/iterator"
+            "patterns/behavioral/mediator"
+            "patterns/behavioral/memento"
+            "patterns/behavioral/observer"
+            "patterns/behavioral/state"
+            "patterns/behavioral/strategy"
+            "patterns/behavioral/template-method"
+            "patterns/behavioral/visitor"
+          )
+
+          for pattern in "${expected_patterns[@]}"; do
+            test -d "$pattern" || {
+              echo "Missing pattern folder: $pattern"
+              exit 1
+            }
+
+            test -f "$pattern/README.md" || {
+              echo "Missing pattern README: $pattern/README.md"
+              exit 1
+            }
+          done
+
+          actual_count="$(find patterns -mindepth 3 -maxdepth 3 -type d | wc -l | tr -d ' ')"
+
+          if [ "$actual_count" != "23" ]; then
+            echo "Expected 23 pattern folders, found $actual_count"
+            find patterns -mindepth 3 -maxdepth 3 -type d | sort
+            exit 1
+          fi
+
+      - name: Ensure patterns stay documentation-only
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          non_markdown_files="$(
+            find patterns -type f ! -name "README.md" ! -name "*.md" | sort
+          )"
+
+          if [ -n "$non_markdown_files" ]; then
+            echo "patterns/ must stay documentation-only for now."
+            echo "$non_markdown_files"
+            exit 1
+          fi
+
+      - name: Validate required root docs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_files=(
+            "README.md"
+            "CONTRIBUTING.md"
+            "LICENSE"
+            "docs/learning-roadmap.md"
+            "docs/pattern-index.md"
+            ".github/ISSUE_TEMPLATE/bug_report.yml"
+            ".github/PULL_REQUEST_TEMPLATE/pattern-docs.md"
+          )
+
+          for file in "${required_files[@]}"; do
+            test -s "$file" || {
+              echo "Missing or empty required file: $file"
+              exit 1
+            }
+          done
