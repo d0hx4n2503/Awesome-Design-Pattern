@@ -1,43 +1,58 @@
-﻿# Builder
+# Builder
 
-## Mục Đích
+## Intent
 
-Tạo object phức tạp từng bước để code khởi tạo dễ đọc và dễ kiểm soát.
+Builder constructs complex objects step by step while keeping creation readable and valid.
 
-## Vấn Đề
+## Problem
 
-Constructor có quá nhiều tham số hoặc object cần nhiều bước setup theo thứ tự.
+Objects with many optional fields often lead to long constructors, unclear parameter order, and partially valid states. This gets worse for configuration, requests, reports, and test data.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tách phần thay đổi ra khỏi client code, để client làm việc với abstraction thay vì phụ thuộc trực tiếp vào chi tiết triển khai.
+Move construction into a builder that exposes meaningful methods and validates the final object before returning it.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi object có nhiều optional field; khi cần nhiều cách build cùng một object; khi muốn test data/config dễ đọc.
+This implementation builds a deployment configuration:
 
-## Khi Không Nên Dùng
+- `DeploymentConfig` is the final immutable object shape.
+- `DeploymentConfigBuilder` provides expressive construction methods.
+- `build()` validates required fields and returns a complete config.
 
-Khi object đơn giản; khi builder chỉ lặp lại setter mà không thêm ý nghĩa.
+Run it from the repository root:
 
-## Dấu Hiệu Nhận Biết
+```bash
+npm run builder
+```
 
-- Có nhiều concrete class cùng chia sẻ một vai trò.
-- Client đang phải biết quá nhiều chi tiết khởi tạo.
-- Thay đổi implementation làm lan sửa code ở nhiều nơi.
+## When To Use
 
-## Ưu Điểm
+- Object construction has many optional parameters.
+- Valid object creation requires multiple steps.
+- Constructor calls are hard to read.
+- Test data setup needs readable defaults.
 
-- Giảm coupling giữa client và concrete class.
-- Dễ thay đổi hoặc mở rộng biến thể object.
-- Làm ý định thiết kế rõ ràng hơn.
+## When Not To Use
 
-## Nhược Điểm
+- The object has only a few required fields.
+- A plain object literal is clearer.
+- The builder only duplicates setters without adding validation or readability.
 
-- Tăng số lượng class/file cần đọc.
-- Có thể gây over-engineering nếu bài toán còn đơn giản.
-- Cần đặt tên abstraction tốt để tránh khó hiểu.
+## Benefits
 
-## Pattern Liên Quan
+- Improves readability at call sites.
+- Prevents invalid partially constructed objects.
+- Makes defaults and validation explicit.
 
-Factory Method, Abstract Factory
+## Trade-offs
+
+- Adds another abstraction.
+- Can become verbose for simple objects.
+- Needs discipline to avoid mutable builder leaks.
+
+## Related Patterns
+
+- Factory Method
+- Abstract Factory
+- Prototype
