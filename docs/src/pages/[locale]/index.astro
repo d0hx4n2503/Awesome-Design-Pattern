@@ -16,12 +16,14 @@ const base = import.meta.env.BASE_URL;
 <DocsLayout>
   <Fragment slot="title">Awesome Design Pattern · </Fragment>
   <section class="hero">
-    <p class="eyebrow">Gang of Four · TypeScript · Tested</p>
-    <h1>{t.heroTitle}</h1>
-    <p>{t.heroBody}</p>
-    <div class="hero-actions">
-      <a class="button primary" href={`${base}${locale}/patterns/behavioral/strategy`}>Start with Strategy</a>
-      <a class="button" href="https://github.com/d0hx4n2503/Awesome-Design-Pattern">GitHub</a>
+    <div class="hero-content">
+      <p class="kicker">Gang of Four · TypeScript · Tested</p>
+      <h1>{t.heroTitle}</h1>
+      <p>{t.heroBody}</p>
+      <div class="hero-actions">
+        <a class="button primary" href={`${base}${locale}/patterns/behavioral/strategy`}>Start with Strategy</a>
+        <a class="button" href="https://github.com/d0hx4n2503/Awesome-Design-Pattern">View on GitHub</a>
+      </div>
     </div>
   </section>
 
@@ -30,6 +32,14 @@ const base = import.meta.env.BASE_URL;
     <article><strong>23</strong><span>TypeScript Implementations</span></article>
     <article><strong>40+</strong><span>Test Cases</span></article>
     <article><strong>3</strong><span>Languages</span></article>
+  </section>
+
+  <section class="section-heading">
+    <div>
+      <p class="eyebrow">Pattern catalog</p>
+      <h2>Explore by implementation</h2>
+    </div>
+    <p>Each entry links to concise docs, TypeScript source, and mirrored tests so the pattern stays easy to study and verify.</p>
   </section>
 
   <section class="cards">
