@@ -10,8 +10,8 @@ This repository is designed to be a professional, documentation-first reference 
 - Prefer practical engineering language over abstract textbook phrasing.
 - Include trade-offs, not only benefits.
 - Keep each change focused and reviewable.
-- Preserve the documentation-first scope until implementation work is explicitly started.
-- Do not add source code under `patterns/` during the current phase.
+- Keep implementation work focused on one pattern at a time.
+- Place source code directly inside the matching folder under `patterns/`.
 
 ## Repository Scope
 
@@ -24,7 +24,7 @@ The repository currently contains:
 - README documentation for each pattern
 - GitHub templates and validation workflow
 
-The repository does not currently contain implementation examples.
+The repository contains TypeScript implementations directly inside pattern folders as they are added.
 
 ## Pattern Documentation Format
 
@@ -69,7 +69,7 @@ Before opening a pull request, verify that:
 
 - The change fits the repository scope.
 - `patterns/` still contains exactly the 23 GoF pattern folders.
-- Pattern folders remain documentation-only.
+- Implementation files live inside the matching pattern folder.
 - Required documentation files are not empty.
 - The writing is clear, practical, and consistent.
 - Trade-offs are included where relevant.
@@ -84,8 +84,8 @@ Reviewers should check:
 - Whether the change introduces unnecessary complexity
 - Whether documentation remains approachable for learners
 
-## Future Implementation Phase
+## Implementation Guidelines
 
-Code examples will be added later as explicit implementation modules. Until then, avoid adding language-specific source files, package managers, build systems, or generated code.
+Implementation examples should be added as focused TypeScript modules inside the relevant pattern folder.
 
-This keeps the documentation baseline stable before the repository grows into executable examples.
+Avoid adding broad build systems, generated code, or unrelated dependencies unless they support the current pattern implementation.

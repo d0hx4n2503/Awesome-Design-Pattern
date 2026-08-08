@@ -67,18 +67,18 @@ jobs:
             exit 1
           fi
 
-      - name: Ensure patterns stay documentation-only
+      - name: Validate implementation file locations
         shell: bash
         run: |
           set -euo pipefail
 
-          non_markdown_files="$(
-            find patterns -type f ! -name "README.md" ! -name "*.md" | sort
+          misplaced_typescript_files="$(
+            find . -path "./.git" -prune -o -name "*.ts" -type f ! -path "./patterns/*" -print | sort
           )"
 
-          if [ -n "$non_markdown_files" ]; then
-            echo "patterns/ must stay documentation-only for now."
-            echo "$non_markdown_files"
+          if [ -n "$misplaced_typescript_files" ]; then
+            echo "TypeScript implementation files must live under patterns/."
+            echo "$misplaced_typescript_files"
             exit 1
           fi
 
@@ -105,3 +105,9 @@ jobs:
               exit 1
             }
           done
+
+      - name: Install TypeScript dependencies
+        run: npm ci
+
+      - name: Type-check TypeScript implementations
+        run: npm run check

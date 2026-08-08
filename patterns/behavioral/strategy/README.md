@@ -41,3 +41,15 @@ Khi chỉ có một thuật toán; khi interface chung bị ép gượng.
 ## Pattern Liên Quan
 
 State, Template Method
+
+## TypeScript Implementation
+
+This folder contains a runnable TypeScript implementation in `index.ts`.
+
+The example models shipping cost calculation. `CheckoutService` depends on a `ShippingStrategy` interface, while concrete strategies such as economy, express, and free shipping provide interchangeable algorithms.
+
+Run it from the repository root:
+
+```bash
+npm run strategy
+```

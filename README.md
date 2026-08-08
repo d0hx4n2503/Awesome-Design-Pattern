@@ -4,7 +4,7 @@
 
 Awe Design Pattern is a structured learning repository for understanding, comparing, and eventually implementing the classic GoF design patterns. The project is intentionally organized like a production-grade engineering knowledge base: clear scope, predictable structure, explicit contribution rules, and automated validation.
 
-The current phase is focused on high-quality documentation. Code examples will be added later as separate, reviewable modules.
+The current phase is focused on high-quality documentation plus small TypeScript implementations added one pattern at a time.
 
 ## Why This Repository Exists
 
@@ -18,11 +18,11 @@ The goal is not to force patterns into every design. The goal is to build judgme
 |---|---|
 | Pattern catalog | Complete: 23 GoF patterns |
 | Pattern documentation | In progress |
-| Source code examples | Not started |
+| Source code examples | Started: TypeScript |
 | CI validation | Active |
 | Contribution guidelines | Active |
 
-At this stage, `patterns/` must remain documentation-only. Each pattern folder contains a `README.md`; no implementation files are expected yet.
+Each implementation lives directly inside its own pattern folder, next to the pattern README.
 
 ## Repository Structure
 
@@ -161,7 +161,7 @@ The repository includes a GitHub Actions workflow that validates:
 
 - Exactly 23 pattern folders exist under `patterns/`
 - Each pattern folder contains a `README.md`
-- `patterns/` remains documentation-only during the current phase
+- TypeScript implementations are allowed inside their own pattern folders
 - Required repository documents are present and non-empty
 
 See `.github/workflows/validate-docs.yml` for the validation rules.
@@ -170,15 +170,15 @@ See `.github/workflows/validate-docs.yml` for the validation rules.
 
 1. Complete concise documentation for all 23 patterns.
 2. Improve cross-pattern comparisons and anti-pattern notes.
-3. Add diagrams for selected patterns.
-4. Introduce code examples as separate modules after the documentation baseline is stable.
-5. Add language-specific implementations once the repository structure is ready.
+3. Add TypeScript implementations one pattern at a time.
+4. Add diagrams for selected patterns.
+5. Expand CI to validate implementations.
 
 ## Contributing
 
 Please read `CONTRIBUTING.md` before opening a pull request. Contributions should improve clarity, accuracy, structure, or practical usefulness.
 
-During the documentation-first phase, do not add source code under `patterns/`.
+Keep implementation code inside the matching pattern folder.
 
 ## Security
 

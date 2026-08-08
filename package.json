@@ -1,0 +1,16 @@
+{
+  "name": "awe-design-pattern",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript implementations of the 23 Gang of Four design patterns.",
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "strategy": "tsx patterns/behavioral/strategy/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
