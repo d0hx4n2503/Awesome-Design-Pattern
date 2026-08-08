@@ -1,0 +1,32 @@
+{
+  "name": "awe-design-pattern",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript implementations of the 23 Gang of Four design patterns.",
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "factory-method": "tsx patterns/creational/factory-method/index.ts",
+    "facade": "tsx patterns/structural/facade/index.ts",
+    "iterator": "tsx patterns/behavioral/iterator/index.ts",
+    "observer": "tsx patterns/behavioral/observer/index.ts",
+    "test": "node --import tsx --test \"test/**/*.test.ts\"",
+    "validate": "npm run format:check && npm run check && npm test",
+    "prepare": "husky",
+    "adapter": "tsx patterns/structural/adapter/index.ts",
+    "builder": "tsx patterns/creational/builder/index.ts",
+    "command": "tsx patterns/behavioral/command/index.ts",
+    "decorator": "tsx patterns/structural/decorator/index.ts",
+    "singleton": "tsx patterns/creational/singleton/index.ts",
+    "strategy": "tsx patterns/behavioral/strategy/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "husky": "^9.1.7",
+    "prettier": "^3.9.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

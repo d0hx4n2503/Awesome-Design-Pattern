@@ -2,9 +2,9 @@
 
 ## Project Scope
 
-Awe Design Pattern is currently a documentation-first repository. It does not ship executable application code, production services, dependencies, containers, or deployment artifacts.
+Awe Design Pattern is currently a learning repository with documentation and small TypeScript pattern implementations. It does not ship production services, containers, or deployment artifacts.
 
-Security risk is therefore limited primarily to repository content, contribution workflow, documentation integrity, and future implementation planning.
+Security risk is therefore limited primarily to repository content, contribution workflow, documentation integrity, development dependencies, and example implementation guidance.
 
 ## Supported Versions
 
@@ -32,7 +32,7 @@ The following are usually not security vulnerabilities for this project:
 
 - Disagreement with pattern prioritization
 - Documentation wording improvements
-- Missing code examples
+- Missing implementation examples
 - Broken links without security impact
 - General style or formatting issues
 
@@ -48,9 +48,9 @@ Security reports should be handled with the following priorities:
 4. Add preventive validation when practical.
 5. Document the fix in the commit or pull request.
 
-## Future Implementation Phase
+## Implementation Security
 
-When executable examples are added, this policy should be expanded to cover:
+As executable examples are added, this policy should be expanded to cover:
 
 - Dependency scanning
 - Static analysis
@@ -59,4 +59,4 @@ When executable examples are added, this policy should be expanded to cover:
 - Language-specific vulnerability handling
 - Supported release versions
 
-Until then, the repository should avoid unnecessary dependencies and generated artifacts.
+The repository should avoid unnecessary dependencies and generated artifacts.

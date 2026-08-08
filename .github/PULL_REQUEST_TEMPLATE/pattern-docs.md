@@ -2,7 +2,7 @@
 
 ## Nội Dung Thay Đổi
 
-- 
+-
 
 ## Loại Thay Đổi
 

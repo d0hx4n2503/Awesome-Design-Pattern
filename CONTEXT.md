@@ -13,8 +13,8 @@ The repository is currently in the **documentation baseline** phase.
 This means:
 
 - All 23 GoF patterns must exist as folders under `patterns/`.
-- Each pattern folder should contain documentation only.
-- No source code should be added under `patterns/` yet.
+- Each pattern folder should contain its documentation and, when implemented, its TypeScript source files.
+- Source code should live directly inside the matching pattern folder.
 - Root-level documentation should be polished and professional.
 - CI should validate repository structure and documentation expectations.
 
@@ -22,7 +22,7 @@ This means:
 
 ### Documentation Before Implementation
 
-The repository should establish a strong conceptual foundation before adding code examples. This prevents implementation details from distracting from the purpose and trade-offs of each pattern.
+The repository should keep each implementation close to its documentation. This makes every pattern folder self-contained and easy to review.
 
 ### Practical Over Theoretical
 
@@ -38,16 +38,17 @@ The repository should not present design patterns as rules to apply everywhere. 
 
 ## Repository Areas
 
-| Path | Purpose |
-|---|---|
-| `.github/` | GitHub templates, workflow validation, and repository automation metadata |
-| `docs/` | Roadmaps, indexes, and supporting documentation |
-| `img/` | Future diagrams and visual assets |
-| `patterns/` | Documentation for the 23 GoF patterns |
-| `scripts/` | Future helper scripts for validation or generation |
-| `README.md` | Primary public-facing project overview |
-| `CONTRIBUTING.md` | Contribution rules and review expectations |
-| `SECURITY.md` | Security reporting and scope |
+| Path              | Purpose                                                                   |
+| ----------------- | ------------------------------------------------------------------------- |
+| `.github/`        | GitHub templates, workflow validation, and repository automation metadata |
+| `docs/`           | Roadmaps, indexes, and supporting documentation                           |
+| `img/`            | Future diagrams and visual assets                                         |
+| `patterns/`       | Documentation and implementation files for the 23 GoF patterns            |
+| `scripts/`        | Future helper scripts for validation or generation                        |
+| `test/`           | Tests mirrored from the `patterns/` folder structure                      |
+| `README.md`       | Primary public-facing project overview                                    |
+| `CONTRIBUTING.md` | Contribution rules and review expectations                                |
+| `SECURITY.md`     | Security reporting and scope                                              |
 
 ## Pattern Folder Rules
 
@@ -68,7 +69,18 @@ Expected leaf pattern folder count:
 
 Each leaf pattern folder should contain a `README.md`.
 
-During the current phase, source code files should not be added to these folders.
+During the current phase, implementation should be added one pattern at a time, starting with TypeScript.
+
+## Test Folder Rules
+
+The `test/` directory should mirror `patterns/`.
+
+For example:
+
+- Implementation: `patterns/behavioral/strategy/index.ts`
+- Test: `test/behavioral/strategy/index.test.ts`
+
+This keeps test coverage easy to navigate as the repository grows.
 
 ## Documentation Tone
 
@@ -87,10 +99,10 @@ Pattern-level documentation may be more educational, but should still avoid vagu
 
 After the documentation baseline is stable, the repository can grow in stages:
 
-1. Add diagrams for selected patterns.
-2. Improve pattern comparisons and anti-pattern sections.
-3. Add implementation examples in a planned language or set of languages.
-4. Add tests and tooling for executable examples.
+1. Continue adding TypeScript implementations one pattern at a time.
+2. Add diagrams for selected patterns.
+3. Improve pattern comparisons and anti-pattern sections.
+4. Add tests and tooling for executable implementations.
 5. Expand CI to validate code quality once code exists.
 
 ## Maintainer Notes
@@ -101,4 +113,5 @@ When making changes:
 - Preserve the 23-pattern structure.
 - Avoid adding dependencies without a clear reason.
 - Update CI when repository rules change.
+- Keep tests aligned with the matching pattern structure under `test/`.
 - Keep `README.md` professional and suitable as the first page a reviewer sees.

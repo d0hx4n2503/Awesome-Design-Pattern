@@ -1,4 +1,4 @@
-name: Validate Documentation
+name: Validate Docs
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
   pull_request:
 
 jobs:
-  validate-patterns:
-    name: Validate pattern structure
+  validate-docs:
+    name: Validate documentation structure
     runs-on: ubuntu-latest
 
     steps:
@@ -67,18 +67,40 @@ jobs:
             exit 1
           fi
 
-      - name: Ensure patterns stay documentation-only
+      - name: Validate TypeScript file locations
         shell: bash
         run: |
           set -euo pipefail
 
-          non_markdown_files="$(
-            find patterns -type f ! -name "README.md" ! -name "*.md" | sort
+          misplaced_typescript_files="$(
+            find . -path "./.git" -prune -o -name "*.ts" -type f ! -path "./patterns/*" ! -path "./test/*" -print | sort
           )"
 
-          if [ -n "$non_markdown_files" ]; then
-            echo "patterns/ must stay documentation-only for now."
-            echo "$non_markdown_files"
+          if [ -n "$misplaced_typescript_files" ]; then
+            echo "TypeScript files must live under patterns/ or test/."
+            echo "$misplaced_typescript_files"
+            exit 1
+          fi
+
+      - name: Validate mirrored test structure
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          while IFS= read -r pattern_dir; do
+            test_dir="${pattern_dir/patterns/test}"
+
+            test -d "$test_dir" || {
+              echo "Missing mirrored test folder: $test_dir"
+              exit 1
+            }
+          done < <(find patterns -mindepth 2 -maxdepth 2 -type d | sort)
+
+          actual_count="$(find test -mindepth 2 -maxdepth 2 -type d | wc -l | tr -d ' ')"
+
+          if [ "$actual_count" != "23" ]; then
+            echo "Expected 23 mirrored test folders, found $actual_count"
+            find test -mindepth 2 -maxdepth 2 -type d | sort
             exit 1
           fi
 

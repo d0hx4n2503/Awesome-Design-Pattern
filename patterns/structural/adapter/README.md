@@ -1,43 +1,59 @@
-﻿# Adapter
+# Adapter
 
-## Mục Đích
+## Intent
 
-Chuyển interface của một object có sẵn thành interface mà client mong muốn.
+Adapter converts an existing interface into the interface a client expects.
 
-## Vấn Đề
+## Problem
 
-Hai phần code cần làm việc với nhau nhưng interface không khớp.
+Real systems rarely integrate with perfectly shaped APIs. A payment provider, legacy service, SDK, or vendor client may expose names, data shapes, and semantics that do not match your domain model. If client code calls that external interface directly, vendor details leak everywhere and future migration becomes expensive.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tổ chức lại quan hệ giữa object/class để client dùng hệ thống qua interface ổn định, trong khi cấu trúc bên trong có thể thay đổi linh hoạt hơn.
+Create an adapter that implements the interface your application owns. The adapter translates calls and data between your domain-facing contract and the incompatible external service.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi tích hợp thư viện/API bên ngoài; khi migrate hệ thống cũ; khi muốn giữ client code ổn định.
+This implementation models checkout payment processing:
 
-## Khi Không Nên Dùng
+- `PaymentProcessor` is the application-owned interface.
+- `LegacyPaymentGateway` is an incompatible external API.
+- `LegacyPaymentAdapter` translates application requests into legacy gateway calls.
+- `CheckoutService` depends only on `PaymentProcessor`.
 
-Khi có thể sửa trực tiếp interface gốc; khi adapter chỉ che giấu thiết kế sai lâu dài.
+Run it from the repository root:
 
-## Dấu Hiệu Nhận Biết
+```bash
+npm run adapter
+```
 
-- Client đang phụ thuộc quá nhiều vào cấu trúc nội bộ.
-- Có nhu cầu bọc, chuyển đổi, gom nhóm, hoặc che giấu chi tiết object.
-- Thay đổi cấu trúc làm lan sửa code ở nhiều nơi.
+## When To Use
 
-## Ưu Điểm
+- Integrating third-party SDKs or vendor APIs.
+- Wrapping legacy systems during migration.
+- Keeping domain code independent from infrastructure details.
+- Normalizing multiple providers behind one application interface.
 
-- Giảm coupling giữa client và implementation.
-- Làm ranh giới module rõ hơn.
-- Giúp hệ thống dễ mở rộng mà ít sửa client code.
+## When Not To Use
 
-## Nhược Điểm
+- The external interface already matches the client contract.
+- You control both sides and can safely change the original interface.
+- The adapter only hides a deeper design issue without reducing coupling.
 
-- Có thể thêm nhiều lớp trung gian.
-- Debug khó hơn nếu abstraction bị lạm dụng.
-- Cần kiểm soát naming để người đọc hiểu vai trò từng lớp.
+## Benefits
 
-## Pattern Liên Quan
+- Keeps vendor-specific details out of business logic.
+- Makes provider replacement easier.
+- Improves testability by targeting an application-owned interface.
 
-Facade, Proxy, Bridge
+## Trade-offs
+
+- Adds one more layer to maintain.
+- Poorly named adapters can hide important behavior.
+- Translation logic can become complex if provider semantics differ greatly.
+
+## Related Patterns
+
+- Facade
+- Proxy
+- Bridge
