@@ -14,7 +14,7 @@ Keep one dimension as an abstraction and delegate the other to an implementation
 
 ## TypeScript Implementation
 
-`CriticalAlert` can use different `DeliveryChannel` implementations.
+`InfoAlert` and `CriticalAlert` are alert abstractions. `EmailChannel` and `SlackChannel` are delivery implementations. Either alert can be combined with either channel without creating classes such as `CriticalSlackAlert` or `InfoEmailAlert`.
 
 ```bash
 npm run bridge

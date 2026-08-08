@@ -26,8 +26,10 @@ This implementation models notification delivery:
 
 - `NotificationSender` is the product interface.
 - `EmailNotificationSender` and `SmsNotificationSender` are concrete products.
-- `NotificationFactory` exposes a factory method for creating the correct sender.
-- `NotificationService` depends on the factory and product abstraction.
+- `NotificationWorkflow` is the creator and defines the stable `notify` workflow.
+- `EmailNotificationWorkflow` and `SmsNotificationWorkflow` are concrete creators that override the factory method.
+
+This is intentionally modeled as the GoF Factory Method shape: the base creator owns the workflow, while subclasses decide which product to instantiate.
 
 Run it from the repository root:
 

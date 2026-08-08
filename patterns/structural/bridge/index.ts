@@ -16,13 +16,22 @@ export abstract class Alert {
   constructor(protected readonly channel: DeliveryChannel) {}
   abstract send(message: string): string;
 }
+export class InfoAlert extends Alert {
+  send(message: string): string {
+    return this.channel.deliver(`[info] ${message}`);
+  }
+}
 export class CriticalAlert extends Alert {
   send(message: string): string {
     return this.channel.deliver(`[critical] ${message}`);
   }
 }
 export function runBridgeExample(): void {
-  console.log(new CriticalAlert(new SlackChannel()).send("database down"));
+  const alerts: Alert[] = [
+    new InfoAlert(new EmailChannel()),
+    new CriticalAlert(new SlackChannel()),
+  ];
+  for (const alert of alerts) console.log(alert.send("database down"));
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
   runBridgeExample();

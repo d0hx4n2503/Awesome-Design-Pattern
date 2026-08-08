@@ -33,6 +33,16 @@ export class SizeVisitor implements FileSystemVisitor {
     for (const child of node.children) child.accept(this);
   }
 }
+export class NameListVisitor implements FileSystemVisitor {
+  readonly names: string[] = [];
+  visitFile(node: FileNode): void {
+    this.names.push(node.name);
+  }
+  visitFolder(node: FolderNode): void {
+    this.names.push(node.name);
+    for (const child of node.children) child.accept(this);
+  }
+}
 export function runVisitorExample(): void {
   const tree = new FolderNode("root", [
     new FileNode("a", 10),

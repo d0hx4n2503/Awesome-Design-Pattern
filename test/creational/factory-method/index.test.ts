@@ -2,16 +2,14 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import {
-  NotificationFactory,
-  NotificationService,
+  EmailNotificationWorkflow,
+  SmsNotificationWorkflow,
 } from "../../../patterns/creational/factory-method/index.js";
 
 describe("Factory Method pattern", () => {
-  it("creates an email sender through the factory method", () => {
-    const service = new NotificationService(new NotificationFactory());
-
+  it("lets a concrete creator choose the email product", () => {
     assert.deepEqual(
-      service.notify("email", {
+      new EmailNotificationWorkflow().notify({
         recipient: "USER@EXAMPLE.COM",
         body: "Hello",
       }),
@@ -23,11 +21,9 @@ describe("Factory Method pattern", () => {
     );
   });
 
-  it("creates an SMS sender through the same factory method", () => {
-    const service = new NotificationService(new NotificationFactory());
-
+  it("lets another concrete creator choose the SMS product", () => {
     assert.deepEqual(
-      service.notify("sms", {
+      new SmsNotificationWorkflow().notify({
         recipient: "+1 (555) 010-0100",
         body: "Code: 123456",
       }),
