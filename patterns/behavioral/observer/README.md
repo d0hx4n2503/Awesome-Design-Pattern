@@ -1,43 +1,59 @@
-﻿# Observer
+# Observer
 
-## Mục Đích
+## Intent
 
-Thông báo thay đổi từ một subject đến nhiều subscriber phụ thuộc.
+Observer defines a one-to-many dependency so that subscribers are notified when a subject changes.
 
-## Vấn Đề
+## Problem
 
-Một object thay đổi và nhiều object khác cần phản ứng mà không muốn coupling trực tiếp.
+When one object changes state, several other parts of the system may need to react. If the subject directly calls every dependent object, it becomes tightly coupled to all consumers and every new reaction requires editing the subject.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tách phần hành vi thay đổi ra thành object, protocol, hoặc workflow rõ ràng để các object cộng tác với nhau mà không phụ thuộc chặt vào chi tiết của nhau.
+Let observers subscribe to a subject. The subject publishes events through a stable observer interface without knowing what each observer does with the update.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi xây event system; khi có notification/pub-sub; khi UI hoặc state thay đổi cần nhiều listener.
+This implementation models order status updates:
 
-## Khi Không Nên Dùng
+- `OrderStatusSubject` owns the order state.
+- `OrderObserver` defines the subscriber contract.
+- `EmailNotifier` and `AnalyticsTracker` react independently.
+- New observers can be added without changing the subject.
 
-Khi thứ tự event quan trọng nhưng không kiểm soát; khi callback chain gây khó debug.
+Run it from the repository root:
 
-## Dấu Hiệu Nhận Biết
+```bash
+npm run observer
+```
 
-- Logic hành vi có nhiều nhánh hoặc nhiều biến thể.
-- Object đang biết quá nhiều về object khác.
-- Thay đổi một rule làm ảnh hưởng nhiều class không liên quan.
+## When To Use
 
-## Ưu Điểm
+- Event notification.
+- Pub/sub style workflows.
+- UI state updates.
+- Domain events where multiple reactions are expected.
 
-- Làm hành vi dễ thay đổi và dễ test độc lập hơn.
-- Giảm phụ thuộc trực tiếp giữa các object cộng tác.
-- Giúp workflow hoặc rule phức tạp có cấu trúc rõ ràng hơn.
+## When Not To Use
 
-## Nhược Điểm
+- There is only one known receiver.
+- Ordering of side effects is critical but not controlled.
+- Debugging event chains would become too difficult.
 
-- Có thể làm tăng số lượng object/class.
-- Flow runtime đôi khi khó lần theo hơn gọi trực tiếp.
-- Dễ bị lạm dụng nếu bài toán chỉ có một hành vi đơn giản.
+## Benefits
 
-## Pattern Liên Quan
+- Reduces coupling between subject and subscribers.
+- Supports adding reactions without changing the subject.
+- Keeps event producers focused on state changes.
 
-Mediator, Strategy
+## Trade-offs
+
+- Event flow can be harder to trace.
+- Subscriber failures need explicit handling.
+- Too many observers can create hidden side effects.
+
+## Related Patterns
+
+- Mediator
+- Strategy
+- Chain of Responsibility

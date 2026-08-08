@@ -9,6 +9,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "factory-method": "tsx patterns/creational/factory-method/index.ts",
+    "observer": "tsx patterns/behavioral/observer/index.ts",
     "test": "node --import tsx --test \"test/**/*.test.ts\"",
     "validate": "npm run format:check && npm run check && npm test",
     "prepare": "husky",
