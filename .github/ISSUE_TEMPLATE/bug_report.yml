@@ -1,0 +1,32 @@
+name: Bug report
+description: Báo lỗi hoặc nội dung chưa chính xác trong tài liệu pattern
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã báo lỗi. Hãy mô tả ngắn gọn để repo dễ cải thiện từng pattern.
+  - type: input
+    id: location
+    attributes:
+      label: Vị trí lỗi
+      description: File hoặc pattern liên quan
+      placeholder: patterns/behavioral/strategy/README.md
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Mô tả vấn đề
+      description: Nội dung nào sai, thiếu, hoặc dễ gây hiểu nhầm?
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Gợi ý sửa
+      description: Nếu có, hãy đề xuất cách diễn đạt hoặc ví dụ tốt hơn.
+    validations:
+      required: false
