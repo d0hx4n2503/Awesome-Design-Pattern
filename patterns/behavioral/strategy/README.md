@@ -1,46 +1,48 @@
-﻿# Strategy
+# Strategy Pattern
 
-## Mục Đích
+## Intent
 
-Đóng gói các thuật toán/hành vi có thể thay thế cho nhau sau cùng một interface.
+Encapsulate interchangeable algorithms or policies behind a shared interface so the calling code can switch behavior without changing its own workflow.
 
-## Vấn Đề
+## Problem
 
-Code có nhiều nhánh chọn thuật toán hoặc behavior thay đổi theo context.
+Business logic often accumulates conditional branches such as `if paymentType === ...`, `if customerTier === ...`, or `if shippingMethod === ...`. As those branches grow, the calling class starts owning too many rules and becomes harder to test.
 
-## Ý Tưởng Cốt Lõi
+## Core Idea
 
-Tách phần hành vi thay đổi ra thành object, protocol, hoặc workflow rõ ràng để các object cộng tác với nhau mà không phụ thuộc chặt vào chi tiết của nhau.
+Move the varying behavior into separate strategy objects. The context depends only on the strategy interface, while each strategy owns one focused algorithm.
 
-## Khi Nên Dùng
+## When To Use
 
-Khi cần thay đổi thuật toán runtime; khi muốn bỏ if/else theo loại; khi viết validation, pricing, sorting, payment.
+Use Strategy when behavior must change at runtime, when multiple algorithms share the same input/output shape, or when conditionals are growing around pricing, validation, sorting, payment, or routing rules.
 
-## Khi Không Nên Dùng
+## When Not To Use
 
-Khi chỉ có một thuật toán; khi interface chung bị ép gượng.
+Avoid Strategy when there is only one algorithm, when the interface would be forced and unclear, or when a simple function parameter is enough.
 
-## Dấu Hiệu Nhận Biết
+## Recognition Signs
 
-- Logic hành vi có nhiều nhánh hoặc nhiều biến thể.
-- Object đang biết quá nhiều về object khác.
-- Thay đổi một rule làm ảnh hưởng nhiều class không liên quan.
+- A class has multiple branches for variations of the same behavior.
+- Adding a new rule requires editing unrelated workflow code.
+- Several algorithms share the same contract but differ in execution details.
 
-## Ưu Điểm
+## Advantages
 
-- Làm hành vi dễ thay đổi và dễ test độc lập hơn.
-- Giảm phụ thuộc trực tiếp giữa các object cộng tác.
-- Giúp workflow hoặc rule phức tạp có cấu trúc rõ ràng hơn.
+- Keeps each algorithm isolated and testable.
+- Reduces conditional complexity in the context.
+- Makes runtime behavior explicit through composition.
 
-## Nhược Điểm
+## Trade-Offs
 
-- Có thể làm tăng số lượng object/class.
-- Flow runtime đôi khi khó lần theo hơn gọi trực tiếp.
-- Dễ bị lạm dụng nếu bài toán chỉ có một hành vi đơn giản.
+- Adds more objects or functions to navigate.
+- Can make runtime flow less obvious if strategies are selected indirectly.
+- Is easy to overuse for behavior that does not actually vary.
 
-## Pattern Liên Quan
+## Related Patterns
 
-State, Template Method
+- State also changes behavior, but the object usually owns its state transitions.
+- Command encapsulates an action rather than an interchangeable algorithm.
+- Template Method keeps the workflow in a base class and varies selected steps.
 
 ## TypeScript Implementation
 

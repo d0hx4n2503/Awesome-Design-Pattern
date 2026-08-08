@@ -1,43 +1,26 @@
-﻿# Prototype
+# Prototype
 
-## Mục Đích
+## Intent
 
-Tạo object mới bằng cách clone object mẫu.
+Create new objects by cloning an existing object instead of constructing from scratch.
 
-## Vấn Đề
+## Problem
 
-Tạo object từ đầu tốn kém hoặc cần copy một cấu hình mẫu đã có.
+Repeatedly setting up similar objects duplicates configuration and risks inconsistent defaults.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tách phần thay đổi ra khỏi client code, để client làm việc với abstraction thay vì phụ thuộc trực tiếp vào chi tiết triển khai.
+Use a configured prototype as a template and clone it with explicit overrides.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi object setup phức tạp; khi cần nhiều bản sao gần giống nhau; khi muốn tránh phụ thuộc concrete constructor.
+`CampaignPrototype` clones campaign templates while copying mutable arrays safely.
 
-## Khi Không Nên Dùng
+```bash
+npm run prototype
+```
 
-Khi object có reference phức tạp dễ clone sai; khi copy semantics không rõ ràng.
+## Trade-offs
 
-## Dấu Hiệu Nhận Biết
-
-- Có nhiều concrete class cùng chia sẻ một vai trò.
-- Client đang phải biết quá nhiều chi tiết khởi tạo.
-- Thay đổi implementation làm lan sửa code ở nhiều nơi.
-
-## Ưu Điểm
-
-- Giảm coupling giữa client và concrete class.
-- Dễ thay đổi hoặc mở rộng biến thể object.
-- Làm ý định thiết kế rõ ràng hơn.
-
-## Nhược Điểm
-
-- Tăng số lượng class/file cần đọc.
-- Có thể gây over-engineering nếu bài toán còn đơn giản.
-- Cần đặt tên abstraction tốt để tránh khó hiểu.
-
-## Pattern Liên Quan
-
-Builder, Abstract Factory
+- Reduces repetitive setup.
+- Clone semantics must be explicit.

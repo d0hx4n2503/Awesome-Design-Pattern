@@ -1,41 +1,41 @@
 # Pattern Index
 
-Danh mục 23 Gang of Four design patterns theo nhóm chính thức.
+A quick index of the 23 Gang of Four design patterns, grouped by their official categories.
 
-## Creational
+## Creational Patterns
 
-| Pattern          | Mục đích chính                                                  |
-| ---------------- | --------------------------------------------------------------- |
-| Abstract Factory | Tạo họ object liên quan mà không phụ thuộc concrete class.      |
-| Builder          | Tạo object phức tạp theo từng bước, dễ đọc và dễ kiểm soát.     |
-| Factory Method   | Để subclass hoặc concrete factory quyết định object cần tạo.    |
-| Prototype        | Tạo object mới bằng cách clone object mẫu.                      |
-| Singleton        | Đảm bảo một class chỉ có một instance có thể truy cập toàn cục. |
+| Pattern          | Primary Intent                                                              |
+| ---------------- | --------------------------------------------------------------------------- |
+| Abstract Factory | Create related object families without depending on concrete classes.       |
+| Builder          | Construct complex objects step by step with readable validation boundaries. |
+| Factory Method   | Let a creator decide which concrete product to instantiate.                 |
+| Prototype        | Create new objects by cloning an existing prototype.                        |
+| Singleton        | Ensure one shared instance is available through a controlled access point.  |
 
-## Structural
+## Structural Patterns
 
-| Pattern   | Mục đích chính                                                        |
-| --------- | --------------------------------------------------------------------- |
-| Adapter   | Chuyển interface hiện có thành interface client mong muốn.            |
-| Bridge    | Tách abstraction khỏi implementation để cả hai thay đổi độc lập.      |
-| Composite | Gom object đơn và object nhóm thành cùng một interface dạng cây.      |
-| Decorator | Bọc object để thêm hành vi mà không sửa class gốc.                    |
-| Facade    | Cung cấp API đơn giản cho subsystem phức tạp.                         |
-| Flyweight | Chia sẻ dữ liệu dùng chung để giảm chi phí bộ nhớ.                    |
-| Proxy     | Đại diện cho object khác để kiểm soát truy cập hoặc thêm hành vi phụ. |
+| Pattern   | Primary Intent                                                                     |
+| --------- | ---------------------------------------------------------------------------------- |
+| Adapter   | Convert an existing interface into the interface the client expects.               |
+| Bridge    | Separate an abstraction from its implementation so both can evolve independently.  |
+| Composite | Treat individual objects and object groups through the same tree-shaped interface. |
+| Decorator | Wrap an object to add behavior without modifying its original class.               |
+| Facade    | Provide a simple API over a complex subsystem.                                     |
+| Flyweight | Share intrinsic state to reduce memory cost across many similar objects.           |
+| Proxy     | Stand in for another object to control access or add supporting behavior.          |
 
-## Behavioral
+## Behavioral Patterns
 
-| Pattern                 | Mục đích chính                                                     |
-| ----------------------- | ------------------------------------------------------------------ |
-| Chain of Responsibility | Truyền request qua chuỗi handler cho đến khi có handler xử lý.     |
-| Command                 | Đóng gói request/action thành object.                              |
-| Interpreter             | Diễn giải grammar/DSL đơn giản.                                    |
-| Iterator                | Duyệt collection mà không lộ cấu trúc bên trong.                   |
-| Mediator                | Điều phối giao tiếp giữa nhiều object để giảm phụ thuộc chéo.      |
-| Memento                 | Lưu và khôi phục trạng thái object mà không phá encapsulation.     |
-| Observer                | Thông báo thay đổi từ subject đến nhiều subscriber.                |
-| State                   | Cho object đổi hành vi khi trạng thái nội bộ thay đổi.             |
-| Strategy                | Hoán đổi thuật toán/hành vi qua interface chung.                   |
-| Template Method         | Định nghĩa skeleton workflow và cho subclass tùy biến một số bước. |
-| Visitor                 | Thêm operation mới cho cấu trúc object ổn định.                    |
+| Pattern                 | Primary Intent                                                             |
+| ----------------------- | -------------------------------------------------------------------------- |
+| Chain of Responsibility | Pass a request through handlers until one handles it or the chain ends.    |
+| Command                 | Encapsulate a request or action as an object.                              |
+| Interpreter             | Evaluate a small grammar, rule set, or domain-specific language.           |
+| Iterator                | Traverse a collection without exposing its internal representation.        |
+| Mediator                | Coordinate communication between objects to reduce direct dependencies.    |
+| Memento                 | Capture and restore object state without breaking encapsulation.           |
+| Observer                | Notify subscribers when a subject changes.                                 |
+| State                   | Let an object change behavior when its internal state changes.             |
+| Strategy                | Swap algorithms or policies behind a shared interface.                     |
+| Template Method         | Define a workflow skeleton while allowing selected steps to vary.          |
+| Visitor                 | Add operations to a stable object structure without changing its elements. |

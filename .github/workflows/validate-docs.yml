@@ -3,7 +3,6 @@ name: Validate Docs
 on:
   push:
     branches:
-      - master
       - main
   pull_request:
 
@@ -73,11 +72,11 @@ jobs:
           set -euo pipefail
 
           misplaced_typescript_files="$(
-            find . -path "./.git" -prune -o -name "*.ts" -type f ! -path "./patterns/*" ! -path "./test/*" -print | sort
+            find . -path "./.git" -prune -o -name "*.ts" -type f ! -path "./patterns/*" ! -path "./test/*" ! -path "./docs/src/*" -print | sort
           )"
 
           if [ -n "$misplaced_typescript_files" ]; then
-            echo "TypeScript files must live under patterns/ or test/."
+            echo "TypeScript files must live under patterns/, test/, or docs/src/."
             echo "$misplaced_typescript_files"
             exit 1
           fi
@@ -117,6 +116,12 @@ jobs:
             "SECURITY.md"
             "docs/learning-roadmap.md"
             "docs/pattern-index.md"
+            "docs/src/pages/index.astro"
+            "docs/src/layouts/DocsLayout.astro"
+            "docs/src/styles/global.css"
+            "docs/public/scripts/site.js"
+            "scripts/sync-docs-content.cjs"
+            "astro.config.mjs"
             ".github/ISSUE_TEMPLATE/bug_report.yml"
             ".github/PULL_REQUEST_TEMPLATE/pattern-docs.md"
           )

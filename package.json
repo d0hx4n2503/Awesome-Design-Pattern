@@ -20,7 +20,24 @@
     "command": "tsx patterns/behavioral/command/index.ts",
     "decorator": "tsx patterns/structural/decorator/index.ts",
     "singleton": "tsx patterns/creational/singleton/index.ts",
-    "strategy": "tsx patterns/behavioral/strategy/index.ts"
+    "strategy": "tsx patterns/behavioral/strategy/index.ts",
+    "template-method": "tsx patterns/behavioral/template-method/index.ts",
+    "proxy": "tsx patterns/structural/proxy/index.ts",
+    "composite": "tsx patterns/structural/composite/index.ts",
+    "state": "tsx patterns/behavioral/state/index.ts",
+    "chain-of-responsibility": "tsx patterns/behavioral/chain-of-responsibility/index.ts",
+    "abstract-factory": "tsx patterns/creational/abstract-factory/index.ts",
+    "prototype": "tsx patterns/creational/prototype/index.ts",
+    "mediator": "tsx patterns/behavioral/mediator/index.ts",
+    "bridge": "tsx patterns/structural/bridge/index.ts",
+    "visitor": "tsx patterns/behavioral/visitor/index.ts",
+    "memento": "tsx patterns/behavioral/memento/index.ts",
+    "flyweight": "tsx patterns/structural/flyweight/index.ts",
+    "interpreter": "tsx patterns/behavioral/interpreter/index.ts",
+    "docs:sync": "node scripts/sync-docs-content.cjs",
+    "docs:dev": "astro dev",
+    "docs:build": "npm run docs:sync && astro build",
+    "docs:preview": "astro preview"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
@@ -28,5 +45,9 @@
     "prettier": "^3.9.6",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "astro": "^7.2.0",
+    "marked": "^18.0.9"
   }
 }

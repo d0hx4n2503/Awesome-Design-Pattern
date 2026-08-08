@@ -1,10 +1,10 @@
 # Learning Roadmap
 
-Roadmap này giúp học 23 GoF design patterns theo thứ tự thực dụng: học pattern hay gặp trước, sau đó mở rộng sang pattern theo ngữ cảnh và pattern chuyên sâu.
+This roadmap teaches the 23 GoF design patterns in a practical order: start with patterns engineers meet often, then move into architectural patterns, and finish with specialized patterns.
 
-## Phase 1 — Dùng Được Ngay
+## Phase 1 - Immediately Useful
 
-Mục tiêu: nhận ra và áp dụng pattern trong dự án thật mà không over-engineering.
+Goal: recognize and apply common patterns in real projects without over-engineering.
 
 1. Strategy
 2. Factory Method
@@ -16,11 +16,11 @@ Mục tiêu: nhận ra và áp dụng pattern trong dự án thật mà không o
 8. Command
 9. Iterator
 
-Nên tập trung vào câu hỏi: “Nếu không dùng pattern này thì code sẽ rối ở đâu?”
+Focus question: where would the code become rigid, repetitive, or conditional-heavy without this pattern?
 
-## Phase 2 — Hiểu Framework Và Kiến Trúc
+## Phase 2 - Framework and Architecture Fluency
 
-Mục tiêu: đọc code framework/library tốt hơn, hiểu vì sao nhiều API được thiết kế như hiện tại.
+Goal: read framework and library code more effectively, and understand why many APIs are designed around extension points.
 
 1. Singleton
 2. Template Method
@@ -31,11 +31,11 @@ Mục tiêu: đọc code framework/library tốt hơn, hiểu vì sao nhiều AP
 7. Abstract Factory
 8. Prototype
 
-Nên tập trung vào trade-off: pattern giúp mở rộng tốt hơn nhưng có làm tăng độ phức tạp không?
+Focus question: does the pattern make the system easier to extend, or does it add unnecessary indirection?
 
-## Phase 3 — Pattern Chuyên Sâu
+## Phase 3 - Specialized Design Tools
 
-Mục tiêu: hoàn thiện tư duy thiết kế và hiểu các bài toán đặc thù.
+Goal: round out design vocabulary for compilers, editors, workflow engines, UI trees, and memory-sensitive systems.
 
 1. Mediator
 2. Bridge
@@ -44,12 +44,12 @@ Mục tiêu: hoàn thiện tư duy thiết kế và hiểu các bài toán đặ
 5. Flyweight
 6. Interpreter
 
-Nên học qua tình huống cụ thể như editor, compiler, workflow engine, game object, hoặc UI tree.
+These patterns are best learned through concrete scenarios rather than abstract class diagrams.
 
-## Cách Học Một Pattern
+## How To Study One Pattern
 
-1. Đọc vấn đề trước, chưa đọc solution ngay.
-2. Tự tưởng tượng cách giải quyết bằng code thường.
-3. So sánh với ý tưởng của pattern.
-4. Tìm dấu hiệu nên dùng và dấu hiệu không nên dùng.
-5. Sau này mới viết code ví dụ nhỏ.
+1. Read the problem before reading the solution.
+2. Sketch how the code would look without the pattern.
+3. Compare that sketch with the pattern implementation.
+4. Identify when the pattern helps and when it is overkill.
+5. Run the tests and inspect the public API.

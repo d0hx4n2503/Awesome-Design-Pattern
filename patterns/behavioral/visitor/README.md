@@ -1,43 +1,26 @@
-﻿# Visitor
+# Visitor
 
-## Mục Đích
+## Intent
 
-Thêm operation mới cho cấu trúc object ổn định mà không sửa các class node nhiều lần.
+Add operations to a stable object structure without changing the object classes.
 
-## Vấn Đề
+## Problem
 
-Cần nhiều thao tác khác nhau trên cùng một object structure, ví dụ AST hoặc tree.
+Tree structures often need many operations; putting all operations on nodes bloats the node classes.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tách phần hành vi thay đổi ra thành object, protocol, hoặc workflow rõ ràng để các object cộng tác với nhau mà không phụ thuộc chặt vào chi tiết của nhau.
+Nodes accept a visitor object, and each visitor implements operations for each node type.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi object structure ổn định; khi thường thêm operation mới; khi cần gom logic operation ra riêng.
+`SizeVisitor` calculates total size for a file tree.
 
-## Khi Không Nên Dùng
+```bash
+npm run visitor
+```
 
-Khi thường thêm node type mới; khi double dispatch làm team khó hiểu.
+## Trade-offs
 
-## Dấu Hiệu Nhận Biết
-
-- Logic hành vi có nhiều nhánh hoặc nhiều biến thể.
-- Object đang biết quá nhiều về object khác.
-- Thay đổi một rule làm ảnh hưởng nhiều class không liên quan.
-
-## Ưu Điểm
-
-- Làm hành vi dễ thay đổi và dễ test độc lập hơn.
-- Giảm phụ thuộc trực tiếp giữa các object cộng tác.
-- Giúp workflow hoặc rule phức tạp có cấu trúc rõ ràng hơn.
-
-## Nhược Điểm
-
-- Có thể làm tăng số lượng object/class.
-- Flow runtime đôi khi khó lần theo hơn gọi trực tiếp.
-- Dễ bị lạm dụng nếu bài toán chỉ có một hành vi đơn giản.
-
-## Pattern Liên Quan
-
-Composite, Iterator
+- Great when structure is stable and operations change.
+- Adding new node types requires updating visitors.

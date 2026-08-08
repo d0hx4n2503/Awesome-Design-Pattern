@@ -1,0 +1,35 @@
+﻿---
+import { marked } from "marked";
+import DocsLayout from "../../../../layouts/DocsLayout.astro";
+import { getPattern, getPatterns } from "../../../../lib/content";
+import { locales, normalizeLocale, ui } from "../../../../lib/i18n";
+
+export function getStaticPaths() {
+  return locales.flatMap((locale) =>
+    getPatterns(locale).map((pattern) => ({
+      params: { locale, group: pattern.group, slug: pattern.slug },
+    })),
+  );
+}
+
+const locale = normalizeLocale(Astro.params.locale);
+const t = ui[locale];
+const pattern = getPattern(locale, Astro.params.group!, Astro.params.slug!);
+const html = marked.parse(pattern.content, { async: false });
+---
+
+<DocsLayout>
+  <Fragment slot="title">{pattern.title} · </Fragment>
+  <article class="doc-page">
+    <header class="doc-header">
+      <p class="eyebrow">{pattern.groupLabel}</p>
+      <h1>{pattern.title}</h1>
+      <div class="meta-grid">
+        <a href={`https://github.com/d0hx4n2503/Design-Pattern/blob/main/${pattern.source}`}>{t.source}</a>
+        <a href={`https://github.com/d0hx4n2503/Design-Pattern/blob/main/${pattern.implementationPath}`}>{t.implementation}</a>
+        <a href={`https://github.com/d0hx4n2503/Design-Pattern/blob/main/${pattern.testPath}`}>{t.tests}</a>
+      </div>
+    </header>
+    <div class="markdown" set:html={html} />
+  </article>
+</DocsLayout>

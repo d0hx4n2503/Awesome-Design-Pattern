@@ -1,43 +1,27 @@
-﻿# Proxy
+# Proxy
 
-## Mục Đích
+## Intent
 
-Đặt object đại diện trước object thật để kiểm soát truy cập hoặc thêm hành vi phụ.
+Control access to another object through the same interface.
 
-## Vấn Đề
+## Problem
 
-Cần lazy loading, cache, logging, permission, hoặc remote access mà không đổi interface client.
+Expensive or sensitive objects often need caching, authorization, or lazy access without leaking those concerns into callers.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tổ chức lại quan hệ giữa object/class để client dùng hệ thống qua interface ổn định, trong khi cấu trúc bên trong có thể thay đổi linh hoạt hơn.
+Put a proxy in front of the real subject and let the proxy decide when to delegate.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi cần kiểm soát vòng đời object thật; khi thêm cross-cutting behavior; khi object thật đắt đỏ hoặc ở xa.
+`CachedDocumentProxy` caches reads and denies access to documents outside the allowed set.
 
-## Khi Không Nên Dùng
+```bash
+npm run proxy
+```
 
-Khi proxy làm side effect khó đoán; khi client cần semantics khác object thật.
+## Trade-offs
 
-## Dấu Hiệu Nhận Biết
-
-- Client đang phụ thuộc quá nhiều vào cấu trúc nội bộ.
-- Có nhu cầu bọc, chuyển đổi, gom nhóm, hoặc che giấu chi tiết object.
-- Thay đổi cấu trúc làm lan sửa code ở nhiều nơi.
-
-## Ưu Điểm
-
-- Giảm coupling giữa client và implementation.
-- Làm ranh giới module rõ hơn.
-- Giúp hệ thống dễ mở rộng mà ít sửa client code.
-
-## Nhược Điểm
-
-- Có thể thêm nhiều lớp trung gian.
-- Debug khó hơn nếu abstraction bị lạm dụng.
-- Cần kiểm soát naming để người đọc hiểu vai trò từng lớp.
-
-## Pattern Liên Quan
-
-Decorator, Adapter, Facade
+- Good for caching and access control.
+- Adds indirection.
+- Must preserve expected subject semantics.

@@ -1,43 +1,27 @@
-﻿# Composite
+# Composite
 
-## Mục Đích
+## Intent
 
-Biểu diễn object đơn và object nhóm bằng cùng một interface dạng cây.
+Treat individual objects and groups through the same interface.
 
-## Vấn Đề
+## Problem
 
-Client phải xử lý riêng leaf và container dù chúng cùng vai trò.
+Tree structures contain leaves and containers. Client code becomes noisy when it handles each kind separately.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tổ chức lại quan hệ giữa object/class để client dùng hệ thống qua interface ổn định, trong khi cấu trúc bên trong có thể thay đổi linh hoạt hơn.
+Define a common component interface. Leaves render directly; composites delegate to children recursively.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi dữ liệu có cấu trúc cây; khi thao tác trên node đơn và nhóm giống nhau; khi xây UI/menu/folder.
+`MenuItem` and `MenuGroup` both implement `MenuComponent`.
 
-## Khi Không Nên Dùng
+```bash
+npm run composite
+```
 
-Khi cấu trúc không phải dạng cây; khi leaf và composite có hành vi quá khác nhau.
+## Trade-offs
 
-## Dấu Hiệu Nhận Biết
-
-- Client đang phụ thuộc quá nhiều vào cấu trúc nội bộ.
-- Có nhu cầu bọc, chuyển đổi, gom nhóm, hoặc che giấu chi tiết object.
-- Thay đổi cấu trúc làm lan sửa code ở nhiều nơi.
-
-## Ưu Điểm
-
-- Giảm coupling giữa client và implementation.
-- Làm ranh giới module rõ hơn.
-- Giúp hệ thống dễ mở rộng mà ít sửa client code.
-
-## Nhược Điểm
-
-- Có thể thêm nhiều lớp trung gian.
-- Debug khó hơn nếu abstraction bị lạm dụng.
-- Cần kiểm soát naming để người đọc hiểu vai trò từng lớp.
-
-## Pattern Liên Quan
-
-Iterator, Visitor, Decorator
+- Excellent for tree-like structures.
+- Recursive behavior needs tests.
+- Leaf and group behavior should stay compatible.

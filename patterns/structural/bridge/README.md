@@ -1,43 +1,26 @@
-﻿# Bridge
+# Bridge
 
-## Mục Đích
+## Intent
 
-Tách abstraction khỏi implementation để cả hai có thể thay đổi độc lập.
+Separate an abstraction from its implementation so both can evolve independently.
 
-## Vấn Đề
+## Problem
 
-Số class tăng nổ khi kết hợp nhiều abstraction với nhiều implementation.
+Two independent dimensions of variation can create a subclass explosion.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tổ chức lại quan hệ giữa object/class để client dùng hệ thống qua interface ổn định, trong khi cấu trúc bên trong có thể thay đổi linh hoạt hơn.
+Keep one dimension as an abstraction and delegate the other to an implementation interface.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi có hai trục thay đổi độc lập; khi cần runtime switching implementation; khi tránh kế thừa nhiều tầng.
+`CriticalAlert` can use different `DeliveryChannel` implementations.
 
-## Khi Không Nên Dùng
+```bash
+npm run bridge
+```
 
-Khi chỉ có một implementation; khi composition làm code khó hiểu hơn kế thừa đơn giản.
+## Trade-offs
 
-## Dấu Hiệu Nhận Biết
-
-- Client đang phụ thuộc quá nhiều vào cấu trúc nội bộ.
-- Có nhu cầu bọc, chuyển đổi, gom nhóm, hoặc che giấu chi tiết object.
-- Thay đổi cấu trúc làm lan sửa code ở nhiều nơi.
-
-## Ưu Điểm
-
-- Giảm coupling giữa client và implementation.
-- Làm ranh giới module rõ hơn.
-- Giúp hệ thống dễ mở rộng mà ít sửa client code.
-
-## Nhược Điểm
-
-- Có thể thêm nhiều lớp trung gian.
-- Debug khó hơn nếu abstraction bị lạm dụng.
-- Cần kiểm soát naming để người đọc hiểu vai trò từng lớp.
-
-## Pattern Liên Quan
-
-Adapter, Strategy
+- Avoids subclass explosion.
+- Adds composition and interfaces.
