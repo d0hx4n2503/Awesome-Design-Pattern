@@ -15,6 +15,7 @@
     "prepare": "husky",
     "adapter": "tsx patterns/structural/adapter/index.ts",
     "builder": "tsx patterns/creational/builder/index.ts",
+    "decorator": "tsx patterns/structural/decorator/index.ts",
     "strategy": "tsx patterns/behavioral/strategy/index.ts"
   },
   "devDependencies": {

@@ -1,43 +1,58 @@
-﻿# Decorator
+# Decorator
 
-## Mục Đích
+## Intent
 
-Bọc object để thêm hành vi mới mà không sửa class gốc.
+Decorator adds behavior to an object by wrapping it with another object that follows the same interface.
 
-## Vấn Đề
+## Problem
 
-Cần kết hợp nhiều biến thể hành vi nhưng kế thừa tạo quá nhiều subclass.
+Feature combinations can explode when modeled with inheritance. For example, logging, caching, retrying, metrics, and authorization can be combined in many ways. Creating a subclass for every combination quickly becomes unmaintainable.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tổ chức lại quan hệ giữa object/class để client dùng hệ thống qua interface ổn định, trong khi cấu trúc bên trong có thể thay đổi linh hoạt hơn.
+Keep the core object focused and wrap it with decorators that add one behavior at a time. Because decorators implement the same interface as the wrapped object, they can be stacked.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi cần thêm behavior linh hoạt; khi behavior có thể xếp chồng; khi muốn tuân thủ open/closed principle.
+This implementation models report generation:
 
-## Khi Không Nên Dùng
+- `ReportGenerator` is the common interface.
+- `SalesReportGenerator` produces the base report.
+- `TimestampReportDecorator` adds generated-at metadata.
+- `SignatureReportDecorator` adds an approval signature.
 
-Khi thứ tự wrapper khó kiểm soát; khi debug chuỗi wrapper trở nên mơ hồ.
+Run it from the repository root:
 
-## Dấu Hiệu Nhận Biết
+```bash
+npm run decorator
+```
 
-- Client đang phụ thuộc quá nhiều vào cấu trúc nội bộ.
-- Có nhu cầu bọc, chuyển đổi, gom nhóm, hoặc che giấu chi tiết object.
-- Thay đổi cấu trúc làm lan sửa code ở nhiều nơi.
+## When To Use
 
-## Ưu Điểm
+- Behavior needs to be composed dynamically.
+- Inheritance would create too many subclasses.
+- You want to add cross-cutting behavior without modifying the core object.
 
-- Giảm coupling giữa client và implementation.
-- Làm ranh giới module rõ hơn.
-- Giúp hệ thống dễ mở rộng mà ít sửa client code.
+## When Not To Use
 
-## Nhược Điểm
+- The wrapping order is unclear or fragile.
+- Debugging nested wrappers would be more expensive than the flexibility gained.
+- A simple function composition would be enough.
 
-- Có thể thêm nhiều lớp trung gian.
-- Debug khó hơn nếu abstraction bị lạm dụng.
-- Cần kiểm soát naming để người đọc hiểu vai trò từng lớp.
+## Benefits
 
-## Pattern Liên Quan
+- Supports open/closed extension.
+- Keeps each behavior small and focused.
+- Allows runtime composition.
 
-Proxy, Composite, Strategy
+## Trade-offs
+
+- Adds object nesting.
+- Ordering can affect behavior.
+- Stack traces and debugging can become less direct.
+
+## Related Patterns
+
+- Proxy
+- Composite
+- Strategy
