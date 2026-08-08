@@ -1,28 +1,32 @@
 # Awe Design Pattern
 
-**A documentation-first reference for the 23 Gang of Four design patterns.**
+**Production-minded TypeScript implementations of the 23 Gang of Four design patterns.**
 
-Awe Design Pattern is a structured learning repository for understanding, comparing, and eventually implementing the classic GoF design patterns. The project is intentionally organized like a production-grade engineering knowledge base: clear scope, predictable structure, explicit contribution rules, and automated validation.
+Awe Design Pattern is a learning and reference repository for engineers who want to understand design patterns through practical, readable TypeScript code. Each pattern lives in its own folder, includes focused documentation, and is tested through a mirrored test structure.
 
-The current phase is focused on high-quality documentation plus small TypeScript implementations added one pattern at a time.
+This repository is intentionally built like a professional engineering project: predictable layout, automated checks, formatting, tests, CodeQL analysis, release workflow, and pre-commit validation.
 
-## Why This Repository Exists
+## What You Get
 
-Design patterns are often taught as names to memorize. This repository takes a different approach: each pattern is explained through the problem it solves, the trade-offs it introduces, and the practical situations where it is worth using.
+- All **23 GoF design patterns** organized by category.
+- TypeScript implementations placed directly inside `patterns/`.
+- Tests mirrored under `test/` so each pattern has a clear validation home.
+- Clean examples focused on real design pressure, not artificial class diagrams.
+- CI workflows split by responsibility: docs, format, test, e2e smoke, CodeQL, and release.
 
-The goal is not to force patterns into every design. The goal is to build judgment.
+## Quick Start
 
-## Project Status
+```bash
+npm install
+npm run validate
+npm run strategy
+```
 
-| Area                    | Status                    |
-| ----------------------- | ------------------------- |
-| Pattern catalog         | Complete: 23 GoF patterns |
-| Pattern documentation   | In progress               |
-| Source code examples    | Started: TypeScript       |
-| CI validation           | Active                    |
-| Contribution guidelines | Active                    |
+Current runnable implementation:
 
-Each implementation lives directly inside its own pattern folder, next to the pattern README. Tests live under `test/` using the same group and pattern structure as `patterns/`.
+| Pattern  | Run Command        | Source                                  | Test                                     |
+| -------- | ------------------ | --------------------------------------- | ---------------------------------------- |
+| Strategy | `npm run strategy` | `patterns/behavioral/strategy/index.ts` | `test/behavioral/strategy/index.test.ts` |
 
 ## Repository Structure
 
@@ -33,8 +37,6 @@ Awe-Design-Pattern/
 │   ├── PULL_REQUEST_TEMPLATE/
 │   └── workflows/
 ├── docs/
-│   ├── learning-roadmap.md
-│   └── pattern-index.md
 ├── img/
 ├── patterns/
 │   ├── creational/
@@ -52,153 +54,107 @@ Awe-Design-Pattern/
 └── SECURITY.md
 ```
 
-## Pattern Groups
+## Implementation Model
 
-### Creational Patterns
+Pattern source code belongs inside the matching pattern folder:
 
-Creational patterns focus on object creation, lifecycle control, and reducing coupling between client code and concrete classes.
+```text
+patterns/behavioral/strategy/index.ts
+```
 
-| Pattern          | Purpose                                                                   |
-| ---------------- | ------------------------------------------------------------------------- |
-| Abstract Factory | Create families of related objects without depending on concrete classes. |
-| Builder          | Construct complex objects step by step with readable configuration.       |
-| Factory Method   | Delegate object creation to a factory method or subclass.                 |
-| Prototype        | Create new objects by cloning existing prototypes.                        |
-| Singleton        | Ensure a single shared instance with controlled access.                   |
+Tests use the same path under `test/`:
 
-### Structural Patterns
+```text
+test/behavioral/strategy/index.test.ts
+```
 
-Structural patterns focus on composition, object relationships, and stable boundaries between parts of a system.
+This keeps every pattern easy to find, review, and extend.
 
-| Pattern   | Purpose                                                                    |
-| --------- | -------------------------------------------------------------------------- |
-| Adapter   | Convert one interface into another expected by the client.                 |
-| Bridge    | Separate abstraction from implementation so both can evolve independently. |
-| Composite | Represent individual objects and groups through the same interface.        |
-| Decorator | Add behavior by wrapping an object without modifying its class.            |
-| Facade    | Provide a simplified interface to a complex subsystem.                     |
-| Flyweight | Share common state to reduce memory usage across many objects.             |
-| Proxy     | Control access to another object through a representative object.          |
+## Pattern Priority
 
-### Behavioral Patterns
+Implementation follows practical adoption order: common patterns first, specialized patterns later.
 
-Behavioral patterns focus on communication, responsibility distribution, workflows, and runtime behavior changes.
+### Priority 1 — Highest Practical Value
 
-| Pattern                 | Purpose                                                                     |
-| ----------------------- | --------------------------------------------------------------------------- |
-| Chain of Responsibility | Pass a request through a chain of handlers.                                 |
-| Command                 | Encapsulate an action or request as an object.                              |
-| Interpreter             | Represent and evaluate a simple grammar or DSL.                             |
-| Iterator                | Traverse a collection without exposing its internal structure.              |
-| Mediator                | Centralize communication between collaborating objects.                     |
-| Memento                 | Capture and restore object state without breaking encapsulation.            |
-| Observer                | Notify dependent subscribers when a subject changes.                        |
-| State                   | Change object behavior when its internal state changes.                     |
-| Strategy                | Swap algorithms or behaviors behind a common interface.                     |
-| Template Method         | Define a workflow skeleton while allowing selected steps to vary.           |
-| Visitor                 | Add operations to a stable object structure without changing the structure. |
+| Order | Pattern        | Group      | Why It Comes Early                                |
+| ----: | -------------- | ---------- | ------------------------------------------------- |
+|     1 | Strategy       | Behavioral | Replaces conditional algorithms and policy logic. |
+|     2 | Factory Method | Creational | Creates clean object creation boundaries.         |
+|     3 | Adapter        | Structural | Makes third-party and legacy integrations clean.  |
+|     4 | Observer       | Behavioral | Powers events, state changes, and pub/sub flows.  |
+|     5 | Decorator      | Structural | Adds behavior without subclass explosion.         |
+|     6 | Facade         | Structural | Simplifies complex subsystems behind stable APIs. |
+|     7 | Builder        | Creational | Makes complex object construction readable.       |
+|     8 | Command        | Behavioral | Encapsulates actions for queues, jobs, and undo.  |
+|     9 | Iterator       | Behavioral | Standardizes traversal without exposing storage.  |
 
-## Learning Priority
+### Priority 2 — Common in Architecture and Frameworks
 
-Patterns are prioritized by practical frequency and learning value.
+| Pattern                 | Group      | Typical Usage                                  |
+| ----------------------- | ---------- | ---------------------------------------------- |
+| Singleton               | Creational | Config, logging, shared infrastructure.        |
+| Template Method         | Behavioral | Framework-defined workflows.                   |
+| Proxy                   | Structural | Caching, lazy loading, authorization.          |
+| Composite               | Structural | Trees, menus, folders, UI components.          |
+| State                   | Behavioral | Lifecycles, workflows, stateful domain models. |
+| Chain of Responsibility | Behavioral | Middleware, validation, approval flows.        |
+| Abstract Factory        | Creational | Product families, themes, providers.           |
+| Prototype               | Creational | Cloning templates or expensive objects.        |
 
-### Priority 1: Learn First
+### Priority 3 — Specialized but Important
 
-These patterns appear frequently in application code, frameworks, integrations, and service design.
+| Pattern     | Group      | Typical Usage                              |
+| ----------- | ---------- | ------------------------------------------ |
+| Mediator    | Behavioral | Complex component coordination.            |
+| Bridge      | Structural | Independent abstraction/implementation.    |
+| Visitor     | Behavioral | ASTs, static analysis, tree operations.    |
+| Memento     | Behavioral | Undo snapshots and state checkpoints.      |
+| Flyweight   | Structural | Memory-sensitive object sharing.           |
+| Interpreter | Behavioral | Small DSLs, rules, and expression parsing. |
 
-| Pattern        | Group      | Common Use Cases                                       |
-| -------------- | ---------- | ------------------------------------------------------ |
-| Strategy       | Behavioral | Validation, pricing, sorting, payment flows            |
-| Factory Method | Creational | Framework extension points, object creation boundaries |
-| Adapter        | Structural | Third-party integrations, legacy system compatibility  |
-| Observer       | Behavioral | Events, notifications, UI state, pub/sub               |
-| Decorator      | Structural | Middleware, wrappers, streams, composable behavior     |
-| Facade         | Structural | Service layer boundaries, simplified module APIs       |
-| Builder        | Creational | Complex configuration, test data, request construction |
-| Command        | Behavioral | Jobs, queues, undo/redo, auditable actions             |
-| Iterator       | Behavioral | Collection traversal and custom iteration rules        |
+## Available Scripts
 
-### Priority 2: Learn Next
-
-These patterns are common in specific architectural or framework contexts.
-
-| Pattern                 | Group      | Common Use Cases                                    |
-| ----------------------- | ---------- | --------------------------------------------------- |
-| Singleton               | Creational | Configuration, logging, shared infrastructure       |
-| Template Method         | Behavioral | Framework-controlled workflows                      |
-| Proxy                   | Structural | Lazy loading, caching, access control               |
-| Composite               | Structural | Trees, UI components, menus, folders                |
-| State                   | Behavioral | Workflows, lifecycle-heavy domain objects           |
-| Chain of Responsibility | Behavioral | Middleware, validation chains, approval flows       |
-| Abstract Factory        | Creational | Product families, themes, providers, platforms      |
-| Prototype               | Creational | Object templates, expensive initialization, cloning |
-
-### Priority 3: Learn for Depth
-
-These patterns are less common in everyday application code, but important for specialized systems.
-
-| Pattern     | Group      | Common Use Cases                                       |
-| ----------- | ---------- | ------------------------------------------------------ |
-| Mediator    | Behavioral | Complex UI coordination, workflow orchestration        |
-| Bridge      | Structural | Independent abstraction and implementation hierarchies |
-| Visitor     | Behavioral | ASTs, compilers, static analysis, tree operations      |
-| Memento     | Behavioral | Undo history, snapshots, checkpoints                   |
-| Flyweight   | Structural | Memory-sensitive systems, editors, games, maps         |
-| Interpreter | Behavioral | Small DSLs, expression evaluation, rule engines        |
-
-## Documentation Standard
-
-Each pattern document should explain:
-
-- The problem the pattern solves
-- The core idea behind the solution
-- When the pattern is appropriate
-- When the pattern is not appropriate
-- Practical signals that suggest the pattern may help
-- Benefits, trade-offs, and related patterns
-
-This structure keeps the repository useful for both beginners and experienced engineers reviewing design options.
+| Command                | Purpose                                      |
+| ---------------------- | -------------------------------------------- |
+| `npm run format`       | Format the repository with Prettier.         |
+| `npm run format:check` | Check formatting without writing changes.    |
+| `npm run check`        | Run TypeScript type-checking.                |
+| `npm test`             | Run Node's built-in test runner through TSX. |
+| `npm run validate`     | Run format check, type-check, and tests.     |
+| `npm run strategy`     | Execute the Strategy pattern example.        |
 
 ## Quality Gates
 
-The repository includes GitHub Actions workflows for documentation, formatting, tests, smoke checks, CodeQL analysis, and releases.
+The repository uses separate workflows for separate responsibilities:
 
-The documentation workflow validates:
+| Workflow            | Responsibility                           |
+| ------------------- | ---------------------------------------- |
+| `validate-docs.yml` | Validate required docs and folder shape  |
+| `format.yml`        | Enforce Prettier formatting              |
+| `test.yml`          | Type-check and unit test TypeScript      |
+| `e2e.yml`           | Run smoke checks for executable examples |
+| `codeql.yml`        | Run CodeQL security analysis             |
+| `release.yml`       | Publish tagged releases                  |
 
-- Exactly 23 pattern folders exist under `patterns/`
-- Each pattern folder contains a `README.md`
-- TypeScript implementations are allowed inside their own pattern folders
-- Required repository documents are present and non-empty
-- TypeScript code passes type-checking and tests
+Husky runs `npm run validate` before commits.
 
-Local validation runs through:
+## Engineering Principles
 
-```bash
-npm run validate
-```
-
-Husky runs the same validation before commits.
-
-See `.github/workflows/validate-docs.yml` for the validation rules.
-
-## Roadmap
-
-1. Complete concise documentation for all 23 patterns.
-2. Improve cross-pattern comparisons and anti-pattern notes.
-3. Add TypeScript implementations one pattern at a time.
-4. Add diagrams for selected patterns.
-5. Expand CI to validate implementations.
+- Keep examples small, explicit, and realistic.
+- Prefer composition and interfaces where they clarify the pattern.
+- Avoid cleverness that hides the point of the pattern.
+- Export only what tests and future examples need.
+- Add one pattern at a time and commit each pattern separately.
+- Keep tests close to the pattern structure.
 
 ## Contributing
 
-Please read `CONTRIBUTING.md` before opening a pull request. Contributions should improve clarity, accuracy, structure, or practical usefulness.
-
-Keep implementation code inside the matching pattern folder.
+Read `CONTRIBUTING.md` before opening a pull request. The short version: keep changes focused, write clear English, include tests for implementation changes, and preserve the 23-pattern structure.
 
 ## Security
 
-This repository is currently documentation-focused and does not ship executable application code. Security reporting guidance is available in `SECURITY.md`.
+Security reporting guidance is available in `SECURITY.md`.
 
 ## License
 
-This project is licensed under the Apache License 2.0. See `LICENSE` for details.
+This project is licensed under the Apache License 2.0. See `LICENSE`.
