@@ -1,4 +1,4 @@
-﻿---
+---
 import { marked } from "marked";
 import DocsLayout from "../../../../layouts/DocsLayout.astro";
 import { getPattern, getPatterns } from "../../../../lib/content";
@@ -15,21 +15,45 @@ export function getStaticPaths() {
 const locale = normalizeLocale(Astro.params.locale);
 const t = ui[locale];
 const pattern = getPattern(locale, Astro.params.group!, Astro.params.slug!);
-const html = marked.parse(pattern.content, { async: false });
+const headings = [...pattern.content.matchAll(/^##\s+(.+)$/gm)].map((match) => {
+  const text = match[1] ?? "";
+  const id = text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .trim()
+    .replace(/\s+/g, "-");
+  return { id, text };
+});
+let headingIndex = 0;
+const html = marked
+  .parse(pattern.content, { async: false })
+  .replace(/<h2>(.*?)<\/h2>/g, (match, text) => {
+    const heading = headings[headingIndex++];
+    return heading ? `<h2 id="${heading.id}">${text}</h2>` : match;
+  });
 ---
 
 <DocsLayout>
   <Fragment slot="title">{pattern.title} · </Fragment>
-  <article class="doc-page">
-    <header class="doc-header">
-      <p class="eyebrow">{pattern.groupLabel}</p>
-      <h1>{pattern.title}</h1>
-      <div class="meta-grid">
-        <a href={`https://github.com/d0hx4n2503/Awesome-Design-Pattern/blob/main/${pattern.source}`}>Docs · {t.source}</a>
-        <a href={`https://github.com/d0hx4n2503/Awesome-Design-Pattern/blob/main/${pattern.implementationPath}`}>Code · {t.implementation}</a>
-        <a href={`https://github.com/d0hx4n2503/Awesome-Design-Pattern/blob/main/${pattern.testPath}`}>Tests · {t.tests}</a>
-      </div>
-    </header>
-    <div class="markdown" set:html={html} />
-  </article>
+  <div class="doc-shell">
+    <article class="doc-page">
+      <header class="doc-header">
+        <p class="eyebrow">{pattern.groupLabel}</p>
+        <h1>{pattern.title}</h1>
+        <div class="meta-grid">
+          <a href={`https://github.com/d0hx4n2503/Awesome-Design-Pattern/blob/main/${pattern.source}`}>Docs · {t.source}</a>
+          <a href={`https://github.com/d0hx4n2503/Awesome-Design-Pattern/blob/main/${pattern.implementationPath}`}>Code · {t.implementation}</a>
+          <a href={`https://github.com/d0hx4n2503/Awesome-Design-Pattern/blob/main/${pattern.testPath}`}>Tests · {t.tests}</a>
+        </div>
+      </header>
+      <div class="markdown" set:html={html} />
+    </article>
+
+    <aside class="toc" aria-label="On this page">
+      <p>On this page</p>
+      <nav>
+        {headings.map((heading) => <a href={`#${heading.id}`}>{heading.text}</a>)}
+      </nav>
+    </aside>
+  </div>
 </DocsLayout>
