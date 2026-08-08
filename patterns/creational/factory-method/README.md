@@ -1,43 +1,59 @@
-﻿# Factory Method
+# Factory Method
 
-## Mục Đích
+## Intent
 
-Đưa quyết định tạo object vào factory method thay vì gọi concrete constructor trực tiếp.
+Factory Method defines a creation method that returns objects through a common interface while allowing subclasses or concrete factories to decide which class to instantiate.
 
-## Vấn Đề
+## Problem
 
-Client cần object theo interface chung nhưng không nên phụ thuộc class cụ thể.
+Client code often needs a product by behavior, not by concrete class. If it directly creates every implementation with `new`, creation decisions spread across the codebase and each new product type requires editing multiple callers.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tách phần thay đổi ra khỏi client code, để client làm việc với abstraction thay vì phụ thuộc trực tiếp vào chi tiết triển khai.
+Move object creation behind a factory method. Client code works with the product interface, while the factory encapsulates the concrete selection logic.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi object cần tạo phụ thuộc runtime context; khi framework cho subclass quyết định implementation; khi muốn giảm coupling.
+This implementation models notification delivery:
 
-## Khi Không Nên Dùng
+- `NotificationSender` is the product interface.
+- `EmailNotificationSender` and `SmsNotificationSender` are concrete products.
+- `NotificationFactory` exposes a factory method for creating the correct sender.
+- `NotificationService` depends on the factory and product abstraction.
 
-Khi việc tạo object không thay đổi; khi abstraction làm code khó lần theo hơn.
+Run it from the repository root:
 
-## Dấu Hiệu Nhận Biết
+```bash
+npm run factory-method
+```
 
-- Có nhiều concrete class cùng chia sẻ một vai trò.
-- Client đang phải biết quá nhiều chi tiết khởi tạo.
-- Thay đổi implementation làm lan sửa code ở nhiều nơi.
+## When To Use
 
-## Ưu Điểm
+- Object creation depends on runtime input.
+- Client code should not know concrete classes.
+- New product types should be added with minimal caller changes.
+- Framework or domain code needs an extension point for creation.
 
-- Giảm coupling giữa client và concrete class.
-- Dễ thay đổi hoặc mở rộng biến thể object.
-- Làm ý định thiết kế rõ ràng hơn.
+## When Not To Use
 
-## Nhược Điểm
+- There is only one concrete class and creation is trivial.
+- A simple constructor call is clearer.
+- The factory becomes a large conditional dumping ground.
 
-- Tăng số lượng class/file cần đọc.
-- Có thể gây over-engineering nếu bài toán còn đơn giản.
-- Cần đặt tên abstraction tốt để tránh khó hiểu.
+## Benefits
 
-## Pattern Liên Quan
+- Reduces coupling to concrete classes.
+- Centralizes creation rules.
+- Makes product selection easier to test.
 
-Abstract Factory, Template Method
+## Trade-offs
+
+- Adds indirection around object creation.
+- Can hide dependencies if the factory grows too much.
+- May be overkill for small object graphs.
+
+## Related Patterns
+
+- Abstract Factory
+- Template Method
+- Builder
