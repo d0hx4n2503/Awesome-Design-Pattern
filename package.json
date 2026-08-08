@@ -1,5 +1,5 @@
 {
-  "name": "awe-design-pattern",
+  "name": "awesome-design-pattern",
   "version": "0.1.0",
   "private": true,
   "description": "TypeScript implementations of the 23 Gang of Four design patterns.",

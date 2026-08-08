@@ -21,7 +21,7 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={t.tagline} />
-    <title><slot name="title" />Awe Design Pattern</title>
+    <title><slot name="title" />Awesome Design Pattern</title>
     <script is:inline>
       const savedTheme = localStorage.getItem("theme");
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -34,7 +34,7 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
         <a class="brand" href={`${base}${locale}/`}>
           <span class="brand-mark">A</span>
           <span>
-            <strong>Awe Design Pattern</strong>
+            <strong>Awesome Design Pattern</strong>
             <small>{t.tagline}</small>
           </span>
         </a>

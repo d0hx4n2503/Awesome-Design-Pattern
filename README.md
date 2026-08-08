@@ -1,8 +1,8 @@
-# Awe Design Pattern
+# Awesome Design Pattern
 
 **Production-minded TypeScript implementations of the 23 Gang of Four design patterns.**
 
-Awe Design Pattern is a learning and reference repository for engineers who want to understand design patterns through practical, readable TypeScript code. Each pattern lives in its own folder, includes focused documentation, and is tested through a mirrored test structure.
+Awesome Design Pattern is a learning and reference repository for engineers who want to understand design patterns through practical, readable TypeScript code. Each pattern lives in its own folder, includes focused documentation, and is tested through a mirrored test structure.
 
 This repository is intentionally built like a professional engineering project: predictable layout, automated checks, formatting, tests, CodeQL analysis, release workflow, and pre-commit validation.
 
