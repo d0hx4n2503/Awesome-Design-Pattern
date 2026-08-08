@@ -29,18 +29,23 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
     </script>
   </head>
   <body>
-    <div class="shell">
-      <aside class="sidebar">
-        <a class="brand" href={`${base}${locale}/`}>
-          <span class="brand-mark">A</span>
-          <span>
-            <strong>Awesome Design Pattern</strong>
-            <small>{t.tagline}</small>
+    <header class="topbar">
+      <div class="topbar-main">
+        <a class="brand" href={`${base}${locale}/`} aria-label="Awesome Design Pattern home">
+          <span class="brand-symbol" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
           </span>
+          <strong>Awesome Patterns</strong>
         </a>
 
-        <div class="toolbar">
-          <label>
+        <div class="search-wrap">
+          <input id="pattern-search" class="search" type="search" placeholder={t.searchPlaceholder} />
+        </div>
+
+        <div class="header-actions">
+          <label class="locale-control">
             <span>{t.language}</span>
             <select id="locale-select" aria-label={t.language}>
               {locales.map((item) => <option value={item} selected={item === locale}>{localeLabels[item]}</option>)}
@@ -48,19 +53,34 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
           </label>
           <button
             id="theme-toggle"
+            class="icon-button"
             type="button"
             data-theme-label={t.theme}
             data-light-label={t.lightTheme}
             data-dark-label={t.darkTheme}
+            aria-label={t.theme}
           >
-            {t.theme}: {t.lightTheme}
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.41-1.41M4.93 19.07l1.41-1.41m0-11.32L4.93 4.93m14.14 14.14-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 14.6A8.5 8.5 0 0 1 9.4 3 7 7 0 1 0 21 14.6Z" />
+            </svg>
           </button>
         </div>
+      </div>
 
-        <div class="search-wrap">
-          <input id="pattern-search" class="search" type="search" placeholder={t.searchPlaceholder} />
-        </div>
+      <nav class="topnav" aria-label="Documentation sections">
+        <a href={`${base}${locale}/`}>Overview</a>
+        <a href={`${base}${locale}/patterns/creational/factory-method/`}>Creational</a>
+        <a href={`${base}${locale}/patterns/structural/adapter/`}>Structural</a>
+        <a href={`${base}${locale}/patterns/behavioral/strategy/`}>Behavioral</a>
+        <a href="https://github.com/d0hx4n2503/Awesome-Design-Pattern">GitHub</a>
+      </nav>
+    </header>
 
+    <div class="shell">
+      <aside class="sidebar">
         <nav class="nav" aria-label={t.patterns}>
           {Object.entries(groupedPatterns).map(([group, items]) => (
             <section>
