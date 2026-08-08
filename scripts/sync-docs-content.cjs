@@ -39,6 +39,14 @@ const headings = {
     "Trade-offs": "\u0110\u00e1nh \u0111\u1ed5i",
     "Trade-Offs": "\u0110\u00e1nh \u0111\u1ed5i",
     "Related Patterns": "Pattern li\u00ean quan",
+    "Practical Perspective": "G\u00f3c nh\u00ecn th\u1ef1c t\u1ebf",
+    "Real-World Use Cases":
+      "T\u00ecnh hu\u1ed1ng \u00e1p d\u1ee5ng th\u1ef1c t\u1ebf",
+    "Decision Questions": "C\u00e2u h\u1ecfi ra quy\u1ebft \u0111\u1ecbnh",
+    "Design Checklist": "Checklist thi\u1ebft k\u1ebf",
+    "Common Mistakes": "L\u1ed7i th\u01b0\u1eddng g\u1eb7p",
+    "Testing Guidance": "H\u01b0\u1edbng d\u1eabn ki\u1ec3m th\u1eed",
+    "Refactoring Signals": "D\u1ea5u hi\u1ec7u refactor",
   },
   zh: {
     Intent: "\u610f\u56fe",
@@ -54,6 +62,13 @@ const headings = {
     "Trade-offs": "\u6743\u8861",
     "Trade-Offs": "\u6743\u8861",
     "Related Patterns": "\u76f8\u5173\u6a21\u5f0f",
+    "Practical Perspective": "\u5b9e\u6218\u89c6\u89d2",
+    "Real-World Use Cases": "\u771f\u5b9e\u573a\u666f",
+    "Decision Questions": "\u51b3\u7b56\u95ee\u9898",
+    "Design Checklist": "\u8bbe\u8ba1\u68c0\u67e5\u6e05\u5355",
+    "Common Mistakes": "\u5e38\u89c1\u9519\u8bef",
+    "Testing Guidance": "\u6d4b\u8bd5\u6307\u5357",
+    "Refactoring Signals": "\u91cd\u6784\u4fe1\u53f7",
   },
 };
 
