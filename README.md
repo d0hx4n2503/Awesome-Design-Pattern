@@ -32,7 +32,7 @@ Run any pattern directly with its script:
 ## Repository Structure
 
 ```text
-Awe-Design-Pattern/
+Awesome-Design-Pattern/
 |-- .github/
 |   |-- ISSUE_TEMPLATE/
 |   |-- PULL_REQUEST_TEMPLATE/
