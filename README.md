@@ -1,177 +1,189 @@
 # Awe Design Pattern
 
-Repo học và triển khai đầy đủ **23 Gang of Four Design Patterns** theo hướng thực chiến: hiểu vấn đề, biết khi nào dùng, đọc ví dụ minh họa, và so sánh trade-off.
+**A documentation-first reference for the 23 Gang of Four design patterns.**
 
-## Mục Tiêu
+Awe Design Pattern is a structured learning repository for understanding, comparing, and eventually implementing the classic GoF design patterns. The project is intentionally organized like a production-grade engineering knowledge base: clear scope, predictable structure, explicit contribution rules, and automated validation.
 
-- Xây dựng ví dụ rõ ràng cho toàn bộ 23 design patterns.
-- Sắp xếp pattern theo **mức độ ưu tiên học** và **độ phổ biến khi đi làm**.
-- Mỗi pattern có tài liệu riêng trong `patterns/`, chưa viết code cho đến khi repo bước sang giai đoạn implementation.
-- Ưu tiên giải thích bằng ngữ cảnh thực tế thay vì chỉ chép định nghĩa sách vở.
+The current phase is focused on high-quality documentation. Code examples will be added later as separate, reviewable modules.
 
-## Trạng Thái Repo
+## Why This Repository Exists
 
-- Giai đoạn hiện tại: **documentation-first**.
-- Thư mục `patterns/` chỉ chứa đúng 23 thư mục pattern và README mô tả, chưa có source code.
-- Khi bắt đầu code, mỗi pattern sẽ được triển khai thành module riêng để dễ review và học từng phần.
+Design patterns are often taught as names to memorize. This repository takes a different approach: each pattern is explained through the problem it solves, the trade-offs it introduces, and the practical situations where it is worth using.
 
-## Thứ Tự Ưu Tiên Học
+The goal is not to force patterns into every design. The goal is to build judgment.
 
-### Priority 1 — Rất Phổ Biến, Nên Học Trước
+## Project Status
 
-| Pattern | Nhóm | Độ phổ biến | Vì sao nên ưu tiên |
-|---|---|---:|---|
-| Strategy | Behavioral | Rất cao | Thay đổi thuật toán/hành vi linh hoạt, dùng nhiều trong service, validation, pricing, payment. |
-| Factory Method | Creational | Rất cao | Tạo object qua abstraction, thường gặp trong framework và clean architecture. |
-| Adapter | Structural | Rất cao | Kết nối interface không tương thích, cực hữu ích khi tích hợp API/thư viện bên ngoài. |
-| Observer | Behavioral | Rất cao | Nền tảng của event, pub/sub, notification, UI state, reactive programming. |
-| Decorator | Structural | Cao | Mở rộng hành vi mà không sửa class gốc, gặp nhiều trong middleware, stream, wrapper. |
-| Facade | Structural | Cao | Che giấu hệ thống phức tạp sau API đơn giản, rất hợp với service layer/module boundary. |
-| Builder | Creational | Cao | Tạo object phức tạp dễ đọc, hay dùng với config, query, request, test data. |
-| Command | Behavioral | Cao | Đóng gói action, hữu ích cho queue, undo/redo, job, transaction script. |
-| Iterator | Behavioral | Cao | Duyệt collection mà không lộ cấu trúc bên trong, gặp trong hầu hết ngôn ngữ/framework. |
+| Area | Status |
+|---|---|
+| Pattern catalog | Complete: 23 GoF patterns |
+| Pattern documentation | In progress |
+| Source code examples | Not started |
+| CI validation | Active |
+| Contribution guidelines | Active |
 
-### Priority 2 — Phổ Biến Theo Ngữ Cảnh
+At this stage, `patterns/` must remain documentation-only. Each pattern folder contains a `README.md`; no implementation files are expected yet.
 
-| Pattern | Nhóm | Độ phổ biến | Khi thường gặp |
-|---|---|---:|---|
-| Singleton | Creational | Cao | Config, logger, connection manager; cần học cả rủi ro global state/test khó. |
-| Template Method | Behavioral | Trung bình cao | Chuẩn hóa workflow nhưng cho subclass tùy biến từng bước. |
-| Proxy | Structural | Trung bình cao | Lazy loading, cache, access control, remote object, logging wrapper. |
-| Composite | Structural | Trung bình | Cấu trúc cây như menu, folder, UI component, organization chart. |
-| State | Behavioral | Trung bình | Object đổi hành vi theo trạng thái: order, workflow, document, game character. |
-| Chain of Responsibility | Behavioral | Trung bình | Pipeline xử lý request: middleware, validation chain, approval flow. |
-| Abstract Factory | Creational | Trung bình | Tạo họ object liên quan, hữu ích với nhiều platform/theme/provider. |
-| Prototype | Creational | Trung bình | Clone object/template khi tạo mới tốn kém hoặc cần copy cấu hình mẫu. |
-
-### Priority 3 — Ít Gặp Hơn Nhưng Quan Trọng
-
-| Pattern | Nhóm | Độ phổ biến | Khi nên học kỹ |
-|---|---|---:|---|
-| Mediator | Behavioral | Trung bình thấp | Giảm phụ thuộc chéo giữa nhiều object/component. |
-| Bridge | Structural | Trung bình thấp | Tách abstraction khỏi implementation khi cả hai cùng thay đổi độc lập. |
-| Visitor | Behavioral | Trung bình thấp | Thêm operation mới cho cấu trúc object ổn định, hay gặp trong AST/compiler/tooling. |
-| Memento | Behavioral | Thấp | Lưu/khôi phục trạng thái, undo snapshot, editor/history. |
-| Flyweight | Structural | Thấp | Tối ưu bộ nhớ khi có rất nhiều object giống nhau, ví dụ text editor/game/map. |
-| Interpreter | Behavioral | Thấp | Xử lý grammar/DSL đơn giản; ít dùng trực tiếp vì thường có parser/library thay thế. |
-
-## Danh Sách Đầy Đủ 23 Patterns
-
-### Creational Patterns
-
-1. Abstract Factory
-2. Builder
-3. Factory Method
-4. Prototype
-5. Singleton
-
-### Structural Patterns
-
-1. Adapter
-2. Bridge
-3. Composite
-4. Decorator
-5. Facade
-6. Flyweight
-7. Proxy
-
-### Behavioral Patterns
-
-1. Chain of Responsibility
-2. Command
-3. Interpreter
-4. Iterator
-5. Mediator
-6. Memento
-7. Observer
-8. State
-9. Strategy
-10. Template Method
-11. Visitor
-
-## Pattern Bị Thiếu Trong README Cũ
-
-README ban đầu có 21 pattern. Bộ GoF chuẩn có 23 pattern, còn thiếu:
-
-- `Interpreter`
-- `Iterator`
-
-## Cấu Trúc Repo
+## Repository Structure
 
 ```text
 Awe-Design-Pattern/
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   ├── PULL_REQUEST_TEMPLATE/
+│   └── workflows/
 ├── docs/
 │   ├── learning-roadmap.md
 │   └── pattern-index.md
-├── creational/
-│   ├── abstract-factory/
-│   ├── builder/
-│   ├── factory-method/
-│   ├── prototype/
-│   └── singleton/
-├── structural/
-│   ├── adapter/
-│   ├── bridge/
-│   ├── composite/
-│   ├── decorator/
-│   ├── facade/
-│   ├── flyweight/
-│   └── proxy/
-├── behavioral/
-│   ├── chain-of-responsibility/
-│   ├── command/
-│   ├── interpreter/
-│   ├── iterator/
-│   ├── mediator/
-│   ├── memento/
-│   ├── observer/
-│   ├── state/
-│   ├── strategy/
-│   ├── template-method/
-│   └── visitor/
-└── README.md
+├── img/
+├── patterns/
+│   ├── creational/
+│   ├── structural/
+│   └── behavioral/
+├── scripts/
+├── CONTEXT.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── README.md
+└── SECURITY.md
 ```
 
-## Template Cho Mỗi Pattern
+## Pattern Groups
 
-Mỗi thư mục pattern nên có README riêng theo format:
+### Creational Patterns
 
-```md
-# Pattern Name
+Creational patterns focus on object creation, lifecycle control, and reducing coupling between client code and concrete classes.
 
-## Vấn Đề
+| Pattern | Purpose |
+|---|---|
+| Abstract Factory | Create families of related objects without depending on concrete classes. |
+| Builder | Construct complex objects step by step with readable configuration. |
+| Factory Method | Delegate object creation to a factory method or subclass. |
+| Prototype | Create new objects by cloning existing prototypes. |
+| Singleton | Ensure a single shared instance with controlled access. |
 
-Pattern này giải quyết vấn đề gì?
+### Structural Patterns
 
-## Ý Tưởng
+Structural patterns focus on composition, object relationships, and stable boundaries between parts of a system.
 
-Cách pattern tổ chức object/class.
+| Pattern | Purpose |
+|---|---|
+| Adapter | Convert one interface into another expected by the client. |
+| Bridge | Separate abstraction from implementation so both can evolve independently. |
+| Composite | Represent individual objects and groups through the same interface. |
+| Decorator | Add behavior by wrapping an object without modifying its class. |
+| Facade | Provide a simplified interface to a complex subsystem. |
+| Flyweight | Share common state to reduce memory usage across many objects. |
+| Proxy | Control access to another object through a representative object. |
 
-## Khi Nào Dùng
+### Behavioral Patterns
 
-- Use case 1
-- Use case 2
+Behavioral patterns focus on communication, responsibility distribution, workflows, and runtime behavior changes.
 
-## Khi Không Nên Dùng
+| Pattern | Purpose |
+|---|---|
+| Chain of Responsibility | Pass a request through a chain of handlers. |
+| Command | Encapsulate an action or request as an object. |
+| Interpreter | Represent and evaluate a simple grammar or DSL. |
+| Iterator | Traverse a collection without exposing its internal structure. |
+| Mediator | Centralize communication between collaborating objects. |
+| Memento | Capture and restore object state without breaking encapsulation. |
+| Observer | Notify dependent subscribers when a subject changes. |
+| State | Change object behavior when its internal state changes. |
+| Strategy | Swap algorithms or behaviors behind a common interface. |
+| Template Method | Define a workflow skeleton while allowing selected steps to vary. |
+| Visitor | Add operations to a stable object structure without changing the structure. |
 
-- Trường hợp dễ over-engineering
+## Learning Priority
 
-## Ví Dụ Code
+Patterns are prioritized by practical frequency and learning value.
 
-Ví dụ tối giản, dễ chạy.
+### Priority 1: Learn First
 
-## Ưu / Nhược Điểm
+These patterns appear frequently in application code, frameworks, integrations, and service design.
 
-Trade-off thực tế.
-```
+| Pattern | Group | Common Use Cases |
+|---|---|---|
+| Strategy | Behavioral | Validation, pricing, sorting, payment flows |
+| Factory Method | Creational | Framework extension points, object creation boundaries |
+| Adapter | Structural | Third-party integrations, legacy system compatibility |
+| Observer | Behavioral | Events, notifications, UI state, pub/sub |
+| Decorator | Structural | Middleware, wrappers, streams, composable behavior |
+| Facade | Structural | Service layer boundaries, simplified module APIs |
+| Builder | Creational | Complex configuration, test data, request construction |
+| Command | Behavioral | Jobs, queues, undo/redo, auditable actions |
+| Iterator | Behavioral | Collection traversal and custom iteration rules |
 
-## Lộ Trình Học Khuyến Nghị
+### Priority 2: Learn Next
 
-1. Học nhóm **Priority 1** trước để dùng được ngay trong dự án thật.
-2. Sau đó học **Priority 2** để nhận ra pattern trong framework và kiến trúc backend/frontend.
-3. Cuối cùng học **Priority 3** để hoàn thiện tư duy thiết kế và hiểu các tình huống đặc thù.
+These patterns are common in specific architectural or framework contexts.
 
-Xem thêm:
+| Pattern | Group | Common Use Cases |
+|---|---|---|
+| Singleton | Creational | Configuration, logging, shared infrastructure |
+| Template Method | Behavioral | Framework-controlled workflows |
+| Proxy | Structural | Lazy loading, caching, access control |
+| Composite | Structural | Trees, UI components, menus, folders |
+| State | Behavioral | Workflows, lifecycle-heavy domain objects |
+| Chain of Responsibility | Behavioral | Middleware, validation chains, approval flows |
+| Abstract Factory | Creational | Product families, themes, providers, platforms |
+| Prototype | Creational | Object templates, expensive initialization, cloning |
 
-- `docs/learning-roadmap.md`
-- `docs/pattern-index.md`
+### Priority 3: Learn for Depth
+
+These patterns are less common in everyday application code, but important for specialized systems.
+
+| Pattern | Group | Common Use Cases |
+|---|---|---|
+| Mediator | Behavioral | Complex UI coordination, workflow orchestration |
+| Bridge | Structural | Independent abstraction and implementation hierarchies |
+| Visitor | Behavioral | ASTs, compilers, static analysis, tree operations |
+| Memento | Behavioral | Undo history, snapshots, checkpoints |
+| Flyweight | Structural | Memory-sensitive systems, editors, games, maps |
+| Interpreter | Behavioral | Small DSLs, expression evaluation, rule engines |
+
+## Documentation Standard
+
+Each pattern document should explain:
+
+- The problem the pattern solves
+- The core idea behind the solution
+- When the pattern is appropriate
+- When the pattern is not appropriate
+- Practical signals that suggest the pattern may help
+- Benefits, trade-offs, and related patterns
+
+This structure keeps the repository useful for both beginners and experienced engineers reviewing design options.
+
+## Quality Gates
+
+The repository includes a GitHub Actions workflow that validates:
+
+- Exactly 23 pattern folders exist under `patterns/`
+- Each pattern folder contains a `README.md`
+- `patterns/` remains documentation-only during the current phase
+- Required repository documents are present and non-empty
+
+See `.github/workflows/validate-docs.yml` for the validation rules.
+
+## Roadmap
+
+1. Complete concise documentation for all 23 patterns.
+2. Improve cross-pattern comparisons and anti-pattern notes.
+3. Add diagrams for selected patterns.
+4. Introduce code examples as separate modules after the documentation baseline is stable.
+5. Add language-specific implementations once the repository structure is ready.
+
+## Contributing
+
+Please read `CONTRIBUTING.md` before opening a pull request. Contributions should improve clarity, accuracy, structure, or practical usefulness.
+
+During the documentation-first phase, do not add source code under `patterns/`.
+
+## Security
+
+This repository is currently documentation-focused and does not ship executable application code. Security reporting guidance is available in `SECURITY.md`.
+
+## License
+
+This project is licensed under the Apache License 2.0. See `LICENSE` for details.

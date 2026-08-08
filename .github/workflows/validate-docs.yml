@@ -89,8 +89,10 @@ jobs:
 
           required_files=(
             "README.md"
+            "CONTEXT.md"
             "CONTRIBUTING.md"
             "LICENSE"
+            "SECURITY.md"
             "docs/learning-roadmap.md"
             "docs/pattern-index.md"
             ".github/ISSUE_TEMPLATE/bug_report.yml"
