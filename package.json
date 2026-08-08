@@ -19,6 +19,7 @@
     "builder": "tsx patterns/creational/builder/index.ts",
     "command": "tsx patterns/behavioral/command/index.ts",
     "decorator": "tsx patterns/structural/decorator/index.ts",
+    "singleton": "tsx patterns/creational/singleton/index.ts",
     "strategy": "tsx patterns/behavioral/strategy/index.ts"
   },
   "devDependencies": {

@@ -1,43 +1,39 @@
-﻿# Singleton
+# Singleton
 
-## Mục Đích
+## Intent
 
-Đảm bảo một class chỉ có một instance và cung cấp điểm truy cập chung.
+Ensure one controlled instance exists for a class and expose a single access point to it.
 
-## Vấn Đề
+## Problem
 
-Một tài nguyên dùng chung cần được quản lý thống nhất, ví dụ config hoặc logger.
+Shared runtime services such as configuration can become inconsistent when multiple instances are created independently.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tách phần thay đổi ra khỏi client code, để client làm việc với abstraction thay vì phụ thuộc trực tiếp vào chi tiết triển khai.
+Hide construction behind a static accessor. Keep the shared object small, explicit, and test-resettable.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi thật sự cần single shared instance; khi lifecycle được kiểm soát rõ; khi dependency injection không phù hợp.
+`AppConfig` stores process-wide settings. `getInstance()` always returns the same object, while `resetForTest()` keeps tests isolated.
 
-## Khi Không Nên Dùng
+```bash
+npm run singleton
+```
 
-Khi chỉ dùng để tiện truy cập global; khi làm test khó; khi tạo hidden dependency.
+## When To Use
 
-## Dấu Hiệu Nhận Biết
+- One shared process-level object is required.
+- Multiple instances would create inconsistent state.
+- Central lifecycle control is valuable.
 
-- Có nhiều concrete class cùng chia sẻ một vai trò.
-- Client đang phải biết quá nhiều chi tiết khởi tạo.
-- Thay đổi implementation làm lan sửa code ở nhiều nơi.
+## Trade-offs
 
-## Ưu Điểm
+- Can hide dependencies.
+- Mutable global state can make tests fragile.
+- Dependency injection is often cleaner for application services.
 
-- Giảm coupling giữa client và concrete class.
-- Dễ thay đổi hoặc mở rộng biến thể object.
-- Làm ý định thiết kế rõ ràng hơn.
+## Related Patterns
 
-## Nhược Điểm
-
-- Tăng số lượng class/file cần đọc.
-- Có thể gây over-engineering nếu bài toán còn đơn giản.
-- Cần đặt tên abstraction tốt để tránh khó hiểu.
-
-## Pattern Liên Quan
-
-Factory Method, Facade
+- Factory Method
+- Facade
+- Flyweight
