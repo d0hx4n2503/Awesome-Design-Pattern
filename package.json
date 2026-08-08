@@ -20,7 +20,8 @@
     "command": "tsx patterns/behavioral/command/index.ts",
     "decorator": "tsx patterns/structural/decorator/index.ts",
     "singleton": "tsx patterns/creational/singleton/index.ts",
-    "strategy": "tsx patterns/behavioral/strategy/index.ts"
+    "strategy": "tsx patterns/behavioral/strategy/index.ts",
+    "template-method": "tsx patterns/behavioral/template-method/index.ts"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
