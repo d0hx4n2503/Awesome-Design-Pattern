@@ -24,7 +24,7 @@ Nodes accept a visitor object, and each visitor implements operations for each n
 
 ## Triển khai TypeScript
 
-`SizeVisitor` calculates total size for a file tree.
+`SizeVisitor` calculates total size for a file tree. `NameListVisitor` adds a second operation over the same nodes without changing `FileNode` or `FolderNode`.
 
 ```bash
 npm run visitor

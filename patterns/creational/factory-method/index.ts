@@ -37,32 +37,30 @@ export class SmsNotificationSender implements NotificationSender {
   }
 }
 
-export class NotificationFactory {
-  createSender(channel: NotificationChannel): NotificationSender {
-    switch (channel) {
-      case "email":
-        return new EmailNotificationSender();
-      case "sms":
-        return new SmsNotificationSender();
-    }
+export abstract class NotificationWorkflow {
+  notify(message: NotificationMessage): DeliveryReceipt {
+    return this.createSender().send(message);
+  }
+
+  protected abstract createSender(): NotificationSender;
+}
+
+export class EmailNotificationWorkflow extends NotificationWorkflow {
+  protected createSender(): NotificationSender {
+    return new EmailNotificationSender();
   }
 }
 
-export class NotificationService {
-  constructor(private readonly factory: NotificationFactory) {}
-
-  notify(
-    channel: NotificationChannel,
-    message: NotificationMessage,
-  ): DeliveryReceipt {
-    return this.factory.createSender(channel).send(message);
+export class SmsNotificationWorkflow extends NotificationWorkflow {
+  protected createSender(): NotificationSender {
+    return new SmsNotificationSender();
   }
 }
 
 export function runFactoryMethodExample(): void {
-  const service = new NotificationService(new NotificationFactory());
+  const workflow = new EmailNotificationWorkflow();
 
-  const receipt = service.notify("email", {
+  const receipt = workflow.notify({
     recipient: "USER@EXAMPLE.COM",
     body: "Your order has shipped.",
   });
