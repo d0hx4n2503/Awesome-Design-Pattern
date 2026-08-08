@@ -57,7 +57,9 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
           </button>
         </div>
 
-        <input id="pattern-search" class="search" type="search" placeholder={t.searchPlaceholder} />
+        <div class="search-wrap">
+          <input id="pattern-search" class="search" type="search" placeholder={t.searchPlaceholder} />
+        </div>
 
         <nav class="nav" aria-label={t.patterns}>
           {Object.entries(groupedPatterns).map(([group, items]) => (
