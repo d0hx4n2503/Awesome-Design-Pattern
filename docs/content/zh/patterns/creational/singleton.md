@@ -8,21 +8,21 @@ source: "patterns/creational/singleton/README.md"
 
 # Singleton
 
-> 本中文文档与英文原文保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
+> 本中文文档与源 README 保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
 
-## Intent
+## 意图
 
 Ensure one controlled instance exists for a class and expose a single access point to it.
 
-## Problem
+## 问题
 
 Shared runtime services such as configuration can become inconsistent when multiple instances are created independently.
 
-## Solution
+## 解决方案
 
 Hide construction behind a static accessor. Keep the shared object small, explicit, and test-resettable.
 
-## TypeScript Implementation
+## TypeScript 实现
 
 `AppConfig` stores process-wide settings. `getInstance()` always returns the same object, while `resetForTest()` keeps tests isolated.
 
@@ -30,19 +30,19 @@ Hide construction behind a static accessor. Keep the shared object small, explic
 npm run singleton
 ```
 
-## When To Use
+## 适用场景
 
 - One shared process-level object is required.
 - Multiple instances would create inconsistent state.
 - Central lifecycle control is valuable.
 
-## Trade-offs
+## 权衡
 
 - Can hide dependencies.
 - Mutable global state can make tests fragile.
 - Dependency injection is often cleaner for application services.
 
-## Related Patterns
+## 相关模式
 
 - Factory Method
 - Facade

@@ -2,27 +2,27 @@
 title: "Composite"
 slug: "composite"
 group: "structural"
-groupLabel: "Structural"
+groupLabel: "Cấu trúc"
 source: "patterns/structural/composite/README.md"
 ---
 
 # Composite
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Treat individual objects and groups through the same interface.
 
-## Problem
+## Vấn đề
 
 Tree structures contain leaves and containers. Client code becomes noisy when it handles each kind separately.
 
-## Solution
+## Giải pháp
 
 Define a common component interface. Leaves render directly; composites delegate to children recursively.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `MenuItem` and `MenuGroup` both implement `MenuComponent`.
 
@@ -30,7 +30,7 @@ Define a common component interface. Leaves render directly; composites delegate
 npm run composite
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Excellent for tree-like structures.
 - Recursive behavior needs tests.

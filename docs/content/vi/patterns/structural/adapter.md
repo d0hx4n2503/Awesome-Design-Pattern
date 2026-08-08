@@ -2,27 +2,27 @@
 title: "Adapter"
 slug: "adapter"
 group: "structural"
-groupLabel: "Structural"
+groupLabel: "Cấu trúc"
 source: "patterns/structural/adapter/README.md"
 ---
 
 # Adapter
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Adapter converts an existing interface into the interface a client expects.
 
-## Problem
+## Vấn đề
 
 Real systems rarely integrate with perfectly shaped APIs. A payment provider, legacy service, SDK, or vendor client may expose names, data shapes, and semantics that do not match your domain model. If client code calls that external interface directly, vendor details leak everywhere and future migration becomes expensive.
 
-## Solution
+## Giải pháp
 
 Create an adapter that implements the interface your application owns. The adapter translates calls and data between your domain-facing contract and the incompatible external service.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 This implementation models checkout payment processing:
 
@@ -37,32 +37,32 @@ Run it from the repository root:
 npm run adapter
 ```
 
-## When To Use
+## Khi nên dùng
 
 - Integrating third-party SDKs or vendor APIs.
 - Wrapping legacy systems during migration.
 - Keeping domain code independent from infrastructure details.
 - Normalizing multiple providers behind one application interface.
 
-## When Not To Use
+## Khi không nên dùng
 
 - The external interface already matches the client contract.
 - You control both sides and can safely change the original interface.
 - The adapter only hides a deeper design issue without reducing coupling.
 
-## Benefits
+## Lợi ích
 
 - Keeps vendor-specific details out of business logic.
 - Makes provider replacement easier.
 - Improves testability by targeting an application-owned interface.
 
-## Trade-offs
+## Đánh đổi
 
 - Adds one more layer to maintain.
 - Poorly named adapters can hide important behavior.
 - Translation logic can become complex if provider semantics differ greatly.
 
-## Related Patterns
+## Pattern liên quan
 
 - Facade
 - Proxy

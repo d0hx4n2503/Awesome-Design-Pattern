@@ -2,27 +2,27 @@
 title: "Facade"
 slug: "facade"
 group: "structural"
-groupLabel: "Structural"
+groupLabel: "Cấu trúc"
 source: "patterns/structural/facade/README.md"
 ---
 
 # Facade
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Facade provides a simple, stable interface over a more complex subsystem.
 
-## Problem
+## Vấn đề
 
 Client code often needs to coordinate several services to complete one business workflow. If every caller knows the subsystem details, the workflow is duplicated and changes become risky.
 
-## Solution
+## Giải pháp
 
 Create a facade that exposes a high-level operation. The facade orchestrates the subsystem internally while clients depend on one clear API.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 This implementation models order placement:
 
@@ -36,32 +36,32 @@ Run it from the repository root:
 npm run facade
 ```
 
-## When To Use
+## Khi nên dùng
 
 - A workflow requires several subsystem calls.
 - Client code is coupled to too many internal services.
 - You want a clean module or service boundary.
 - The subsystem is valid but too detailed for most callers.
 
-## When Not To Use
+## Khi không nên dùng
 
 - The facade becomes a god object.
 - It hides important domain decisions from callers.
 - The subsystem is already simple and stable.
 
-## Benefits
+## Lợi ích
 
 - Reduces coupling at module boundaries.
 - Centralizes workflow orchestration.
 - Makes common operations easier to use correctly.
 
-## Trade-offs
+## Đánh đổi
 
 - Can become too broad if not scoped carefully.
 - May hide useful lower-level capabilities.
 - Needs clear naming to avoid becoming a vague service layer.
 
-## Related Patterns
+## Pattern liên quan
 
 - Adapter
 - Mediator

@@ -8,21 +8,21 @@ source: "patterns/structural/proxy/README.md"
 
 # Proxy
 
-> 本中文文档与英文原文保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
+> 本中文文档与源 README 保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
 
-## Intent
+## 意图
 
 Control access to another object through the same interface.
 
-## Problem
+## 问题
 
 Expensive or sensitive objects often need caching, authorization, or lazy access without leaking those concerns into callers.
 
-## Solution
+## 解决方案
 
 Put a proxy in front of the real subject and let the proxy decide when to delegate.
 
-## TypeScript Implementation
+## TypeScript 实现
 
 `CachedDocumentProxy` caches reads and denies access to documents outside the allowed set.
 
@@ -30,7 +30,7 @@ Put a proxy in front of the real subject and let the proxy decide when to delega
 npm run proxy
 ```
 
-## Trade-offs
+## 权衡
 
 - Good for caching and access control.
 - Adds indirection.

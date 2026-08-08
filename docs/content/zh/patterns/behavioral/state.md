@@ -8,21 +8,21 @@ source: "patterns/behavioral/state/README.md"
 
 # State
 
-> 本中文文档与英文原文保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
+> 本中文文档与源 README 保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
 
-## Intent
+## 意图
 
 Allow an object to change behavior when its internal state changes.
 
-## Problem
+## 问题
 
 Lifecycle-heavy objects often collect large conditional blocks based on state.
 
-## Solution
+## 解决方案
 
 Represent each state as an object. The context delegates behavior to the current state and controls transitions.
 
-## TypeScript Implementation
+## TypeScript 实现
 
 `Order` delegates `pay()` and `ship()` to explicit state objects.
 
@@ -30,7 +30,7 @@ Represent each state as an object. The context delegates behavior to the current
 npm run state
 ```
 
-## Trade-offs
+## 权衡
 
 - Reduces state conditionals.
 - Adds more objects.

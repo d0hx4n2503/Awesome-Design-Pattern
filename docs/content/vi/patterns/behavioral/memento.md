@@ -2,27 +2,27 @@
 title: "Memento"
 slug: "memento"
 group: "behavioral"
-groupLabel: "Behavioral"
+groupLabel: "Hành vi"
 source: "patterns/behavioral/memento/README.md"
 ---
 
 # Memento
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Capture and restore object state without exposing internal representation.
 
-## Problem
+## Vấn đề
 
 Undo and snapshot features need previous state without letting outside code mutate internals.
 
-## Solution
+## Giải pháp
 
 The originator creates immutable snapshots and restores from them later.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `TextEditor` creates and restores text snapshots.
 
@@ -30,7 +30,7 @@ The originator creates immutable snapshots and restores from them later.
 npm run memento
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Preserves encapsulation.
 - Snapshots can consume memory.

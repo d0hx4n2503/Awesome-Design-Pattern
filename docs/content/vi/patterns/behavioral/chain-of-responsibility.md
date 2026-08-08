@@ -2,27 +2,27 @@
 title: "Chain of Responsibility"
 slug: "chain-of-responsibility"
 group: "behavioral"
-groupLabel: "Behavioral"
+groupLabel: "Hành vi"
 source: "patterns/behavioral/chain-of-responsibility/README.md"
 ---
 
 # Chain of Responsibility
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Pass a request through a sequence of handlers until one rejects it or the chain completes.
 
-## Problem
+## Vấn đề
 
 Validation and middleware often require reusable steps. One giant function makes ordering and reuse difficult.
 
-## Solution
+## Giải pháp
 
 Represent each step as a handler linked to the next handler.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 Support tickets pass through authentication, title, and priority handlers.
 
@@ -30,7 +30,7 @@ Support tickets pass through authentication, title, and priority handlers.
 npm run chain-of-responsibility
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Great for middleware pipelines.
 - Runtime flow is indirect.

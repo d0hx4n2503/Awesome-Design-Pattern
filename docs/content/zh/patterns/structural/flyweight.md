@@ -8,21 +8,21 @@ source: "patterns/structural/flyweight/README.md"
 
 # Flyweight
 
-> 本中文文档与英文原文保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
+> 本中文文档与源 README 保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
 
-## Intent
+## 意图
 
 Share common object state to reduce memory usage when many similar objects are needed.
 
-## Problem
+## 问题
 
 Large collections can waste memory by duplicating identical intrinsic data.
 
-## Solution
+## 解决方案
 
 Separate shared intrinsic state from per-use extrinsic state and reuse flyweights through a factory.
 
-## TypeScript Implementation
+## TypeScript 实现
 
 `MarkerIconFactory` reuses map marker icons by type.
 
@@ -30,7 +30,7 @@ Separate shared intrinsic state from per-use extrinsic state and reuse flyweight
 npm run flyweight
 ```
 
-## Trade-offs
+## 权衡
 
 - Useful for large object counts.
 - Premature use can overcomplicate code.

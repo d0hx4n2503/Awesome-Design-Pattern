@@ -2,27 +2,27 @@
 title: "Prototype"
 slug: "prototype"
 group: "creational"
-groupLabel: "Creational"
+groupLabel: "Khởi tạo"
 source: "patterns/creational/prototype/README.md"
 ---
 
 # Prototype
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Create new objects by cloning an existing object instead of constructing from scratch.
 
-## Problem
+## Vấn đề
 
 Repeatedly setting up similar objects duplicates configuration and risks inconsistent defaults.
 
-## Solution
+## Giải pháp
 
 Use a configured prototype as a template and clone it with explicit overrides.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `CampaignPrototype` clones campaign templates while copying mutable arrays safely.
 
@@ -30,7 +30,7 @@ Use a configured prototype as a template and clone it with explicit overrides.
 npm run prototype
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Reduces repetitive setup.
 - Clone semantics must be explicit.

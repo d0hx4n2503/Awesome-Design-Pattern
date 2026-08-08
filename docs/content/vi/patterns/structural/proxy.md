@@ -2,27 +2,27 @@
 title: "Proxy"
 slug: "proxy"
 group: "structural"
-groupLabel: "Structural"
+groupLabel: "Cấu trúc"
 source: "patterns/structural/proxy/README.md"
 ---
 
 # Proxy
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Control access to another object through the same interface.
 
-## Problem
+## Vấn đề
 
 Expensive or sensitive objects often need caching, authorization, or lazy access without leaking those concerns into callers.
 
-## Solution
+## Giải pháp
 
 Put a proxy in front of the real subject and let the proxy decide when to delegate.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `CachedDocumentProxy` caches reads and denies access to documents outside the allowed set.
 
@@ -30,7 +30,7 @@ Put a proxy in front of the real subject and let the proxy decide when to delega
 npm run proxy
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Good for caching and access control.
 - Adds indirection.

@@ -2,27 +2,27 @@
 title: "Iterator"
 slug: "iterator"
 group: "behavioral"
-groupLabel: "Behavioral"
+groupLabel: "Hành vi"
 source: "patterns/behavioral/iterator/README.md"
 ---
 
 # Iterator
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Iterator provides a standard way to traverse a collection without exposing its internal representation.
 
-## Problem
+## Vấn đề
 
 Client code often needs to traverse data, but it should not depend on whether that data is stored as an array, tree, page cursor, or custom structure. Exposing internal storage makes later changes expensive.
 
-## Solution
+## Giải pháp
 
 Expose iteration through a stable iterator protocol. Clients consume values sequentially while the collection owns traversal details.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 This implementation models paginated search results:
 
@@ -36,32 +36,32 @@ Run it from the repository root:
 npm run iterator
 ```
 
-## When To Use
+## Khi nên dùng
 
 - Collection internals should remain hidden.
 - You need a consistent traversal API.
 - A collection supports custom ordering or pagination.
 - Clients should not manage indexes manually.
 
-## When Not To Use
+## Khi không nên dùng
 
 - A plain array is already enough.
 - Traversal requires highly specialized performance controls.
 - The iterator hides important side effects such as network calls.
 
-## Benefits
+## Lợi ích
 
 - Encapsulates traversal logic.
 - Keeps client code simple.
 - Allows collection internals to change later.
 
-## Trade-offs
+## Đánh đổi
 
 - Adds abstraction around simple loops.
 - Lazy iteration can surprise callers if side effects are involved.
 - Custom iterators need clear naming and tests.
 
-## Related Patterns
+## Pattern liên quan
 
 - Composite
 - Visitor

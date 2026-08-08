@@ -8,21 +8,21 @@ source: "patterns/behavioral/observer/README.md"
 
 # Observer
 
-> 本中文文档与英文原文保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
+> 本中文文档与源 README 保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
 
-## Intent
+## 意图
 
 Observer defines a one-to-many dependency so that subscribers are notified when a subject changes.
 
-## Problem
+## 问题
 
 When one object changes state, several other parts of the system may need to react. If the subject directly calls every dependent object, it becomes tightly coupled to all consumers and every new reaction requires editing the subject.
 
-## Solution
+## 解决方案
 
 Let observers subscribe to a subject. The subject publishes events through a stable observer interface without knowing what each observer does with the update.
 
-## TypeScript Implementation
+## TypeScript 实现
 
 This implementation models order status updates:
 
@@ -37,32 +37,32 @@ Run it from the repository root:
 npm run observer
 ```
 
-## When To Use
+## 适用场景
 
 - Event notification.
 - Pub/sub style workflows.
 - UI state updates.
 - Domain events where multiple reactions are expected.
 
-## When Not To Use
+## 不适用场景
 
 - There is only one known receiver.
 - Ordering of side effects is critical but not controlled.
 - Debugging event chains would become too difficult.
 
-## Benefits
+## 优点
 
 - Reduces coupling between subject and subscribers.
 - Supports adding reactions without changing the subject.
 - Keeps event producers focused on state changes.
 
-## Trade-offs
+## 权衡
 
 - Event flow can be harder to trace.
 - Subscriber failures need explicit handling.
 - Too many observers can create hidden side effects.
 
-## Related Patterns
+## 相关模式
 
 - Mediator
 - Strategy

@@ -8,21 +8,21 @@ source: "patterns/structural/decorator/README.md"
 
 # Decorator
 
-> 本中文文档与英文原文保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
+> 本中文文档与源 README 保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
 
-## Intent
+## 意图
 
 Decorator adds behavior to an object by wrapping it with another object that follows the same interface.
 
-## Problem
+## 问题
 
 Feature combinations can explode when modeled with inheritance. For example, logging, caching, retrying, metrics, and authorization can be combined in many ways. Creating a subclass for every combination quickly becomes unmaintainable.
 
-## Solution
+## 解决方案
 
 Keep the core object focused and wrap it with decorators that add one behavior at a time. Because decorators implement the same interface as the wrapped object, they can be stacked.
 
-## TypeScript Implementation
+## TypeScript 实现
 
 This implementation models report generation:
 
@@ -37,31 +37,31 @@ Run it from the repository root:
 npm run decorator
 ```
 
-## When To Use
+## 适用场景
 
 - Behavior needs to be composed dynamically.
 - Inheritance would create too many subclasses.
 - You want to add cross-cutting behavior without modifying the core object.
 
-## When Not To Use
+## 不适用场景
 
 - The wrapping order is unclear or fragile.
 - Debugging nested wrappers would be more expensive than the flexibility gained.
 - A simple function composition would be enough.
 
-## Benefits
+## 优点
 
 - Supports open/closed extension.
 - Keeps each behavior small and focused.
 - Allows runtime composition.
 
-## Trade-offs
+## 权衡
 
 - Adds object nesting.
 - Ordering can affect behavior.
 - Stack traces and debugging can become less direct.
 
-## Related Patterns
+## 相关模式
 
 - Proxy
 - Composite

@@ -8,21 +8,21 @@ source: "patterns/behavioral/memento/README.md"
 
 # Memento
 
-> 本中文文档与英文原文保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
+> 本中文文档与源 README 保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
 
-## Intent
+## 意图
 
 Capture and restore object state without exposing internal representation.
 
-## Problem
+## 问题
 
 Undo and snapshot features need previous state without letting outside code mutate internals.
 
-## Solution
+## 解决方案
 
 The originator creates immutable snapshots and restores from them later.
 
-## TypeScript Implementation
+## TypeScript 实现
 
 `TextEditor` creates and restores text snapshots.
 
@@ -30,7 +30,7 @@ The originator creates immutable snapshots and restores from them later.
 npm run memento
 ```
 
-## Trade-offs
+## 权衡
 
 - Preserves encapsulation.
 - Snapshots can consume memory.

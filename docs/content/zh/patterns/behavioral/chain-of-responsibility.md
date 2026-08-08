@@ -8,21 +8,21 @@ source: "patterns/behavioral/chain-of-responsibility/README.md"
 
 # Chain of Responsibility
 
-> 本中文文档与英文原文保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
+> 本中文文档与源 README 保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
 
-## Intent
+## 意图
 
 Pass a request through a sequence of handlers until one rejects it or the chain completes.
 
-## Problem
+## 问题
 
 Validation and middleware often require reusable steps. One giant function makes ordering and reuse difficult.
 
-## Solution
+## 解决方案
 
 Represent each step as a handler linked to the next handler.
 
-## TypeScript Implementation
+## TypeScript 实现
 
 Support tickets pass through authentication, title, and priority handlers.
 
@@ -30,7 +30,7 @@ Support tickets pass through authentication, title, and priority handlers.
 npm run chain-of-responsibility
 ```
 
-## Trade-offs
+## 权衡
 
 - Great for middleware pipelines.
 - Runtime flow is indirect.

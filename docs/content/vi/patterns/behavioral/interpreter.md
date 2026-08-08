@@ -2,27 +2,27 @@
 title: "Interpreter"
 slug: "interpreter"
 group: "behavioral"
-groupLabel: "Behavioral"
+groupLabel: "Hành vi"
 source: "patterns/behavioral/interpreter/README.md"
 ---
 
 # Interpreter
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Represent a small grammar and evaluate sentences in that grammar.
 
-## Problem
+## Vấn đề
 
 Small rule systems can turn into rigid conditional logic when rules are hard-coded.
 
-## Solution
+## Giải pháp
 
 Represent grammar rules as expression objects that interpret themselves against a context.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 Boolean feature rules are composed from variable, AND, and OR expressions.
 
@@ -30,7 +30,7 @@ Boolean feature rules are composed from variable, AND, and OR expressions.
 npm run interpreter
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Good for small DSLs.
 - Complex grammars should use a parser library.

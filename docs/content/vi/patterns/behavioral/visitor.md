@@ -2,27 +2,27 @@
 title: "Visitor"
 slug: "visitor"
 group: "behavioral"
-groupLabel: "Behavioral"
+groupLabel: "Hành vi"
 source: "patterns/behavioral/visitor/README.md"
 ---
 
 # Visitor
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Add operations to a stable object structure without changing the object classes.
 
-## Problem
+## Vấn đề
 
 Tree structures often need many operations; putting all operations on nodes bloats the node classes.
 
-## Solution
+## Giải pháp
 
 Nodes accept a visitor object, and each visitor implements operations for each node type.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `SizeVisitor` calculates total size for a file tree.
 
@@ -30,7 +30,7 @@ Nodes accept a visitor object, and each visitor implements operations for each n
 npm run visitor
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Great when structure is stable and operations change.
 - Adding new node types requires updating visitors.

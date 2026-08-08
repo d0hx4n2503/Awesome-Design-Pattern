@@ -2,27 +2,27 @@
 title: "State"
 slug: "state"
 group: "behavioral"
-groupLabel: "Behavioral"
+groupLabel: "Hành vi"
 source: "patterns/behavioral/state/README.md"
 ---
 
 # State
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Allow an object to change behavior when its internal state changes.
 
-## Problem
+## Vấn đề
 
 Lifecycle-heavy objects often collect large conditional blocks based on state.
 
-## Solution
+## Giải pháp
 
 Represent each state as an object. The context delegates behavior to the current state and controls transitions.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `Order` delegates `pay()` and `ship()` to explicit state objects.
 
@@ -30,7 +30,7 @@ Represent each state as an object. The context delegates behavior to the current
 npm run state
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Reduces state conditionals.
 - Adds more objects.

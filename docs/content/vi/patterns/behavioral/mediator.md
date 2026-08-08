@@ -2,27 +2,27 @@
 title: "Mediator"
 slug: "mediator"
 group: "behavioral"
-groupLabel: "Behavioral"
+groupLabel: "Hành vi"
 source: "patterns/behavioral/mediator/README.md"
 ---
 
 # Mediator
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Centralize communication between collaborating objects so they do not depend on each other directly.
 
-## Problem
+## Vấn đề
 
 Many-to-many component communication creates tangled dependencies.
 
-## Solution
+## Giải pháp
 
 Participants talk to a mediator, and the mediator coordinates delivery.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `ChatRoom` routes messages between `ChatUser` instances.
 
@@ -30,7 +30,7 @@ Participants talk to a mediator, and the mediator coordinates delivery.
 npm run mediator
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Reduces direct coupling.
 - Mediator complexity can grow quickly.

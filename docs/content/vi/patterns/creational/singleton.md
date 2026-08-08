@@ -2,27 +2,27 @@
 title: "Singleton"
 slug: "singleton"
 group: "creational"
-groupLabel: "Creational"
+groupLabel: "Khởi tạo"
 source: "patterns/creational/singleton/README.md"
 ---
 
 # Singleton
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Ensure one controlled instance exists for a class and expose a single access point to it.
 
-## Problem
+## Vấn đề
 
 Shared runtime services such as configuration can become inconsistent when multiple instances are created independently.
 
-## Solution
+## Giải pháp
 
 Hide construction behind a static accessor. Keep the shared object small, explicit, and test-resettable.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `AppConfig` stores process-wide settings. `getInstance()` always returns the same object, while `resetForTest()` keeps tests isolated.
 
@@ -30,19 +30,19 @@ Hide construction behind a static accessor. Keep the shared object small, explic
 npm run singleton
 ```
 
-## When To Use
+## Khi nên dùng
 
 - One shared process-level object is required.
 - Multiple instances would create inconsistent state.
 - Central lifecycle control is valuable.
 
-## Trade-offs
+## Đánh đổi
 
 - Can hide dependencies.
 - Mutable global state can make tests fragile.
 - Dependency injection is often cleaner for application services.
 
-## Related Patterns
+## Pattern liên quan
 
 - Factory Method
 - Facade

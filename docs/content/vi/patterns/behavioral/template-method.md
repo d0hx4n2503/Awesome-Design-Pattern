@@ -2,27 +2,27 @@
 title: "Template Method"
 slug: "template-method"
 group: "behavioral"
-groupLabel: "Behavioral"
+groupLabel: "Hành vi"
 source: "patterns/behavioral/template-method/README.md"
 ---
 
 # Template Method
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Define the skeleton of an algorithm while allowing subclasses to customize selected steps.
 
-## Problem
+## Vấn đề
 
 Several workflows share the same high-level sequence but differ in small details. Duplicating the full workflow makes ordering rules inconsistent.
 
-## Solution
+## Giải pháp
 
 Keep the invariant workflow in a base class and defer variable steps to protected methods.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `DataImportJob` owns the import sequence. `CsvImportJob` customizes extraction and parsing while validation and persistence remain shared.
 
@@ -30,7 +30,7 @@ Keep the invariant workflow in a base class and defer variable steps to protecte
 npm run template-method
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Great for stable workflows.
 - Can become rigid because it relies on inheritance.

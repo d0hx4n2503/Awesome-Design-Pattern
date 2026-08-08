@@ -46,7 +46,15 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
               {locales.map((item) => <option value={item} selected={item === locale}>{localeLabels[item]}</option>)}
             </select>
           </label>
-          <button id="theme-toggle" type="button">{t.theme}</button>
+          <button
+            id="theme-toggle"
+            type="button"
+            data-theme-label={t.theme}
+            data-light-label={t.lightTheme}
+            data-dark-label={t.darkTheme}
+          >
+            {t.theme}: {t.lightTheme}
+          </button>
         </div>
 
         <input id="pattern-search" class="search" type="search" placeholder={t.searchPlaceholder} />

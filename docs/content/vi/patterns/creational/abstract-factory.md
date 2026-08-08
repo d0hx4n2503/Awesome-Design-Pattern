@@ -2,27 +2,27 @@
 title: "Abstract Factory"
 slug: "abstract-factory"
 group: "creational"
-groupLabel: "Creational"
+groupLabel: "Khởi tạo"
 source: "patterns/creational/abstract-factory/README.md"
 ---
 
 # Abstract Factory
 
-> This localized route is synced from the source pattern README and keeps technical terminology aligned with the TypeScript implementation.
+> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
 
-## Intent
+## Mục đích
 
 Create families of related objects without coupling clients to concrete classes.
 
-## Problem
+## Vấn đề
 
 Applications often need compatible product families such as light/dark UI components or provider-specific clients.
 
-## Solution
+## Giải pháp
 
 Expose a factory interface that creates a complete product family.
 
-## TypeScript Implementation
+## Triển khai TypeScript
 
 `ThemeFactory` creates matching buttons and checkboxes for light or dark themes.
 
@@ -30,7 +30,7 @@ Expose a factory interface that creates a complete product family.
 npm run abstract-factory
 ```
 
-## Trade-offs
+## Đánh đổi
 
 - Enforces product compatibility.
 - Adding a new product type changes all factories.
