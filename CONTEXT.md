@@ -38,17 +38,17 @@ The repository should not present design patterns as rules to apply everywhere. 
 
 ## Repository Areas
 
-| Path | Purpose |
-|---|---|
-| `.github/` | GitHub templates, workflow validation, and repository automation metadata |
-| `docs/` | Roadmaps, indexes, and supporting documentation |
-| `img/` | Future diagrams and visual assets |
-| `patterns/` | Documentation and implementation files for the 23 GoF patterns |
-| `scripts/` | Future helper scripts for validation or generation |
-| `test/` | Tests mirrored from the `patterns/` folder structure |
-| `README.md` | Primary public-facing project overview |
-| `CONTRIBUTING.md` | Contribution rules and review expectations |
-| `SECURITY.md` | Security reporting and scope |
+| Path              | Purpose                                                                   |
+| ----------------- | ------------------------------------------------------------------------- |
+| `.github/`        | GitHub templates, workflow validation, and repository automation metadata |
+| `docs/`           | Roadmaps, indexes, and supporting documentation                           |
+| `img/`            | Future diagrams and visual assets                                         |
+| `patterns/`       | Documentation and implementation files for the 23 GoF patterns            |
+| `scripts/`        | Future helper scripts for validation or generation                        |
+| `test/`           | Tests mirrored from the `patterns/` folder structure                      |
+| `README.md`       | Primary public-facing project overview                                    |
+| `CONTRIBUTING.md` | Contribution rules and review expectations                                |
+| `SECURITY.md`     | Security reporting and scope                                              |
 
 ## Pattern Folder Rules
 

@@ -20,7 +20,9 @@ export class EconomyShipping implements ShippingStrategy {
   quote(shipment: Shipment): ShippingQuote {
     return {
       carrier: "Economy",
-      costUsd: roundMoney(4 + shipment.weightKg * 0.8 + shipment.distanceKm * 0.03),
+      costUsd: roundMoney(
+        4 + shipment.weightKg * 0.8 + shipment.distanceKm * 0.03,
+      ),
       estimatedDays: 7,
     };
   }
@@ -30,7 +32,9 @@ export class ExpressShipping implements ShippingStrategy {
   quote(shipment: Shipment): ShippingQuote {
     return {
       carrier: "Express",
-      costUsd: roundMoney(12 + shipment.weightKg * 1.6 + shipment.distanceKm * 0.08),
+      costUsd: roundMoney(
+        12 + shipment.weightKg * 1.6 + shipment.distanceKm * 0.08,
+      ),
       estimatedDays: 2,
     };
   }
@@ -83,6 +87,9 @@ function roundMoney(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
   runStrategyExample();
 }

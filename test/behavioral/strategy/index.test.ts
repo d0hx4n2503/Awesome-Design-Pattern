@@ -22,7 +22,9 @@ describe("Strategy pattern", () => {
       new EconomyShipping(),
       new ExpressShipping(),
       new FreeShipping(),
-    ].map((strategy) => new CheckoutService(strategy).calculateShipping(standardShipment));
+    ].map((strategy) =>
+      new CheckoutService(strategy).calculateShipping(standardShipment),
+    );
 
     assert.deepEqual(quotes, [
       {

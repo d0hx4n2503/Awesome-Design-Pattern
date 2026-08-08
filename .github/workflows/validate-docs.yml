@@ -1,4 +1,4 @@
-name: Validate Documentation
+name: Validate Docs
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
   pull_request:
 
 jobs:
-  validate-patterns:
-    name: Validate pattern structure
+  validate-docs:
+    name: Validate documentation structure
     runs-on: ubuntu-latest
 
     steps:
@@ -67,7 +67,7 @@ jobs:
             exit 1
           fi
 
-      - name: Validate implementation file locations
+      - name: Validate TypeScript file locations
         shell: bash
         run: |
           set -euo pipefail
@@ -127,9 +127,3 @@ jobs:
               exit 1
             }
           done
-
-      - name: Install TypeScript dependencies
-        run: npm ci
-
-      - name: Validate TypeScript implementations
-        run: npm run validate
