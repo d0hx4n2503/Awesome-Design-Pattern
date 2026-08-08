@@ -1,43 +1,58 @@
-﻿# Iterator
+# Iterator
 
-## Mục Đích
+## Intent
 
-Duyệt collection mà không lộ cấu trúc lưu trữ bên trong.
+Iterator provides a standard way to traverse a collection without exposing its internal representation.
 
-## Vấn Đề
+## Problem
 
-Client cần đi qua các phần tử nhưng không nên biết collection dùng array, tree, graph hay structure khác.
+Client code often needs to traverse data, but it should not depend on whether that data is stored as an array, tree, page cursor, or custom structure. Exposing internal storage makes later changes expensive.
 
-## Ý Tưởng Cốt Lõi
+## Solution
 
-Tách phần hành vi thay đổi ra thành object, protocol, hoặc workflow rõ ràng để các object cộng tác với nhau mà không phụ thuộc chặt vào chi tiết của nhau.
+Expose iteration through a stable iterator protocol. Clients consume values sequentially while the collection owns traversal details.
 
-## Khi Nên Dùng
+## TypeScript Implementation
 
-Khi muốn chuẩn hóa cách duyệt; khi collection có nhiều kiểu traversal; khi cần che giấu internal structure.
+This implementation models paginated search results:
 
-## Khi Không Nên Dùng
+- `PaginatedResults` stores items internally by pages.
+- It implements `Iterable<T>` so callers can use `for...of`.
+- Clients do not need to know how pages are stored.
 
-Khi collection rất đơn giản và abstraction không cần thiết; khi traversal cần tối ưu đặc thù.
+Run it from the repository root:
 
-## Dấu Hiệu Nhận Biết
+```bash
+npm run iterator
+```
 
-- Logic hành vi có nhiều nhánh hoặc nhiều biến thể.
-- Object đang biết quá nhiều về object khác.
-- Thay đổi một rule làm ảnh hưởng nhiều class không liên quan.
+## When To Use
 
-## Ưu Điểm
+- Collection internals should remain hidden.
+- You need a consistent traversal API.
+- A collection supports custom ordering or pagination.
+- Clients should not manage indexes manually.
 
-- Làm hành vi dễ thay đổi và dễ test độc lập hơn.
-- Giảm phụ thuộc trực tiếp giữa các object cộng tác.
-- Giúp workflow hoặc rule phức tạp có cấu trúc rõ ràng hơn.
+## When Not To Use
 
-## Nhược Điểm
+- A plain array is already enough.
+- Traversal requires highly specialized performance controls.
+- The iterator hides important side effects such as network calls.
 
-- Có thể làm tăng số lượng object/class.
-- Flow runtime đôi khi khó lần theo hơn gọi trực tiếp.
-- Dễ bị lạm dụng nếu bài toán chỉ có một hành vi đơn giản.
+## Benefits
 
-## Pattern Liên Quan
+- Encapsulates traversal logic.
+- Keeps client code simple.
+- Allows collection internals to change later.
 
-Composite, Visitor
+## Trade-offs
+
+- Adds abstraction around simple loops.
+- Lazy iteration can surprise callers if side effects are involved.
+- Custom iterators need clear naming and tests.
+
+## Related Patterns
+
+- Composite
+- Visitor
+- Interpreter
