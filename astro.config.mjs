@@ -5,7 +5,7 @@ export default defineConfig({
   publicDir: "./docs/public",
   outDir: "./dist/site",
   site: "https://d0hx4n2503.github.io",
-  base: "/typescript-design-patterns-handbook/",
+  base: "/Typescript-Design-Patterns-Handbook/",
   markdown: {
     shikiConfig: {
       theme: "github-dark",

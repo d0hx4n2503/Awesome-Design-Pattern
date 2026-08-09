@@ -73,7 +73,7 @@ npm run docs:dev
 Open the local docs site at:
 
 ```text
-http://localhost:4321/typescript-design-patterns-handbook/
+http://localhost:4321/Typescript-Design-Patterns-Handbook/
 ```
 
 Run an individual pattern example:
@@ -153,7 +153,7 @@ A practical rule: **start simple, wait for pressure, then refactor toward a patt
 ## Repository Structure
 
 ```text
-typescript-design-patterns-handbook/
+Typescript-Design-Patterns-Handbook/
 |-- .github/
 |   |-- ISSUE_TEMPLATE/
 |   |-- PULL_REQUEST_TEMPLATE/
