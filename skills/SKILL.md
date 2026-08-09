@@ -25,6 +25,17 @@ Before recommending a pattern, verify at least one of these pressures exists:
 
 If none of these pressures exists, recommend a simpler solution first.
 
+## NestJS Framework Integration Rules
+
+When working in a NestJS codebase, map Gang of Four patterns to NestJS native constructs instead of writing custom classes:
+
+- **Singleton**: Do NOT implement custom Singleton classes. Use NestJS Dependency Injection (DI) with `@Injectable()` and default singleton scope providers.
+- **Strategy**: For authentication/authorization policies, prefer NestJS `Guards` combined with Passport strategies (`@nestjs/passport`).
+- **Chain of Responsibility**: For request preprocessing, validation, or auditing, use NestJS `Middleware`, `Interceptor`, `Guard`, or `ValidationPipe`.
+- **Decorator**: Use NestJS custom decorators (`createParamDecorator`) or standard TS decorators to attach metadata.
+- **Observer**: Use `@nestjs/event-emitter` (`EventEmitter2` and `@OnEvent`) for event-driven flows.
+- **Factory**: Use NestJS Custom Providers with `useFactory` when instantiation logic requires configuration.
+
 ## Required Workflow
 
 Follow this workflow before suggesting a pattern.
