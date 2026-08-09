@@ -34,16 +34,16 @@ const html = marked
 ---
 
 <DocsLayout>
-  <Fragment slot="title">{pattern.title} Â· </Fragment>
+  <Fragment slot="title">{pattern.title} ? </Fragment>
   <div class="doc-shell">
     <article class="doc-page">
       <header class="doc-header">
         <p class="eyebrow">{pattern.groupLabel}</p>
         <h1>{pattern.title}</h1>
         <div class="meta-grid">
-          <a href={`https://github.com/d0hx4n2503/Awesome-Design-Pattern/blob/main/${pattern.source}`}>Docs Â· {t.source}</a>
-          <a href={`https://github.com/d0hx4n2503/Awesome-Design-Pattern/blob/main/${pattern.implementationPath}`}>Code Â· {t.implementation}</a>
-          <a href={`https://github.com/d0hx4n2503/Awesome-Design-Pattern/blob/main/${pattern.testPath}`}>Tests Â· {t.tests}</a>
+          <a href={`https://github.com/d0hx4n2503/Typescript-Design-Patterns-Handbook/blob/main/${pattern.source}`}>Docs ? {t.source}</a>
+          <a href={`https://github.com/d0hx4n2503/Typescript-Design-Patterns-Handbook/blob/main/${pattern.implementationPath}`}>Code ? {t.implementation}</a>
+          <a href={`https://github.com/d0hx4n2503/Typescript-Design-Patterns-Handbook/blob/main/${pattern.testPath}`}>Tests ? {t.tests}</a>
         </div>
       </header>
       <div class="markdown" set:html={html} />
