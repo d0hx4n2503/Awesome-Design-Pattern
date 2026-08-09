@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for contributing to **Awe Design Pattern**.
+Thank you for contributing to **TypeScript Design Patterns Handbook**.
 
 This repository is designed to be a professional, documentation-first reference for the 23 Gang of Four design patterns. Contributions should make the material clearer, more accurate, easier to navigate, or more useful in real engineering contexts.
 

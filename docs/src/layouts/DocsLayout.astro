@@ -21,7 +21,7 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={t.tagline} />
-    <title><slot name="title" />Awesome Design Pattern</title>
+    <title><slot name="title" />TypeScript Design Patterns Handbook</title>
     <script is:inline>
       const savedTheme = localStorage.getItem("theme");
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -31,13 +31,13 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
   <body>
     <header class="topbar">
       <div class="topbar-main">
-        <a class="brand" href={`${base}${locale}/`} aria-label="Awesome Design Pattern home">
+        <a class="brand" href={`${base}${locale}/`} aria-label="TypeScript Design Patterns Handbook home">
           <span class="brand-symbol" aria-hidden="true">
             <span></span>
             <span></span>
             <span></span>
           </span>
-          <strong>Awesome Patterns</strong>
+          <strong>TS Patterns Handbook</strong>
         </a>
 
         <div class="search-wrap">
@@ -75,7 +75,7 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
         <a href={`${base}${locale}/patterns/creational/factory-method/`}>Creational</a>
         <a href={`${base}${locale}/patterns/structural/adapter/`}>Structural</a>
         <a href={`${base}${locale}/patterns/behavioral/strategy/`}>Behavioral</a>
-        <a href="https://github.com/d0hx4n2503/Awesome-Design-Pattern">GitHub</a>
+        <a href="https://github.com/d0hx4n2503/typescript-design-patterns-handbook">GitHub</a>
       </nav>
     </header>
 

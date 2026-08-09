@@ -2,7 +2,7 @@
 
 ## Summary
 
-Awe Design Pattern is a documentation-first repository for the 23 Gang of Four design patterns. The repository is intended to become a professional learning and reference resource before it becomes an implementation catalog.
+TypeScript Design Patterns Handbook is a documentation-first repository for the 23 Gang of Four design patterns. The repository is intended to become a professional learning and reference resource before it becomes an implementation catalog.
 
 The project emphasizes practical engineering judgment: when a pattern helps, when it creates unnecessary complexity, and how patterns relate to real software design decisions.
 
