@@ -8,81 +8,61 @@ source: "patterns/behavioral/interpreter/README.md"
 
 # Interpreter
 
-> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
-
 ## Mục đích
 
-Represent a small grammar and evaluate sentences in that grammar.
+Biểu diễn và evaluate một DSL nhỏ hoặc expression tree bằng object model rõ ràng.
 
 ## Vấn đề
 
-Small rule systems can turn into rigid conditional logic when rules are hard-coded.
+Rule dạng string, filter hoặc condition phức tạp nếu parse/evaluate ad-hoc sẽ khó mở rộng và khó báo lỗi.
 
-## Giải pháp
+## Ý tưởng cốt lõi
 
-Represent grammar rules as expression objects that interpret themselves against a context.
-
-## Triển khai TypeScript
-
-Boolean feature rules are composed from variable, AND, and OR expressions.
-
-```bash
-npm run interpreter
-```
-
-## Đánh đổi
-
-- Good for small DSLs.
-- Complex grammars should use a parser library.
+Mỗi grammar concept là expression object; expression evaluate dựa trên context.
 
 ## Góc nhìn thực tế
 
-Behavioral patterns are about distributing responsibilities between objects so workflows stay understandable as rules grow.
-
-For Interpreter, the important question is not “can I draw the UML diagram?” but “what dependency or decision becomes easier to change after I introduce this pattern?” In production code, the pattern should make ownership clearer, reduce accidental coupling, and give tests a natural seam.
+Interpreter không nên được dùng chỉ vì tên pattern nghe "xịn". Nó chỉ đáng dùng khi giúp code bớt phụ thuộc sai chỗ, làm thay đổi trong tương lai rẻ hơn, và tạo seam rõ ràng để test.
 
 ## Tình huống áp dụng thực tế
 
-- Business rules that vary by tenant or product where Interpreter keeps responsibilities separated.
-- Workflow orchestration where Interpreter keeps responsibilities separated.
-- Event-driven UI or domain flows where Interpreter keeps responsibilities separated.
-- Validation, authorization, pricing, routing, or lifecycle logic where Interpreter keeps responsibilities separated.
+- Dự án TypeScript có phần hành vi đang tăng biến thể.
+- Code bắt đầu có nhiều nhánh điều kiện quanh cùng một quyết định.
+- Team cần một cấu trúc đủ rõ để người mới đọc vẫn hiểu runtime flow.
 
-## Câu hỏi ra quyết định
+## Khi nên dùng
 
-- Which object owns the decision?
-- Can a rule change without editing stable workflow code?
-- Is runtime behavior explicit enough to debug?
-- Use it for small domain-specific rule languages or expression trees.
-- Do not grow it into a full programming language accidentally.
+- DSL nhỏ và ổn định.
+- Rule cần compose/store/inspect.
+- Feature flag, filter, eligibility rule.
+
+## Khi không nên dùng
+
+- Grammar lớn hoặc thay đổi liên tục.
+- Parser/rules engine có sẵn phù hợp hơn.
+- Predicate đơn giản đã đủ.
 
 ## Checklist thiết kế
 
-- Start with the client code: define the interface you want callers to depend on.
-- Keep concrete classes small and named after one responsibility.
-- Make creation, selection, delegation, or notification rules explicit instead of hidden in conditionals.
-- Prefer composition roots for wiring objects together.
-- Document the reason for using the pattern so future contributors do not cargo-cult it.
+- Bắt đầu từ caller: caller thật sự cần contract nào?
+- Đặt tên abstraction theo domain, không chỉ theo tên pattern.
+- Giữ concrete class nhỏ và chỉ có một lý do để thay đổi.
+- Test qua public interface thay vì private detail.
+- Nếu thêm pattern làm code khó đọc hơn, hãy quay lại giải pháp đơn giản hơn.
 
 ## Lỗi thường gặp
 
-- Adding the pattern before the code has a real variation point.
-- Creating abstractions that only rename concrete classes.
-- Hiding important runtime behavior so debugging becomes harder.
-- Letting examples stay toy-sized without showing where the pattern boundary sits in real code.
-- Forgetting tests for negative paths, invalid states, or fallback behavior.
+- Áp dụng pattern khi mới có một biến thể giả định.
+- Tạo interface chỉ để bọc một class cùng tên.
+- Ẩn runtime flow khiến debug khó hơn.
+- Dùng pattern để khoe kiến thức thay vì giải quyết pressure thật.
 
 ## Hướng dẫn kiểm thử
 
-- Test through the public abstraction, not private implementation details.
-- Use fakes or test doubles for collaborators so the pattern seam is verified.
-- Add one integration-style test proving the objects are wired correctly.
-- Cover edge cases that motivated the pattern: missing strategy, rejected state transition, failed handler, invalid factory family, stale proxy cache, or similar.
-- Keep tests named after behavior and business outcome rather than pattern terminology.
+- Test từng concrete behavior hoặc collaborator riêng.
+- Test caller với fake implementation để chứng minh boundary hữu ích.
+- Thêm case lỗi/edge case đúng với lý do bạn chọn pattern.
 
-## Dấu hiệu refactor
+## Triển khai TypeScript
 
-- The pattern is useful when adding a new variation no longer requires editing stable caller code.
-- It is probably overdesigned when every new class has only one trivial method and no independent reason to exist.
-- If contributors cannot explain the runtime flow quickly, simplify the wiring or improve names.
-- If tests must mock too many layers, the abstraction boundary is likely in the wrong place.
+Thư mục pattern có ví dụ TypeScript chạy được trong `index.ts`. Hãy đọc code cùng test tương ứng để thấy pattern boundary nằm ở đâu và vì sao caller không cần phụ thuộc vào chi tiết triển khai.

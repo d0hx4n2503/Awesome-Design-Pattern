@@ -362,6 +362,16 @@ select:hover,
   background: var(--accent-soft);
 }
 
+.search-empty {
+  padding: 10px;
+  margin: 14px 8px 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+}
+
 .content {
   width: 100%;
   padding: 28px clamp(24px, 4vw, 56px) 80px;

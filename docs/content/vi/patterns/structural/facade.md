@@ -8,113 +8,61 @@ source: "patterns/structural/facade/README.md"
 
 # Facade
 
-> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
-
 ## Mục đích
 
-Facade provides a simple, stable interface over a more complex subsystem.
+Cung cấp một API đơn giản, theo use case, che đi orchestration phức tạp phía sau.
 
 ## Vấn đề
 
-Client code often needs to coordinate several services to complete one business workflow. If every caller knows the subsystem details, the workflow is duplicated and changes become risky.
+Nhiều caller cùng phải gọi cart, inventory, payment, email theo đúng thứ tự sẽ tạo duplication và lỗi khó kiểm soát.
 
-## Giải pháp
+## Ý tưởng cốt lõi
 
-Create a facade that exposes a high-level operation. The facade orchestrates the subsystem internally while clients depend on one clear API.
-
-## Triển khai TypeScript
-
-This implementation models order placement:
-
-- `InventoryService`, `PaymentService`, and `ShippingService` are subsystem services.
-- `OrderFacade` coordinates the workflow.
-- Callers place an order through one method instead of orchestrating every subsystem.
-
-Run it from the repository root:
-
-```bash
-npm run facade
-```
-
-## Khi nên dùng
-
-- A workflow requires several subsystem calls.
-- Client code is coupled to too many internal services.
-- You want a clean module or service boundary.
-- The subsystem is valid but too detailed for most callers.
-
-## Khi không nên dùng
-
-- The facade becomes a god object.
-- It hides important domain decisions from callers.
-- The subsystem is already simple and stable.
-
-## Lợi ích
-
-- Reduces coupling at module boundaries.
-- Centralizes workflow orchestration.
-- Makes common operations easier to use correctly.
-
-## Đánh đổi
-
-- Can become too broad if not scoped carefully.
-- May hide useful lower-level capabilities.
-- Needs clear naming to avoid becoming a vague service layer.
-
-## Pattern liên quan
-
-- Adapter
-- Mediator
-- Proxy
+Facade gom workflow phổ biến thành một entry point rõ nghĩa, xử lý ordering và error ở một nơi.
 
 ## Góc nhìn thực tế
 
-Structural patterns are about shaping relationships between objects so systems can evolve without rewriting every caller.
-
-For Facade, the important question is not “can I draw the UML diagram?” but “what dependency or decision becomes easier to change after I introduce this pattern?” In production code, the pattern should make ownership clearer, reduce accidental coupling, and give tests a natural seam.
+Facade không nên được dùng chỉ vì tên pattern nghe "xịn". Nó chỉ đáng dùng khi giúp code bớt phụ thuộc sai chỗ, làm thay đổi trong tương lai rẻ hơn, và tạo seam rõ ràng để test.
 
 ## Tình huống áp dụng thực tế
 
-- Third-party API boundaries where Facade keeps responsibilities separated.
-- Legacy migration layers where Facade keeps responsibilities separated.
-- UI component composition where Facade keeps responsibilities separated.
-- Cross-cutting wrappers such as caching, logging, or access checks where Facade keeps responsibilities separated.
+- Dự án TypeScript có phần cấu trúc đang tăng biến thể.
+- Code bắt đầu có nhiều nhánh điều kiện quanh cùng một quyết định.
+- Team cần một cấu trúc đủ rõ để người mới đọc vẫn hiểu runtime flow.
 
-## Câu hỏi ra quyết định
+## Khi nên dùng
 
-- Which interface should client code depend on?
-- Where should translation, composition, or access control live?
-- Does this abstraction reduce coupling or just rename it?
-- Use it to expose one task-focused operation over a complex subsystem.
-- Avoid letting the facade become a dumping ground for unrelated workflows.
+- Một use case cần phối hợp nhiều subsystem.
+- Caller chỉ cần thao tác mức nghiệp vụ.
+- Muốn thống nhất error handling.
+
+## Khi không nên dùng
+
+- Facade thành god service chứa mọi thứ.
+- Caller cần kiểm soát chi tiết từng subsystem.
+- Bạn đang che giấu domain model nên được tách rõ hơn.
 
 ## Checklist thiết kế
 
-- Start with the client code: define the interface you want callers to depend on.
-- Keep concrete classes small and named after one responsibility.
-- Make creation, selection, delegation, or notification rules explicit instead of hidden in conditionals.
-- Prefer composition roots for wiring objects together.
-- Document the reason for using the pattern so future contributors do not cargo-cult it.
+- Bắt đầu từ caller: caller thật sự cần contract nào?
+- Đặt tên abstraction theo domain, không chỉ theo tên pattern.
+- Giữ concrete class nhỏ và chỉ có một lý do để thay đổi.
+- Test qua public interface thay vì private detail.
+- Nếu thêm pattern làm code khó đọc hơn, hãy quay lại giải pháp đơn giản hơn.
 
 ## Lỗi thường gặp
 
-- Adding the pattern before the code has a real variation point.
-- Creating abstractions that only rename concrete classes.
-- Hiding important runtime behavior so debugging becomes harder.
-- Letting examples stay toy-sized without showing where the pattern boundary sits in real code.
-- Forgetting tests for negative paths, invalid states, or fallback behavior.
+- Áp dụng pattern khi mới có một biến thể giả định.
+- Tạo interface chỉ để bọc một class cùng tên.
+- Ẩn runtime flow khiến debug khó hơn.
+- Dùng pattern để khoe kiến thức thay vì giải quyết pressure thật.
 
 ## Hướng dẫn kiểm thử
 
-- Test through the public abstraction, not private implementation details.
-- Use fakes or test doubles for collaborators so the pattern seam is verified.
-- Add one integration-style test proving the objects are wired correctly.
-- Cover edge cases that motivated the pattern: missing strategy, rejected state transition, failed handler, invalid factory family, stale proxy cache, or similar.
-- Keep tests named after behavior and business outcome rather than pattern terminology.
+- Test từng concrete behavior hoặc collaborator riêng.
+- Test caller với fake implementation để chứng minh boundary hữu ích.
+- Thêm case lỗi/edge case đúng với lý do bạn chọn pattern.
 
-## Dấu hiệu refactor
+## Triển khai TypeScript
 
-- The pattern is useful when adding a new variation no longer requires editing stable caller code.
-- It is probably overdesigned when every new class has only one trivial method and no independent reason to exist.
-- If contributors cannot explain the runtime flow quickly, simplify the wiring or improve names.
-- If tests must mock too many layers, the abstraction boundary is likely in the wrong place.
+Thư mục pattern có ví dụ TypeScript chạy được trong `index.ts`. Hãy đọc code cùng test tương ứng để thấy pattern boundary nằm ở đâu và vì sao caller không cần phụ thuộc vào chi tiết triển khai.

@@ -8,81 +8,61 @@ source: "patterns/structural/bridge/README.md"
 
 # Bridge
 
-> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
-
 ## Mục đích
 
-Separate an abstraction from its implementation so both can evolve independently.
+Tách abstraction khỏi implementation để hai chiều biến thể phát triển độc lập.
 
 ## Vấn đề
 
-Two independent dimensions of variation can create a subclass explosion.
+Hai trục biến thể tạo class explosion như EmailPdfReport, SmsPdfReport, EmailHtmlReport...
 
-## Giải pháp
+## Ý tưởng cốt lõi
 
-Keep one dimension as an abstraction and delegate the other to an implementation interface.
-
-## Triển khai TypeScript
-
-`InfoAlert` and `CriticalAlert` are alert abstractions. `EmailChannel` and `SlackChannel` are delivery implementations. Either alert can be combined with either channel without creating classes such as `CriticalSlackAlert` or `InfoEmailAlert`.
-
-```bash
-npm run bridge
-```
-
-## Đánh đổi
-
-- Avoids subclass explosion.
-- Adds composition and interfaces.
+Một chiều nằm ở abstraction, chiều còn lại nằm sau implementation interface.
 
 ## Góc nhìn thực tế
 
-Structural patterns are about shaping relationships between objects so systems can evolve without rewriting every caller.
-
-For Bridge, the important question is not “can I draw the UML diagram?” but “what dependency or decision becomes easier to change after I introduce this pattern?” In production code, the pattern should make ownership clearer, reduce accidental coupling, and give tests a natural seam.
+Bridge không nên được dùng chỉ vì tên pattern nghe "xịn". Nó chỉ đáng dùng khi giúp code bớt phụ thuộc sai chỗ, làm thay đổi trong tương lai rẻ hơn, và tạo seam rõ ràng để test.
 
 ## Tình huống áp dụng thực tế
 
-- Third-party API boundaries where Bridge keeps responsibilities separated.
-- Legacy migration layers where Bridge keeps responsibilities separated.
-- UI component composition where Bridge keeps responsibilities separated.
-- Cross-cutting wrappers such as caching, logging, or access checks where Bridge keeps responsibilities separated.
+- Dự án TypeScript có phần cấu trúc đang tăng biến thể.
+- Code bắt đầu có nhiều nhánh điều kiện quanh cùng một quyết định.
+- Team cần một cấu trúc đủ rõ để người mới đọc vẫn hiểu runtime flow.
 
-## Câu hỏi ra quyết định
+## Khi nên dùng
 
-- Which interface should client code depend on?
-- Where should translation, composition, or access control live?
-- Does this abstraction reduce coupling or just rename it?
-- Use it when two independent variation axes would otherwise create class explosion.
-- Keep abstraction and implementation interfaces from leaking into each other.
+- Có hai variation axes độc lập.
+- Muốn thay implementation mà không đổi abstraction.
+- Subclass combination đang tăng nhanh.
+
+## Khi không nên dùng
+
+- Chỉ có một trục biến thể.
+- Strategy đủ đơn giản hơn.
+- Hai phía không thật sự độc lập.
 
 ## Checklist thiết kế
 
-- Start with the client code: define the interface you want callers to depend on.
-- Keep concrete classes small and named after one responsibility.
-- Make creation, selection, delegation, or notification rules explicit instead of hidden in conditionals.
-- Prefer composition roots for wiring objects together.
-- Document the reason for using the pattern so future contributors do not cargo-cult it.
+- Bắt đầu từ caller: caller thật sự cần contract nào?
+- Đặt tên abstraction theo domain, không chỉ theo tên pattern.
+- Giữ concrete class nhỏ và chỉ có một lý do để thay đổi.
+- Test qua public interface thay vì private detail.
+- Nếu thêm pattern làm code khó đọc hơn, hãy quay lại giải pháp đơn giản hơn.
 
 ## Lỗi thường gặp
 
-- Adding the pattern before the code has a real variation point.
-- Creating abstractions that only rename concrete classes.
-- Hiding important runtime behavior so debugging becomes harder.
-- Letting examples stay toy-sized without showing where the pattern boundary sits in real code.
-- Forgetting tests for negative paths, invalid states, or fallback behavior.
+- Áp dụng pattern khi mới có một biến thể giả định.
+- Tạo interface chỉ để bọc một class cùng tên.
+- Ẩn runtime flow khiến debug khó hơn.
+- Dùng pattern để khoe kiến thức thay vì giải quyết pressure thật.
 
 ## Hướng dẫn kiểm thử
 
-- Test through the public abstraction, not private implementation details.
-- Use fakes or test doubles for collaborators so the pattern seam is verified.
-- Add one integration-style test proving the objects are wired correctly.
-- Cover edge cases that motivated the pattern: missing strategy, rejected state transition, failed handler, invalid factory family, stale proxy cache, or similar.
-- Keep tests named after behavior and business outcome rather than pattern terminology.
+- Test từng concrete behavior hoặc collaborator riêng.
+- Test caller với fake implementation để chứng minh boundary hữu ích.
+- Thêm case lỗi/edge case đúng với lý do bạn chọn pattern.
 
-## Dấu hiệu refactor
+## Triển khai TypeScript
 
-- The pattern is useful when adding a new variation no longer requires editing stable caller code.
-- It is probably overdesigned when every new class has only one trivial method and no independent reason to exist.
-- If contributors cannot explain the runtime flow quickly, simplify the wiring or improve names.
-- If tests must mock too many layers, the abstraction boundary is likely in the wrong place.
+Thư mục pattern có ví dụ TypeScript chạy được trong `index.ts`. Hãy đọc code cùng test tương ứng để thấy pattern boundary nằm ở đâu và vì sao caller không cần phụ thuộc vào chi tiết triển khai.

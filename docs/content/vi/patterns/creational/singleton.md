@@ -8,94 +8,61 @@ source: "patterns/creational/singleton/README.md"
 
 # Singleton
 
-> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
-
 ## Mục đích
 
-Ensure one controlled instance exists for a class and expose a single access point to it.
+Đảm bảo chỉ có một instance dùng chung trong phạm vi process.
 
 ## Vấn đề
 
-Shared runtime services such as configuration can become inconsistent when multiple instances are created independently.
+Một số infrastructure như config hoặc logger cần shared lifecycle; nhiều instance có thể gây state lệch hoặc tốn resource.
 
-## Giải pháp
+## Ý tưởng cốt lõi
 
-Hide construction behind a static accessor. Keep the shared object small, explicit, and test-resettable.
-
-## Triển khai TypeScript
-
-`AppConfig` stores process-wide settings. `getInstance()` always returns the same object, while `resetForTest()` keeps tests isolated.
-
-```bash
-npm run singleton
-```
-
-## Khi nên dùng
-
-- One shared process-level object is required.
-- Multiple instances would create inconsistent state.
-- Central lifecycle control is valuable.
-
-## Đánh đổi
-
-- Can hide dependencies.
-- Mutable global state can make tests fragile.
-- Dependency injection is often cleaner for application services.
-
-## Pattern liên quan
-
-- Factory Method
-- Facade
-- Flyweight
+Ẩn constructor và cung cấp access point có kiểm soát cho shared instance.
 
 ## Góc nhìn thực tế
 
-Creational patterns are about controlling object creation so callers do not depend on concrete construction details.
-
-For Singleton, the important question is not “can I draw the UML diagram?” but “what dependency or decision becomes easier to change after I introduce this pattern?” In production code, the pattern should make ownership clearer, reduce accidental coupling, and give tests a natural seam.
+Singleton không nên được dùng chỉ vì tên pattern nghe "xịn". Nó chỉ đáng dùng khi giúp code bớt phụ thuộc sai chỗ, làm thay đổi trong tương lai rẻ hơn, và tạo seam rõ ràng để test.
 
 ## Tình huống áp dụng thực tế
 
-- Framework integration points where Singleton keeps responsibilities separated.
-- Configuration-driven runtime behavior where Singleton keeps responsibilities separated.
-- Test fixture creation where Singleton keeps responsibilities separated.
-- Infrastructure objects whose setup should be centralized where Singleton keeps responsibilities separated.
+- Dự án TypeScript có phần khởi tạo đang tăng biến thể.
+- Code bắt đầu có nhiều nhánh điều kiện quanh cùng một quyết định.
+- Team cần một cấu trúc đủ rõ để người mới đọc vẫn hiểu runtime flow.
 
-## Câu hỏi ra quyết định
+## Khi nên dùng
 
-- Who owns object creation?
-- Which concrete type should callers be allowed to know?
-- Can invalid combinations be prevented at construction time?
-- Use it only when one process-wide instance is a real invariant.
-- Prefer dependency injection when global access would hide dependencies.
+- Một instance process-wide là invariant thật.
+- Object quản lý infrastructure, không phải state theo user/request.
+- Lifecycle dễ reset khi test.
+
+## Khi không nên dùng
+
+- Chỉ muốn global variable tiện tay.
+- Object chứa mutable state nghiệp vụ.
+- Dependency injection quản lý lifetime rõ hơn.
 
 ## Checklist thiết kế
 
-- Start with the client code: define the interface you want callers to depend on.
-- Keep concrete classes small and named after one responsibility.
-- Make creation, selection, delegation, or notification rules explicit instead of hidden in conditionals.
-- Prefer composition roots for wiring objects together.
-- Document the reason for using the pattern so future contributors do not cargo-cult it.
+- Bắt đầu từ caller: caller thật sự cần contract nào?
+- Đặt tên abstraction theo domain, không chỉ theo tên pattern.
+- Giữ concrete class nhỏ và chỉ có một lý do để thay đổi.
+- Test qua public interface thay vì private detail.
+- Nếu thêm pattern làm code khó đọc hơn, hãy quay lại giải pháp đơn giản hơn.
 
 ## Lỗi thường gặp
 
-- Adding the pattern before the code has a real variation point.
-- Creating abstractions that only rename concrete classes.
-- Hiding important runtime behavior so debugging becomes harder.
-- Letting examples stay toy-sized without showing where the pattern boundary sits in real code.
-- Forgetting tests for negative paths, invalid states, or fallback behavior.
+- Áp dụng pattern khi mới có một biến thể giả định.
+- Tạo interface chỉ để bọc một class cùng tên.
+- Ẩn runtime flow khiến debug khó hơn.
+- Dùng pattern để khoe kiến thức thay vì giải quyết pressure thật.
 
 ## Hướng dẫn kiểm thử
 
-- Test through the public abstraction, not private implementation details.
-- Use fakes or test doubles for collaborators so the pattern seam is verified.
-- Add one integration-style test proving the objects are wired correctly.
-- Cover edge cases that motivated the pattern: missing strategy, rejected state transition, failed handler, invalid factory family, stale proxy cache, or similar.
-- Keep tests named after behavior and business outcome rather than pattern terminology.
+- Test từng concrete behavior hoặc collaborator riêng.
+- Test caller với fake implementation để chứng minh boundary hữu ích.
+- Thêm case lỗi/edge case đúng với lý do bạn chọn pattern.
 
-## Dấu hiệu refactor
+## Triển khai TypeScript
 
-- The pattern is useful when adding a new variation no longer requires editing stable caller code.
-- It is probably overdesigned when every new class has only one trivial method and no independent reason to exist.
-- If contributors cannot explain the runtime flow quickly, simplify the wiring or improve names.
-- If tests must mock too many layers, the abstraction boundary is likely in the wrong place.
+Thư mục pattern có ví dụ TypeScript chạy được trong `index.ts`. Hãy đọc code cùng test tương ứng để thấy pattern boundary nằm ở đâu và vì sao caller không cần phụ thuộc vào chi tiết triển khai.

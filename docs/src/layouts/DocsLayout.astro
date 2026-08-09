@@ -23,9 +23,13 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
     <meta name="description" content={t.tagline} />
     <title><slot name="title" />TypeScript Design Patterns Handbook</title>
     <script is:inline>
-      const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      document.documentElement.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
+      try {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
     </script>
   </head>
   <body>
