@@ -1,88 +1,68 @@
 ---
-title: "Mediator"
+title: "中介者"
 slug: "mediator"
 group: "behavioral"
 groupLabel: "行为型"
 source: "patterns/behavioral/mediator/README.md"
 ---
 
-# Mediator
-
-> 本中文文档与源 README 保持同步，并保留关键技术术语，方便与 TypeScript 实现对照阅读。
+# 中介者
 
 ## 意图
 
-Centralize communication between collaborating objects so they do not depend on each other directly.
+用 中介者 模式把变化点放到清晰的抽象边界后面。
 
 ## 问题
 
-Many-to-many component communication creates tangled dependencies.
+当代码开始因为不同规则、状态、提供商或结构而出现大量条件分支时，稳定流程会被迫理解太多细节。
 
-## 解决方案
+## 核心思想
 
-Participants talk to a mediator, and the mediator coordinates delivery.
-
-## TypeScript 实现
-
-`ChatRoom` routes messages between `ChatUser` instances.
-
-```bash
-npm run mediator
-```
-
-## 权衡
-
-- Reduces direct coupling.
-- Mediator complexity can grow quickly.
+中介者 的核心是让调用方依赖稳定契约，把真正变化的部分移动到独立对象或协作结构中。
 
 ## 实战视角
 
-Behavioral patterns are about distributing responsibilities between objects so workflows stay understandable as rules grow.
-
-For Mediator, the important question is not “can I draw the UML diagram?” but “what dependency or decision becomes easier to change after I introduce this pattern?” In production code, the pattern should make ownership clearer, reduce accidental coupling, and give tests a natural seam.
+不要为了“用了设计模式”而使用 中介者。它应该解决真实的变化压力：减少错误依赖、降低未来修改成本，并让测试边界更清晰。
 
 ## 真实场景
 
-- Business rules that vary by tenant or product where Mediator keeps responsibilities separated.
-- Workflow orchestration where Mediator keeps responsibilities separated.
-- Event-driven UI or domain flows where Mediator keeps responsibilities separated.
-- Validation, authorization, pricing, routing, or lifecycle logic where Mediator keeps responsibilities separated.
+- TypeScript 项目中的行为型职责正在出现多个变体。
+- 同一个决策点周围开始出现越来越多条件分支。
+- 团队需要一种新人也能快速理解的运行时结构。
 
-## 决策问题
+## 适用场景
 
-- Which object owns the decision?
-- Can a rule change without editing stable workflow code?
-- Is runtime behavior explicit enough to debug?
-- Use it when many components coordinate through a shared collaboration policy.
-- Split large mediators before they become god objects.
+- 已经存在多个真实变体，并且这些变体会继续增长。
+- 调用方不应该知道 中介者 背后的具体实现细节。
+- 引入该模式后，新增规则、状态、产品或协作者不需要修改稳定流程。
+
+## 不适用场景
+
+- 当前只有一个实现，而且短期内没有真实变化压力。
+- 一个普通函数、对象字面量、配置表或依赖注入已经足够清晰。
+- 引入该模式会让运行时流程更难追踪，而不是更容易维护。
 
 ## 设计检查清单
 
-- Start with the client code: define the interface you want callers to depend on.
-- Keep concrete classes small and named after one responsibility.
-- Make creation, selection, delegation, or notification rules explicit instead of hidden in conditionals.
-- Prefer composition roots for wiring objects together.
-- Document the reason for using the pattern so future contributors do not cargo-cult it.
+- 先看调用方真正需要什么契约。
+- 抽象命名应来自业务语义，而不只是模式名称。
+- 保持具体类小而聚焦。
+- 通过公共接口测试行为，而不是测试私有细节。
+- 如果模式让代码更难读，应回到更简单的设计。
 
 ## 常见错误
 
-- Adding the pattern before the code has a real variation point.
-- Creating abstractions that only rename concrete classes.
-- Hiding important runtime behavior so debugging becomes harder.
-- Letting examples stay toy-sized without showing where the pattern boundary sits in real code.
-- Forgetting tests for negative paths, invalid states, or fallback behavior.
+- 只有假想变化点就提前引入模式。
+- 创建只包了一层同名类的空抽象。
+- 隐藏运行时流程，导致调试更困难。
+- 为了展示模式知识而不是解决真实问题。
 
-## 测试指南
+## 测试建议
 
-- Test through the public abstraction, not private implementation details.
-- Use fakes or test doubles for collaborators so the pattern seam is verified.
-- Add one integration-style test proving the objects are wired correctly.
-- Cover edge cases that motivated the pattern: missing strategy, rejected state transition, failed handler, invalid factory family, stale proxy cache, or similar.
-- Keep tests named after behavior and business outcome rather than pattern terminology.
+- 单独测试每个具体行为或协作者。
+- 用 fake implementation 测试调用方，证明边界有价值。
+- 补充与选用该模式原因相关的失败路径和边界情况。
 
-## 重构信号
+## TypeScript 实现
 
-- The pattern is useful when adding a new variation no longer requires editing stable caller code.
-- It is probably overdesigned when every new class has only one trivial method and no independent reason to exist.
-- If contributors cannot explain the runtime flow quickly, simplify the wiring or improve names.
-- If tests must mock too many layers, the abstraction boundary is likely in the wrong place.
+该模式目录中的 `index.ts` 提供可运行的 TypeScript 示例。建议结合对应测试一起阅读，重点关注调用方依赖的抽象边界，而不是具体类的名字。

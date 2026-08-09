@@ -8,6 +8,8 @@ const t = ui[locale];
 const patterns = getPatterns(locale);
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base.slice(0, -1) : base;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const socialImageUrl = new URL(`${base}images/ts_design_patterns_social_card.png`, Astro.site ?? Astro.url.origin);
 const currentPath = Astro.url.pathname.replace(basePath, "").replace(/^\/(en|vi|zh)/, "");
 const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups, pattern) => {
   groups[pattern.groupLabel] ??= [];
@@ -21,11 +23,26 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={t.tagline} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TypeScript Design Patterns Handbook" />
+    <meta property="og:description" content={t.tagline} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:alt" content="TypeScript Design Patterns Handbook social preview card" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TypeScript Design Patterns Handbook" />
+    <meta name="twitter:description" content={t.tagline} />
+    <meta name="twitter:image" content={socialImageUrl} />
     <title><slot name="title" />TypeScript Design Patterns Handbook</title>
     <script is:inline>
-      const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      document.documentElement.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
+      try {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
     </script>
   </head>
   <body>
@@ -41,7 +58,13 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
         </a>
 
         <div class="search-wrap">
-          <input id="pattern-search" class="search" type="search" placeholder={t.searchPlaceholder} />
+          <input
+            id="pattern-search"
+            class="search"
+            type="search"
+            placeholder={t.searchPlaceholder}
+            data-no-results={t.noResults}
+          />
         </div>
 
         <div class="header-actions">
@@ -107,12 +130,127 @@ const groupedPatterns = patterns.reduce<Record<string, typeof patterns>>((groups
       </main>
     </div>
 
-    <script src={`${base}scripts/site.js`}></script>
     <script is:inline define:vars={{ base, currentPath }}>
+      function readTheme() {
+        try {
+          return localStorage.getItem("theme");
+        } catch {
+          return null;
+        }
+      }
+
+      function writeTheme(theme) {
+        try {
+          localStorage.setItem("theme", theme);
+        } catch {
+          // Ignore storage failures in private or restricted browser contexts.
+        }
+      }
+
+      function normalize(value) {
+        return value
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "")
+          .trim();
+      }
+
+      function initTheme() {
+        const themeToggle = document.getElementById("theme-toggle");
+        if (!themeToggle) return;
+
+        const currentTheme =
+          document.documentElement.dataset.theme ||
+          readTheme() ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+        function update(theme) {
+          const label = themeToggle.dataset.themeLabel || "Theme";
+          const lightLabel = themeToggle.dataset.lightLabel || "Light";
+          const darkLabel = themeToggle.dataset.darkLabel || "Dark";
+          document.documentElement.dataset.theme = theme;
+          themeToggle.setAttribute("aria-label", `${label}: ${theme === "dark" ? darkLabel : lightLabel}`);
+          themeToggle.setAttribute("title", `${label}: ${theme === "dark" ? darkLabel : lightLabel}`);
+          themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+        }
+
+        update(currentTheme);
+
+        themeToggle.addEventListener("click", () => {
+          const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+          writeTheme(nextTheme);
+          update(nextTheme);
+        });
+      }
+
+      function initSearch() {
+        const searchInput = document.getElementById("pattern-search");
+        const patternLinks = Array.from(document.querySelectorAll("[data-pattern-link]"));
+        if (!searchInput || patternLinks.length === 0) return;
+
+        const nav = document.querySelector(".nav");
+        const emptyState = document.createElement("p");
+        emptyState.className = "search-empty";
+        emptyState.hidden = true;
+        emptyState.textContent = searchInput.dataset.noResults || "No matching patterns.";
+        nav?.append(emptyState);
+
+        function filter() {
+          const query = normalize(searchInput.value);
+          let firstMatch = null;
+          let visibleCount = 0;
+
+          patternLinks.forEach((link) => {
+            const item = link.closest("li");
+            const section = link.closest("section");
+            const text = normalize(link.textContent || "");
+            const group = normalize(section?.querySelector("h2")?.textContent || "");
+            const isMatch = query.length === 0 || text.includes(query) || group.includes(query);
+
+            if (item) item.hidden = !isMatch;
+            if (isMatch) {
+              visibleCount += 1;
+              firstMatch ??= link;
+            }
+          });
+
+          document.querySelectorAll(".nav section").forEach((section) => {
+            const hasVisibleItem = Boolean(section.querySelector("li:not([hidden])"));
+            section.hidden = query.length > 0 && !hasVisibleItem;
+          });
+
+          emptyState.hidden = visibleCount > 0;
+          searchInput.dataset.firstResult = firstMatch?.getAttribute("href") || "";
+        }
+
+        searchInput.addEventListener("input", filter);
+        searchInput.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" && searchInput.dataset.firstResult) {
+            window.location.href = searchInput.dataset.firstResult;
+          }
+          if (event.key === "Escape") {
+            searchInput.value = "";
+            filter();
+            searchInput.blur();
+          }
+        });
+
+        window.addEventListener("keydown", (event) => {
+          const isSearchShortcut = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k";
+          if (!isSearchShortcut) return;
+          event.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+        });
+      }
+
       document.getElementById("locale-select")?.addEventListener("change", (event) => {
         const nextLocale = event.target.value;
         window.location.href = `${base}${nextLocale}${currentPath}`;
       });
+
+      initTheme();
+      initSearch();
     </script>
   </body>
 </html>

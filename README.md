@@ -1,5 +1,7 @@
 # TypeScript Design Patterns Handbook
 
+![TypeScript Design Patterns Handbook social preview](img/ts_design_patterns_social_card.png)
+
 **A practical TypeScript handbook for the 23 Gang of Four design patterns.**
 
 TypeScript Design Patterns Handbook helps engineers reference design patterns as practical engineering tools, not as UML trivia. Each pattern includes readable TypeScript code, mirrored tests, and documentation that explains the trade-offs behind using the pattern in real projects.

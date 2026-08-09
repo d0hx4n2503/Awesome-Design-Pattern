@@ -8,116 +8,61 @@ source: "patterns/creational/factory-method/README.md"
 
 # Factory Method
 
-> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
-
 ## Mục đích
 
-Factory Method defines a creation method that returns objects through a common interface while allowing subclasses or concrete factories to decide which class to instantiate.
+Ẩn việc tạo object cụ thể sau một factory method để workflow không phụ thuộc trực tiếp vào class concrete.
 
 ## Vấn đề
 
-Client code often needs a product by behavior, not by concrete class. If it directly creates every implementation with `new`, creation decisions spread across the codebase and each new product type requires editing multiple callers.
+Khi code gọi `new` ở nhiều nơi, việc thêm provider hoặc product mới thường kéo theo sửa nhiều workflow vốn không nên biết chi tiết khởi tạo.
 
-## Giải pháp
+## Ý tưởng cốt lõi
 
-Move object creation behind a factory method. Client code works with the product interface, while the factory encapsulates the concrete selection logic.
-
-## Triển khai TypeScript
-
-This implementation models notification delivery:
-
-- `NotificationSender` is the product interface.
-- `EmailNotificationSender` and `SmsNotificationSender` are concrete products.
-- `NotificationWorkflow` is the creator and defines the stable `notify` workflow.
-- `EmailNotificationWorkflow` and `SmsNotificationWorkflow` are concrete creators that override the factory method.
-
-This is intentionally modeled as the GoF Factory Method shape: the base creator owns the workflow, while subclasses decide which product to instantiate.
-
-Run it from the repository root:
-
-```bash
-npm run factory-method
-```
-
-## Khi nên dùng
-
-- Object creation depends on runtime input.
-- Client code should not know concrete classes.
-- New product types should be added with minimal caller changes.
-- Framework or domain code needs an extension point for creation.
-
-## Khi không nên dùng
-
-- There is only one concrete class and creation is trivial.
-- A simple constructor call is clearer.
-- The factory becomes a large conditional dumping ground.
-
-## Lợi ích
-
-- Reduces coupling to concrete classes.
-- Centralizes creation rules.
-- Makes product selection easier to test.
-
-## Đánh đổi
-
-- Adds indirection around object creation.
-- Can hide dependencies if the factory grows too much.
-- May be overkill for small object graphs.
-
-## Pattern liên quan
-
-- Abstract Factory
-- Template Method
-- Builder
+Workflow phụ thuộc vào product interface. Factory method quyết định concrete product nào được tạo.
 
 ## Góc nhìn thực tế
 
-Creational patterns are about controlling object creation so callers do not depend on concrete construction details.
-
-For Factory Method, the important question is not “can I draw the UML diagram?” but “what dependency or decision becomes easier to change after I introduce this pattern?” In production code, the pattern should make ownership clearer, reduce accidental coupling, and give tests a natural seam.
+Factory Method không nên được dùng chỉ vì tên pattern nghe "xịn". Nó chỉ đáng dùng khi giúp code bớt phụ thuộc sai chỗ, làm thay đổi trong tương lai rẻ hơn, và tạo seam rõ ràng để test.
 
 ## Tình huống áp dụng thực tế
 
-- Framework integration points where Factory Method keeps responsibilities separated.
-- Configuration-driven runtime behavior where Factory Method keeps responsibilities separated.
-- Test fixture creation where Factory Method keeps responsibilities separated.
-- Infrastructure objects whose setup should be centralized where Factory Method keeps responsibilities separated.
+- Dự án TypeScript có phần khởi tạo đang tăng biến thể.
+- Code bắt đầu có nhiều nhánh điều kiện quanh cùng một quyết định.
+- Team cần một cấu trúc đủ rõ để người mới đọc vẫn hiểu runtime flow.
 
-## Câu hỏi ra quyết định
+## Khi nên dùng
 
-- Who owns object creation?
-- Which concrete type should callers be allowed to know?
-- Can invalid combinations be prevented at construction time?
-- Use it when a workflow should create products without knowing concrete classes.
-- Avoid turning every constructor into a factory method by habit.
+- Object cần tạo thay đổi theo config hoặc input.
+- Caller chỉ nên biết contract, không biết class cụ thể.
+- Quá trình tạo có setup/validation/defaults.
+
+## Khi không nên dùng
+
+- Constructor trực tiếp vẫn rõ ràng.
+- Cần tạo cả họ object liên quan; cân nhắc Abstract Factory.
+- Factory chỉ bọc `new` mà không giảm coupling.
 
 ## Checklist thiết kế
 
-- Start with the client code: define the interface you want callers to depend on.
-- Keep concrete classes small and named after one responsibility.
-- Make creation, selection, delegation, or notification rules explicit instead of hidden in conditionals.
-- Prefer composition roots for wiring objects together.
-- Document the reason for using the pattern so future contributors do not cargo-cult it.
+- Bắt đầu từ caller: caller thật sự cần contract nào?
+- Đặt tên abstraction theo domain, không chỉ theo tên pattern.
+- Giữ concrete class nhỏ và chỉ có một lý do để thay đổi.
+- Test qua public interface thay vì private detail.
+- Nếu thêm pattern làm code khó đọc hơn, hãy quay lại giải pháp đơn giản hơn.
 
 ## Lỗi thường gặp
 
-- Adding the pattern before the code has a real variation point.
-- Creating abstractions that only rename concrete classes.
-- Hiding important runtime behavior so debugging becomes harder.
-- Letting examples stay toy-sized without showing where the pattern boundary sits in real code.
-- Forgetting tests for negative paths, invalid states, or fallback behavior.
+- Áp dụng pattern khi mới có một biến thể giả định.
+- Tạo interface chỉ để bọc một class cùng tên.
+- Ẩn runtime flow khiến debug khó hơn.
+- Dùng pattern để khoe kiến thức thay vì giải quyết pressure thật.
 
 ## Hướng dẫn kiểm thử
 
-- Test through the public abstraction, not private implementation details.
-- Use fakes or test doubles for collaborators so the pattern seam is verified.
-- Add one integration-style test proving the objects are wired correctly.
-- Cover edge cases that motivated the pattern: missing strategy, rejected state transition, failed handler, invalid factory family, stale proxy cache, or similar.
-- Keep tests named after behavior and business outcome rather than pattern terminology.
+- Test từng concrete behavior hoặc collaborator riêng.
+- Test caller với fake implementation để chứng minh boundary hữu ích.
+- Thêm case lỗi/edge case đúng với lý do bạn chọn pattern.
 
-## Dấu hiệu refactor
+## Triển khai TypeScript
 
-- The pattern is useful when adding a new variation no longer requires editing stable caller code.
-- It is probably overdesigned when every new class has only one trivial method and no independent reason to exist.
-- If contributors cannot explain the runtime flow quickly, simplify the wiring or improve names.
-- If tests must mock too many layers, the abstraction boundary is likely in the wrong place.
+Thư mục pattern có ví dụ TypeScript chạy được trong `index.ts`. Hãy đọc code cùng test tương ứng để thấy pattern boundary nằm ở đâu và vì sao caller không cần phụ thuộc vào chi tiết triển khai.

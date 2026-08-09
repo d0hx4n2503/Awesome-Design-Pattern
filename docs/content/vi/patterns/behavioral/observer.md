@@ -8,114 +8,61 @@ source: "patterns/behavioral/observer/README.md"
 
 # Observer
 
-> Tài liệu tiếng Việt này được đồng bộ từ README gốc và giữ các thuật ngữ kỹ thuật quan trọng để dễ đối chiếu với code TypeScript.
-
 ## Mục đích
 
-Observer defines a one-to-many dependency so that subscribers are notified when a subject changes.
+Cho nhiều subscriber phản ứng với một thay đổi mà subject không cần biết subscriber cụ thể.
 
 ## Vấn đề
 
-When one object changes state, several other parts of the system may need to react. If the subject directly calls every dependent object, it becomes tightly coupled to all consumers and every new reaction requires editing the subject.
+Nếu subject gọi trực tiếp email, analytics, cache, UI update..., mỗi thay đổi nhỏ tạo coupling và side effect khó lần theo.
 
-## Giải pháp
+## Ý tưởng cốt lõi
 
-Let observers subscribe to a subject. The subject publishes events through a stable observer interface without knowing what each observer does with the update.
-
-## Triển khai TypeScript
-
-This implementation models order status updates:
-
-- `OrderStatusSubject` owns the order state.
-- `OrderObserver` defines the subscriber contract.
-- `EmailNotifier` and `AnalyticsTracker` react independently.
-- New observers can be added without changing the subject.
-
-Run it from the repository root:
-
-```bash
-npm run observer
-```
-
-## Khi nên dùng
-
-- Event notification.
-- Pub/sub style workflows.
-- UI state updates.
-- Domain events where multiple reactions are expected.
-
-## Khi không nên dùng
-
-- There is only one known receiver.
-- Ordering of side effects is critical but not controlled.
-- Debugging event chains would become too difficult.
-
-## Lợi ích
-
-- Reduces coupling between subject and subscribers.
-- Supports adding reactions without changing the subject.
-- Keeps event producers focused on state changes.
-
-## Đánh đổi
-
-- Event flow can be harder to trace.
-- Subscriber failures need explicit handling.
-- Too many observers can create hidden side effects.
-
-## Pattern liên quan
-
-- Mediator
-- Strategy
-- Chain of Responsibility
+Subject phát event qua contract chung. Subscriber đăng ký/hủy đăng ký và xử lý event độc lập.
 
 ## Góc nhìn thực tế
 
-Behavioral patterns are about distributing responsibilities between objects so workflows stay understandable as rules grow.
-
-For Observer, the important question is not “can I draw the UML diagram?” but “what dependency or decision becomes easier to change after I introduce this pattern?” In production code, the pattern should make ownership clearer, reduce accidental coupling, and give tests a natural seam.
+Observer không nên được dùng chỉ vì tên pattern nghe "xịn". Nó chỉ đáng dùng khi giúp code bớt phụ thuộc sai chỗ, làm thay đổi trong tương lai rẻ hơn, và tạo seam rõ ràng để test.
 
 ## Tình huống áp dụng thực tế
 
-- Business rules that vary by tenant or product where Observer keeps responsibilities separated.
-- Workflow orchestration where Observer keeps responsibilities separated.
-- Event-driven UI or domain flows where Observer keeps responsibilities separated.
-- Validation, authorization, pricing, routing, or lifecycle logic where Observer keeps responsibilities separated.
+- Dự án TypeScript có phần hành vi đang tăng biến thể.
+- Code bắt đầu có nhiều nhánh điều kiện quanh cùng một quyết định.
+- Team cần một cấu trúc đủ rõ để người mới đọc vẫn hiểu runtime flow.
 
-## Câu hỏi ra quyết định
+## Khi nên dùng
 
-- Which object owns the decision?
-- Can a rule change without editing stable workflow code?
-- Is runtime behavior explicit enough to debug?
-- Use it when many subscribers react independently to one subject event.
-- Always provide unsubscribe behavior to prevent leaks.
+- Một event có nhiều phản ứng độc lập.
+- Subscriber có thể xuất hiện hoặc biến mất runtime.
+- Publisher không nên phụ thuộc vào concrete listener.
+
+## Khi không nên dùng
+
+- Thứ tự xử lý là business-critical.
+- Failure của subscriber phải rollback publisher.
+- Hệ phân tán cần message broker thật sự.
 
 ## Checklist thiết kế
 
-- Start with the client code: define the interface you want callers to depend on.
-- Keep concrete classes small and named after one responsibility.
-- Make creation, selection, delegation, or notification rules explicit instead of hidden in conditionals.
-- Prefer composition roots for wiring objects together.
-- Document the reason for using the pattern so future contributors do not cargo-cult it.
+- Bắt đầu từ caller: caller thật sự cần contract nào?
+- Đặt tên abstraction theo domain, không chỉ theo tên pattern.
+- Giữ concrete class nhỏ và chỉ có một lý do để thay đổi.
+- Test qua public interface thay vì private detail.
+- Nếu thêm pattern làm code khó đọc hơn, hãy quay lại giải pháp đơn giản hơn.
 
 ## Lỗi thường gặp
 
-- Adding the pattern before the code has a real variation point.
-- Creating abstractions that only rename concrete classes.
-- Hiding important runtime behavior so debugging becomes harder.
-- Letting examples stay toy-sized without showing where the pattern boundary sits in real code.
-- Forgetting tests for negative paths, invalid states, or fallback behavior.
+- Áp dụng pattern khi mới có một biến thể giả định.
+- Tạo interface chỉ để bọc một class cùng tên.
+- Ẩn runtime flow khiến debug khó hơn.
+- Dùng pattern để khoe kiến thức thay vì giải quyết pressure thật.
 
 ## Hướng dẫn kiểm thử
 
-- Test through the public abstraction, not private implementation details.
-- Use fakes or test doubles for collaborators so the pattern seam is verified.
-- Add one integration-style test proving the objects are wired correctly.
-- Cover edge cases that motivated the pattern: missing strategy, rejected state transition, failed handler, invalid factory family, stale proxy cache, or similar.
-- Keep tests named after behavior and business outcome rather than pattern terminology.
+- Test từng concrete behavior hoặc collaborator riêng.
+- Test caller với fake implementation để chứng minh boundary hữu ích.
+- Thêm case lỗi/edge case đúng với lý do bạn chọn pattern.
 
-## Dấu hiệu refactor
+## Triển khai TypeScript
 
-- The pattern is useful when adding a new variation no longer requires editing stable caller code.
-- It is probably overdesigned when every new class has only one trivial method and no independent reason to exist.
-- If contributors cannot explain the runtime flow quickly, simplify the wiring or improve names.
-- If tests must mock too many layers, the abstraction boundary is likely in the wrong place.
+Thư mục pattern có ví dụ TypeScript chạy được trong `index.ts`. Hãy đọc code cùng test tương ứng để thấy pattern boundary nằm ở đâu và vì sao caller không cần phụ thuộc vào chi tiết triển khai.

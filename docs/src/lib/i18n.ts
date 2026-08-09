@@ -22,6 +22,7 @@ export const ui = {
     lightTheme: "Light",
     darkTheme: "Dark",
     language: "Language",
+    noResults: "No matching patterns.",
     heroTitle: "Design patterns, implemented cleanly.",
     heroBody:
       "Explore all 23 GoF patterns with TypeScript implementations, tests, and concise engineering notes.",
@@ -39,6 +40,7 @@ export const ui = {
     lightTheme: "S\u00e1ng",
     darkTheme: "T\u1ed1i",
     language: "Ng\u00f4n ng\u1eef",
+    noResults: "Kh\u00f4ng t\u00ecm th\u1ea5y m\u1eabu ph\u00f9 h\u1ee3p.",
     heroTitle:
       "M\u1eabu thi\u1ebft k\u1ebf, tri\u1ec3n khai r\u00f5 r\u00e0ng.",
     heroBody:
@@ -57,6 +59,8 @@ export const ui = {
     lightTheme: "\u6d45\u8272",
     darkTheme: "\u6df1\u8272",
     language: "\u8bed\u8a00",
+    noResults:
+      "\u6ca1\u6709\u627e\u5230\u5339\u914d\u7684\u8bbe\u8ba1\u6a21\u5f0f\u3002",
     heroTitle: "\u6e05\u6670\u5b9e\u73b0\u8bbe\u8ba1\u6a21\u5f0f\u3002",
     heroBody:
       "\u6d4f\u89c8\u5168\u90e8 23 \u4e2a GoF \u8bbe\u8ba1\u6a21\u5f0f\uff0c\u5305\u62ec TypeScript \u5b9e\u73b0\u3001\u6d4b\u8bd5\u548c\u7b80\u6d01\u5de5\u7a0b\u8bf4\u660e\u3002",
