@@ -1,8 +1,8 @@
-# Awesome Design Pattern
+# TypeScript Design Patterns Handbook
 
-**A production-minded TypeScript reference for the 23 Gang of Four design patterns.**
+**A practical TypeScript handbook for the 23 Gang of Four design patterns.**
 
-Awesome Design Pattern helps engineers learn design patterns as practical engineering tools, not as UML trivia. Each pattern includes readable TypeScript code, mirrored tests, and documentation that explains the trade-offs behind using the pattern in real projects.
+TypeScript Design Patterns Handbook helps engineers reference design patterns as practical engineering tools, not as UML trivia. Each pattern includes readable TypeScript code, mirrored tests, and documentation that explains the trade-offs behind using the pattern in real projects.
 
 The goal is simple: help you recognize when a pattern clarifies a design, when it is unnecessary ceremony, and how to apply it without over-engineering your codebase.
 
@@ -33,13 +33,14 @@ This repository treats every pattern through a practical lens:
 ```bash
 npm install
 npm run validate
+npm test
 npm run docs:dev
 ```
 
 Open the local docs site at:
 
 ```text
-http://localhost:4321/Awesome-Design-Pattern/
+http://localhost:4321/typescript-design-patterns-handbook/
 ```
 
 Run an individual pattern example:
@@ -119,7 +120,7 @@ A practical rule: **start simple, wait for pressure, then refactor toward a patt
 ## Repository Structure
 
 ```text
-Awesome-Design-Pattern/
+typescript-design-patterns-handbook/
 |-- .github/
 |   |-- ISSUE_TEMPLATE/
 |   |-- PULL_REQUEST_TEMPLATE/
@@ -228,15 +229,16 @@ The docs UI supports search, light/dark theme switching, and three locale routes
 
 ## Available Scripts
 
-| Command                | Purpose                                      |
-| ---------------------- | -------------------------------------------- |
-| `npm run format`       | Format the repository with Prettier.         |
-| `npm run format:check` | Check formatting without writing changes.    |
-| `npm run check`        | Run TypeScript type-checking.                |
-| `npm test`             | Run Node's built-in test runner through TSX. |
-| `npm run validate`     | Run format check, type-check, and tests.     |
-| `npm run docs:build`   | Build the Astro documentation site.          |
-| `npm run strategy`     | Execute the Strategy pattern example.        |
+| Command                | Purpose                                     |
+| ---------------------- | ------------------------------------------- |
+| `npm run format`       | Format the repository with Prettier.        |
+| `npm run format:check` | Check formatting without writing changes.   |
+| `npm run check`        | Run TypeScript type-checking.               |
+| `npm run validate`     | Run format check and TypeScript type-check. |
+| `npm test`             | Run the full unit test suite.               |
+| `npm run validate:all` | Run validation and tests together.          |
+| `npm run docs:build`   | Build the Astro documentation site.         |
+| `npm run strategy`     | Execute the Strategy pattern example.       |
 
 ## Quality Gates
 
@@ -253,7 +255,10 @@ The repository uses separate workflows for separate responsibilities:
 | `docs_build.yml`    | Build Astro docs on main and pull requests.          |
 | `docs_deploy.yml`   | Deploy Astro docs to GitHub Pages.                   |
 
-Husky runs `npm run validate` before commits.
+Husky keeps local gates split by responsibility:
+
+- `pre-commit` runs `npm run validate` to block formatting and type errors before a commit is created.
+- `pre-push` runs `npm test` to block pushes when pattern behavior regresses.
 
 ## Engineering Principles
 

@@ -1,8 +1,8 @@
 {
-  "name": "awesome-design-pattern",
+  "name": "typescript-design-patterns-handbook",
   "version": "0.1.0",
   "private": true,
-  "description": "TypeScript implementations of the 23 Gang of Four design patterns.",
+  "description": "A practical TypeScript handbook for the 23 Gang of Four design patterns.",
   "type": "module",
   "scripts": {
     "check": "tsc --noEmit",
@@ -13,7 +13,7 @@
     "iterator": "tsx patterns/behavioral/iterator/index.ts",
     "observer": "tsx patterns/behavioral/observer/index.ts",
     "test": "node --import tsx --test \"test/**/*.test.ts\"",
-    "validate": "npm run format:check && npm run check && npm test",
+    "validate": "npm run format:check && npm run check",
     "prepare": "husky",
     "adapter": "tsx patterns/structural/adapter/index.ts",
     "builder": "tsx patterns/creational/builder/index.ts",
@@ -37,7 +37,8 @@
     "docs:sync": "node scripts/sync-docs-content.cjs",
     "docs:dev": "astro dev",
     "docs:build": "npm run docs:sync && astro build",
-    "docs:preview": "astro preview"
+    "docs:preview": "astro preview",
+    "validate:all": "npm run validate && npm test"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

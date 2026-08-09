@@ -2,7 +2,7 @@
 
 ## Project Scope
 
-Awe Design Pattern is currently a learning repository with documentation and small TypeScript pattern implementations. It does not ship production services, containers, or deployment artifacts.
+TypeScript Design Patterns Handbook is currently a learning repository with documentation and small TypeScript pattern implementations. It does not ship production services, containers, or deployment artifacts.
 
 Security risk is therefore limited primarily to repository content, contribution workflow, documentation integrity, development dependencies, and example implementation guidance.
 
