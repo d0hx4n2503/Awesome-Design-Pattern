@@ -26,7 +26,38 @@ This repository treats every pattern through a practical lens:
 - Pattern READMEs with practical guidance, trade-offs, mistakes, and testing strategy.
 - Astro documentation generated from the pattern READMEs.
 - GitBook-style docs UI with search, light/dark theme, and English/Vietnamese/Chinese routes.
+- A copy-ready Codex/AI agent skill for design-pattern guidance during vibe coding.
 - CI workflows split by responsibility: docs, format, test, e2e smoke, CodeQL, and release.
+
+## Agent Skill For Vibe Coding
+
+This repository includes a custom agent skill at:
+
+```text
+skills/SKILL.md
+```
+
+Use it when you want an AI coding agent to help choose or apply design patterns in a real project. The skill teaches the agent to:
+
+- Analyze the actual design pressure before recommending a pattern.
+- Prefer simple TypeScript solutions before adding formal GoF abstractions.
+- Map concrete problem types to suitable patterns.
+- Explain trade-offs, testing strategy, and when not to use a pattern.
+- Apply NestJS-native constructs instead of hand-rolled patterns where appropriate.
+
+### How To Use With An Agent
+
+Copy the full content of `skills/SKILL.md` into your agent as a custom skill, project instruction, or reusable prompt. Then ask questions with project context, for example:
+
+```text
+Use the design-pattern-advisor skill.
+
+I have an ecommerce checkout service with many if/else branches for shipping,
+discounts, payment provider selection, and order state transitions.
+Which patterns should I apply, which should I avoid, and how should I test them?
+```
+
+The intended workflow is: describe your current code pressure first, then let the agent recommend the smallest useful design move. This keeps vibe coding grounded instead of turning every problem into pattern cosplay.
 
 ## Quick Start
 
