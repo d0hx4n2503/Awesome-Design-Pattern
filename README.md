@@ -1,5 +1,7 @@
 # TypeScript Design Patterns Handbook
 
+> If this repo helps you, a ⭐ star helps others find it too.
+
 ![TypeScript Design Patterns Handbook social preview](img/ts_design_patterns_social_card.png)
 
 **A practical TypeScript handbook for the 23 Gang of Four design patterns.**
